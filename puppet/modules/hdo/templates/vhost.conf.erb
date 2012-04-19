@@ -1,0 +1,37 @@
+PassengerRoot <%= scope.lookupvar('hdo::passenger_root') %>
+PassengerRuby <%= scope.lookupvar('hdo::passenger_ruby') %>
+PassengerMaxPoolSize <%= scope.lookupvar('hdo::passenger_max_pool_size') %>
+
+NameVirtualHost <%= vhost_name %>:<%= port %>
+<VirtualHost <%= vhost_name %>:<%= port %>>
+  SetEnv PATH /usr/bin:/bin:/usr/local/bin
+  SetEnv LC_ALL en_US.UTF-8
+
+  ServerName <%= srvname %>
+  DocumentRoot <%= docroot %>
+  <Directory <%= docroot %>>
+    Options <%= options %>
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+  ErrorLog /var/log/<%= apache_name %>/<%= name %>_error.log
+  LogLevel warn
+  CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
+  ServerSignature Off
+  
+  PassengerMinInstances <%= scope.lookupvar('hdo::passenger_min_instances') %>
+
+  RewriteEngine On
+
+  RewriteCond %{THE_REQUEST} ^(GET|HEAD)
+  RewriteCond %{REQUEST_URI} ^/([^.]+)$
+  RewriteCond %{DOCUMENT_ROOT}/cache/%1.html -f
+  RewriteRule ^/[^.]+$ /cache/%1.html [QSA,L]
+
+  RewriteCond %{THE_REQUEST} ^(GET|HEAD)
+  RewriteCond %{DOCUMENT_ROOT}/cache/index.html -f
+  RewriteRule ^/$ /cache/index.html [QSA,L]
+</VirtualHost>
+
