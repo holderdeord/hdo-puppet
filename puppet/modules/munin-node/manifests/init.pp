@@ -9,13 +9,4 @@ class munin-node($master_host, $port = 4949) {
     notify  => Service['munin-node']
   }
 
-  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
-    @firewall {
-      "0100-INPUT ACCEPT $port":
-        action => 'accept',
-        dport => "$port",
-        proto => 'tcp'
-    }
-  }
-
 }
