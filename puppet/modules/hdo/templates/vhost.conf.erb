@@ -20,11 +20,20 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   LogLevel warn
   CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
   ServerSignature Off
-  
+
   PassengerMinInstances <%= scope.lookupvar('hdo::passenger_min_instances') %>
 
   RewriteEngine On
+  RewriteLog Off
 
+  # More Info: http://www.shiftcommathree.com/articles/make-your-rails-maintenance-page-respond-with-a-503
+  ErrorDocument 503 /system/maintenance.html
+  RewriteCond %{REQUEST_URI} !.(css|gif|jpg|png)$
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$  -  [redirect=503,last]
+
+  # for page cache
   RewriteCond %{THE_REQUEST} ^(GET|HEAD)
   RewriteCond %{REQUEST_URI} ^/([^.]+)$
   RewriteCond %{DOCUMENT_ROOT}/cache/%1.html -f
