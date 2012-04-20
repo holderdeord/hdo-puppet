@@ -34,10 +34,12 @@ class hdo {
 
   package { "libapache2-mod-passenger":
     ensure => present,
+    require => Exec['brightbox-passenger']
   }
 
   package { "passenger-common1.9.1":
-    ensure => present
+    ensure => present,
+    require => Exec['brightbox-passenger']
   }
   
   package { "libxml2":
