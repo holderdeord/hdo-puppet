@@ -144,12 +144,12 @@ class hdo {
   }
 
   class { 'mysql::server':
-    config_hash => { 'root_password' => $mysql_password }
+    config_hash => { 'root_password' => $mysql_root_password }
   }
 
   mysql::db { 'hdo_production':
     user     => 'hdo',
-    password => $hdo_mysql_password,
+    password => $mysql_hdo_password,
     host     => 'localhost',
     grant    => ['all'],
   }
