@@ -12,7 +12,9 @@ $ VAGRANT=1 cap deploy
 
 On the server as root:
 
-$ apt-get install puppet
+$ apt-get install puppet git-core
+$ git clone git://github.com/holderdeord/hdo-puppet.git
+$ cd hdo-puppet
 $ git submodule update --init
 $ FACTER_mysql_root_password=t0ps3cret FACTER_mysql_hdo_password=s3cr3t puppet apply --modulepath=puppet/modules puppet/base.pp
 

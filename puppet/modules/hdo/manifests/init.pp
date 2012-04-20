@@ -4,10 +4,10 @@ class hdo {
   $passenger_root          = "/usr/lib/phusion-passenger"
   $passenger_min_instances = 3
   $passenger_max_pool_size = 10
-  
+
   if $mysql_root_password {} else { $mysql_root_password = "dont-use-this" }
-  if $hdo_mysql_password {} else { $hdo_mysql_password = "dont-use-this" }
-  
+  if $mysql_hdo_password {} else { $mysql_hdo_password = "dont-use-this" }
+
   package { "python-software-properties":
     ensure  => present,
     require => Exec['apt-update']
@@ -41,19 +41,19 @@ class hdo {
     ensure => present,
     require => Exec['brightbox-passenger']
   }
-  
+
   package { "libxml2":
     ensure => installed,
   }
-  
+
   package { "libxml2-dev":
     ensure => installed,
   }
-  
+
   package { "libxslt1-dev":
     ensure => installed,
   }
-  
+
   define gem ($name) {
     exec { "$name-gem":
       command => "gem1.9.3 install $name",
@@ -61,11 +61,11 @@ class hdo {
       require => [Package['ruby1.9.3']]
     }
   }
-  
+
   gem { "bundler": name => bundler}
   gem { "builder": name => builder}
   gem { "nokogiri": name => nokogiri, require => Package['libxml2', 'libxml2-dev', 'libxslt1-dev']}
-  
+
 
   package { "ruby":
     ensure  => present,
@@ -98,8 +98,8 @@ class hdo {
     password   => "7ba6c44a47bd64d32fd2360d70087deaf222d55e",
     shell      => "/bin/bash"
   }
-  
-  file { "/home/hdo": 
+
+  file { "/home/hdo":
     ensure => directory,
     owner => hdo
   }
@@ -127,41 +127,41 @@ class hdo {
     require => [Package['git-core'], File['/code']],
     user    => hdo
   }
-  
-  exec { "folketingparser": 
+
+  exec { "folketingparser":
     command   => "git submodule update --init",
     require   => Exec['hdo-storting-importer'],
     cwd       => "/code/hdo-storting-importer",
     user      => hdo,
     logoutput => on_failure,
     # gitorious seems flaky:
-    tries     => 5, 
-    try_sleep => 3
+    tries     => 10,
+    try_sleep => 5
   }
-  
+
   package { "libmysqlclient-dev":
     ensure => installed,
   }
-  
+
   class { 'mysql::server':
     config_hash => { 'root_password' => $mysql_password }
   }
-  
+
   mysql::db { 'hdo_production':
     user     => 'hdo',
     password => $hdo_mysql_password,
     host     => 'localhost',
     grant    => ['all'],
   }
-  
-  file { "/home/hdo/.hdo-database.yml": 
+
+  file { "/home/hdo/.hdo-database.yml":
     owner   => hdo,
     mode    => 600,
     content => template("hdo/database.yml"),
     require => File["/home/hdo"]
   }
-  
-  apache::vhost { "beta.holderdeord.no": 
+
+  apache::vhost { "beta.holderdeord.no":
     vhost_name => "*",
     port       => 80,
     servername => "beta.holderdeord.no",
@@ -170,7 +170,7 @@ class hdo {
     options    => "-MultiViews",
     notify     => Service['apache2']
   }
-  
+
   a2mod { "rewrite": ensure => present }
 }
 
