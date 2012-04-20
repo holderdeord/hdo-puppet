@@ -5,4 +5,4 @@ production:
   database: hdo_production
   pool: 5
   username: hdo
-  password: <%= hdo_mysql_password %>
+  password: <%= mysql_hdo_password %>
