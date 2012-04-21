@@ -172,9 +172,5 @@ class hdo {
   }
 
   a2mod { "rewrite": ensure => present }
-
-  class { "munin-node":
-    master_host => "^109\\.74\\.192\\.179$"
-  }
 }
 
