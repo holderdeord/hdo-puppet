@@ -1,7 +1,3 @@
-PassengerRoot <%= scope.lookupvar('hdo::passenger_root') %>
-PassengerRuby <%= scope.lookupvar('hdo::passenger_ruby') %>
-PassengerMaxPoolSize <%= scope.lookupvar('hdo::passenger_max_pool_size') %>
-
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   SetEnv PATH /usr/bin:/bin:/usr/local/bin

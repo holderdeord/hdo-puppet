@@ -4,6 +4,8 @@ class hdo {
   $passenger_root          = "/usr/lib/phusion-passenger"
   $passenger_min_instances = 3
   $passenger_max_pool_size = 10
+  $passenger_max_instances_per_app = 10 # only running one app
+  $passenger_pool_idle_time = 300
 
   if $mysql_root_password {} else { $mysql_root_password = "dont-use-this" }
   if $mysql_hdo_password {} else { $mysql_hdo_password = "dont-use-this" }
@@ -169,6 +171,13 @@ class hdo {
     docroot    => "/webapps/hdo-site/current/public",
     options    => "-MultiViews",
     notify     => Service['apache2']
+  }
+
+  file { "/etc/apache2/conf.d/passenger.conf":
+    owner   => root,
+    mode    => 644,
+    content => template("hdo/passenger.conf.erb"),
+    notify  => Service['apache2']
   }
 
   a2mod { "rewrite": ensure => present }
