@@ -10,14 +10,16 @@ class hdo {
   if $mysql_root_password {} else { $mysql_root_password = "dont-use-this" }
   if $mysql_hdo_password {} else { $mysql_hdo_password = "dont-use-this" }
 
-  package { "python-software-properties":
-    ensure  => present,
-    require => Exec['apt-update']
-  }
-
-  package { "build-essential":
-    ensure  => present,
-    require => Exec['apt-update']
+  package { [
+      "python-software-properties",
+      "htop",
+      "build-essential",
+      "libxml2",
+      "libxml2-dev",
+      "libxslt1-dev",
+      "git-core",
+      "libmysqlclient-dev"
+    ]: ensure  => present
   }
 
   exec { "brightbox-ruby-experimental":
@@ -44,18 +46,6 @@ class hdo {
     require => Exec['brightbox-passenger']
   }
 
-  package { "libxml2":
-    ensure => installed,
-  }
-
-  package { "libxml2-dev":
-    ensure => installed,
-  }
-
-  package { "libxslt1-dev":
-    ensure => installed,
-  }
-
   define gem ($name) {
     exec { "$name-gem":
       command => "gem1.9.3 install $name",
@@ -67,7 +57,6 @@ class hdo {
   gem { "bundler": name => bundler}
   gem { "builder": name => builder}
   gem { "nokogiri": name => nokogiri, require => Package['libxml2', 'libxml2-dev', 'libxslt1-dev']}
-
 
   package { "ruby":
     ensure  => present,
@@ -87,10 +76,6 @@ class hdo {
   exec { "ruby-switch-set":
     command => "/usr/bin/ruby-switch --set ruby1.9.1", # actually 1.9.3..
     require => Package['ruby-switch']
-  }
-
-  package { "git-core":
-    ensure => present,
   }
 
   user { "hdo":
@@ -139,10 +124,6 @@ class hdo {
     # gitorious seems flaky:
     tries     => 10,
     try_sleep => 5
-  }
-
-  package { "libmysqlclient-dev":
-    ensure => installed,
   }
 
   class { 'mysql::server':
