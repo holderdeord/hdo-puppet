@@ -154,6 +154,13 @@ class hdo {
     notify     => Service['apache2']
   }
 
+  apache::vhost::redirect { "holderdeord.no":
+    port          => 80,
+    dest          => "http://beta.holderdeord.no",
+    serveraliases => 'www.holderdeord.no',
+    notify        => Service['apache2']
+  }
+
   file { "/etc/apache2/conf.d/passenger.conf":
     owner   => root,
     mode    => 644,
