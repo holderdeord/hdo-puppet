@@ -170,7 +170,7 @@ class hdo {
   }
 
   apache::vhost { "files.holderdeord.no":
-    post     => 80,
+    port     => 80,
     priority => '30',
     docroot  => "/webapps/files",
     notify   => Service['apache2'],
