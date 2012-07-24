@@ -152,7 +152,7 @@ class hdo {
 
   apache::vhost::redirect { "holderdeord.no":
     port          => 80,
-    priority      => '10'
+    priority      => '10',
     dest          => "http://beta.holderdeord.no",
     serveraliases => 'www.holderdeord.no',
     notify        => Service['apache2']
