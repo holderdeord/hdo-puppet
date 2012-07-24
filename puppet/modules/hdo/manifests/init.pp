@@ -109,9 +109,9 @@ class hdo {
   }
 
   file { "/webapps/files":
-    ensure => directory
-    mode => 775,
-    owner => hdo
+    ensure => directory,
+    mode   => 775,
+    owner  => hdo
   }
 
   exec { "hdo-storting-importer":
