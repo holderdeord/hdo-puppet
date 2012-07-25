@@ -18,7 +18,8 @@ class hdo {
       "libxml2-dev",
       "libxslt1-dev",
       "git-core",
-      "libmysqlclient-dev"
+      "libmysqlclient-dev",
+      "imagemagick"
     ]: ensure  => present
   }
 
