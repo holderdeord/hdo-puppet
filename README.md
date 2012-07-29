@@ -1,7 +1,9 @@
 "Holder de Ord" VM setup repository
-============================================
+===================================
 
-### Development VM image setup
+[![Build Status](https://secure.travis-ci.org/holderdeord/hdo-puppet.png)](http://travis-ci.org/holderdeord/hdo-puppet)
+
+### Installing Vagrant
 
 Full tutorial about Vagrant can be found at http://devops.me/2011/10/05/vagrant/
 
@@ -9,27 +11,31 @@ Full tutorial about Vagrant can be found at http://devops.me/2011/10/05/vagrant/
 
 or:
 
-    $ sudo gem install vagrant
+    $ [sudo] gem install vagrant
 
-And then to add the VM template to Vagrant (one time only operation):
-
-    $ vagrant box add hdo-devel <path-to-hdo-devel.box>
-
-`hdo-devel.box` is the pre-packaged VM image for vagrant that should have
-been given to you already. If you don't have it, the process becomes much
-more complicated.
-
-In addition, *this image requires Virtualbox 4.1.16*.
+Note that the `hdo-devel` VM image *requires at least Virtualbox 4.1.16*.
 For installation instructions, see [this link](http://www.ubuntugeek.com/virtualbox-4-1-16-released-and-ubuntu-installation-instructions-included.html).
 
 ### Bring up the VM instance
 
-Should be really simple. It takes time though:
+Should be really simple, but can take some time depending on your hardware:
 
-    $ vagrant up
+    $ vagrant up
 
-This will also start the provisioning process, that uses
-puppet to install most requirements, web server, etc...
+The first time you run this, Vagrant will download a pre-packaged VM image (`hdo-devel.box`).
+
+On subsequent runs, this brings up the VM, sets up port forwarding/shared folders (as configured in the `Vagrantfile`),
+and provisions the VM with Puppet.
+
+### Puppet code style
+
+To ensure a consistent code style we use the [puppet-lint](https://github.com/rodjek/puppet-lint) tool.
+The `lint.sh` script included in the repo will lint only the modules we maintain, and is used on [Travis CI](http://travis-ci.org/holderdeord/hdo-puppet).
+
+The tool requires a Ruby install + the puppet-lint gem:
+
+    $ [sudo] gem install puppet-lint
+    $ ./lint.sh
 
 ### Test the configuration
 
