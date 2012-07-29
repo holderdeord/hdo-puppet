@@ -1,7 +1,7 @@
 class passenger {
-
-  $passenger_ruby          = "/usr/bin/ruby1.9.1"
-  $passenger_root          = "/usr/lib/phusion-passenger"
+  $passenger_module        = '/var/lib/gems/1.9.1/gems/passenger-3.0.14/ext/apache2/mod_passenger.so'
+  $passenger_ruby          = '/usr/bin/ruby1.9.1'
+  $passenger_root          = '/usr/lib/phusion-passenger'
   $passenger_min_instances = 3
   $passenger_max_pool_size = 10
   $passenger_max_instances_per_app = 10 # only running one app
@@ -27,8 +27,8 @@ class passenger {
     # the command is also installed (hardlink?) in /usr/local/bin,
     # so it's definitely more robust to rely on the /usr/local/bin copy
     path    => ["/bin", "/usr/bin", "/usr/local/bin"],
-    command => "passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled",
-    creates => "/var/lib/gems/1.9.1/gems/passenger-3.0.14/ext/apache2/mod_passenger.so",
+    command => 'passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled',
+    creates => $passenger_module,
     require => [
       Ruby::Gem["passenger"],
       Package["apache2-prefork-dev"],
@@ -41,7 +41,7 @@ class passenger {
     owner   => root,
     mode    => '0644',
     content => template("passenger/passenger.conf.erb"),
-    require => Ruby::Gem['passenger'],
+    require => [Ruby::Gem['passenger'], Exec['passenger-apache']],
     notify  => Service['httpd']
   }
 

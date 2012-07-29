@@ -36,7 +36,9 @@ class hdo::backend {
     require => User["hdo"],
   }
 
-  a2mod { "rewrite": }
+  a2mod { "rewrite":
+    ensure => present
+  }
 
   apache::vhost::redirect { "holderdeord.no":
     port          => 80,
@@ -54,7 +56,8 @@ class hdo::backend {
     template   => "hdo/vhost.conf.erb",
     docroot    => "/webapps/hdo-site/current/public",
     options    => "-MultiViews",
-    notify     => Service['httpd']
+    notify     => Service['httpd'],
+    require    => A2mod['rewrite']
   }
 
   apache::vhost { "files.holderdeord.no":
