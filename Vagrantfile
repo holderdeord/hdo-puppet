@@ -11,10 +11,7 @@ Vagrant::Config.run do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = "http://mathie-vagrant-boxes.s3.amazonaws.com/debian_squeeze_32.box"
-
-  # There's no vm.box_url because I built our own custom image of Ubuntu 12.04 LTS
-  # There was no ready-made image available on www.vagrantbox.es
+  config.vm.box_url = "http://files.holderdeord.no/dev/setup/hdo-devel.box"
 
   # Access the box as 'hdo' user (with 'vagrant ssh')
   # config.ssh.username = "hdo"
