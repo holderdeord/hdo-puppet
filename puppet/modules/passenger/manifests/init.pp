@@ -8,7 +8,16 @@ class passenger {
   $passenger_pool_idle_time = 300
 
   include apache
-	include ruby
+  include ruby
+
+  package {
+    "apache2-prefork-dev":
+      ensure => "installed";
+    "libapr1-dev":
+      ensure => "installed";
+    "libaprutil1-dev":
+      ensure => "installed";
+  }
 
   ruby::gem { "passenger": }
 
@@ -20,7 +29,12 @@ class passenger {
     path    => ["/bin", "/usr/bin", "/usr/local/bin"],
     command => "passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled",
     creates => "/etc/apache2/mods-available/passenger.conf",
-    require => Ruby::Gem["passenger"],
+    require => [
+      Ruby::Gem["passenger"],
+      Package["apache2-prefork-dev"],
+      Package["libapr1-dev"],
+      Package["libaprutil1-dev"],
+    ],
   }
 
   file { "/etc/apache2/conf.d/passenger.conf":
