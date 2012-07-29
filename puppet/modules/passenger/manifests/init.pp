@@ -28,7 +28,7 @@ class passenger {
     # so it's definitely more robust to rely on the /usr/local/bin copy
     path    => ["/bin", "/usr/bin", "/usr/local/bin"],
     command => "passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled",
-    creates => "/etc/apache2/mods-available/passenger.conf",
+    creates => "/var/lib/gems/1.9.1/gems/passenger-3.0.14/ext/apache2/mod_passenger.so",
     require => [
       Ruby::Gem["passenger"],
       Package["apache2-prefork-dev"],
