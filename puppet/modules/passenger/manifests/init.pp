@@ -42,7 +42,7 @@ class passenger {
     mode    => 644,
     content => template("passenger/passenger.conf.erb"),
     require => Ruby::Gem['passenger'],
-    notify  => Service['apache2']
+    notify  => Service['httpd']
   }
 
 }

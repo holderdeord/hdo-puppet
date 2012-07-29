@@ -66,7 +66,7 @@ class hdo::backend {
     priority      => '10',
     dest          => "http://beta.holderdeord.no",
     serveraliases => 'www.holderdeord.no',
-    notify        => Service['apache2']
+    notify        => Service['httpd']
   }
 
   apache::vhost { "beta.holderdeord.no":
@@ -77,14 +77,14 @@ class hdo::backend {
     template   => "hdo/vhost.conf.erb",
     docroot    => "/webapps/hdo-site/current/public",
     options    => "-MultiViews",
-    notify     => Service['apache2']
+    notify     => Service['httpd']
   }
 
   apache::vhost { "files.holderdeord.no":
     port     => 80,
     priority => '30',
     docroot  => "/webapps/files",
-    notify   => Service['apache2'],
+    notify   => Service['httpd'],
     require  => File['/webapps/files']
   }
 
