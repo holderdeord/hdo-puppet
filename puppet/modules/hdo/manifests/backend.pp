@@ -27,11 +27,6 @@ class hdo::backend {
   ruby::gem {
     "bundler":
       name => "bundler";
-    "builder":
-      name => "builder";
-    "nokogiri":
-      name    => "nokogiri",
-      require => Package['libxml2', 'libxml2-dev', 'libxslt1-dev'];
   }
 
   file { [ "/webapps", "/webapps/files" ]:
