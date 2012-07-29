@@ -39,7 +39,7 @@ class passenger {
 
   file { "/etc/apache2/conf.d/passenger.conf":
     owner   => root,
-    mode    => 644,
+    mode    => '0644',
     content => template("passenger/passenger.conf.erb"),
     require => Ruby::Gem['passenger'],
     notify  => Service['httpd']

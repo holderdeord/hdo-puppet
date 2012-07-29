@@ -30,15 +30,15 @@ class hdo::backend {
     "builder":
       name => "builder";
     "nokogiri":
-      name => "nokogiri",
+      name    => "nokogiri",
       require => Package['libxml2', 'libxml2-dev', 'libxslt1-dev'];
   }
 
   file { [ "/webapps", "/webapps/files" ]:
-     ensure => "directory",
-     mode   => 0775,
-     owner  => "hdo",
-     require => User["hdo"],
+    ensure  => "directory",
+    mode    => '0775',
+    owner   => "hdo",
+    require => User["hdo"],
   }
 
   a2mod { "rewrite": }

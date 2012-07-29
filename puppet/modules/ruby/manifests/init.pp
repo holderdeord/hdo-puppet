@@ -16,7 +16,6 @@ class ruby {
     target  => "/etc/alternatives/ruby",
     require => Package['ruby1.9.1']
   }
-
 }
 
 define ruby::gem {

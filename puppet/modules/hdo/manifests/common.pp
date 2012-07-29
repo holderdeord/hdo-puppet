@@ -10,14 +10,14 @@ class hdo::common {
   }
 
   file { "/home/hdo":
-    ensure => directory,
-    owner => "hdo",
+    ensure  => directory,
+    owner   => "hdo",
     require => User["hdo"],
   }
 
   # Looks like vagrant doesn't create the puppet group by default?
   group { "puppet":
-     ensure => present
+    ensure => present
   }
 
 }

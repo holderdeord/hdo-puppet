@@ -23,7 +23,7 @@ class hdo::database {
 
   file { "/home/hdo/.hdo-database.yml":
     owner   => "hdo",
-    mode    => 0600,
+    mode    => '0600',
     # See modules/hdo/templates/database.yml
     content => template("hdo/database.yml"),
     require => File["/home/hdo"]
