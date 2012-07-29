@@ -34,29 +34,11 @@ class hdo::backend {
       require => Package['libxml2', 'libxml2-dev', 'libxslt1-dev'];
   }
 
-  file { [ "/webapps", "/webapps/files", "/code" ]:
+  file { [ "/webapps", "/webapps/files" ]:
      ensure => "directory",
      mode   => 0775,
      owner  => "hdo",
      require => User["hdo"],
-  }
-
-  exec { "hdo-storting-importer":
-    command => "/usr/bin/git clone https://github.com/holderdeord/hdo-storting-importer /code/hdo-storting-importer",
-    creates => "/code/hdo-storting-importer",
-    require => [ Package['git-core'], File['/code'] ],
-    user    => "hdo",
-  }
-
-  exec { "folketingparser":
-    command   => "git submodule update --init",
-    require   => Exec['hdo-storting-importer'],
-    cwd       => "/code/hdo-storting-importer",
-    user      => hdo,
-    logoutput => on_failure,
-    # gitorious seems flaky:
-    tries     => 10,
-    try_sleep => 5,
   }
 
   a2mod { "rewrite": }
