@@ -13,8 +13,11 @@ class passenger {
   ruby::gem { "passenger": }
 
   # We don't use libapache2-mod-passenger I suspect because it's too old?
-	exec { "passenger-apache":
-    path    => ["/bin", "/usr/bin", "/var/lib/gems/1.9.1/gems/passenger-3.0.13/bin"],
+  exec { "passenger-apache":
+    # Real path is /var/lib/gems/1.9.1/gems/passenger-3.0.14/bin, but
+    # the command is also installed (hardlink?) in /usr/local/bin,
+    # so it's definitely more robust to rely on the /usr/local/bin copy
+    path    => ["/bin", "/usr/bin", "/usr/local/bin"],
     command => "passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled",
     creates => "/etc/apache2/mods-available/passenger.conf",
     require => Ruby::Gem["passenger"],
