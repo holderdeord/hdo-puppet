@@ -15,7 +15,7 @@ class hdo::backend {
       "libxslt1-dev",
       "git-core",
       "libmysqlclient-dev",
-      "libcurl6-openssl-dev",
+      "libcurl4-openssl-dev",   # libcurl6?
       "imagemagick",
       "vim",
   ]
