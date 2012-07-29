@@ -18,7 +18,12 @@ For installation instructions, see [this link](http://www.ubuntugeek.com/virtual
 
 ### Bring up the VM instance
 
-Should be really simple, but can take some time depending on your hardware:
+After the inital checkout of the repo, you need check out the required submodules:
+
+    $ git submodule init
+    $ git submodule update
+
+After this, bringing up the VM is pretty simple (but can take some time depending on your hardware):
 
     $ vagrant up
 
@@ -43,19 +48,14 @@ Check out the main website code repository:
 
     $ git checkout https://github.com/holderdeord/hdo-site.git ../hdo-site
 
-Initialize and checkout the required submodules:
-
-    $ git submodule init
-    $ git submodule update
-
 Bring up the VM instance:
 
     $ vagrant up
 
-Install the `hdo` user and setup password-less logins as `hdo` user:
+Set up password-less logins as `hdo` user, which is needed for Capistrano deployment.
+The password for these commands is 'vagrant':
 
-    $ ssh -p 2222 vagrant@localhost "sudo mkdir -p /home/hdo/.ssh"
-    $ cat ~/.ssh/id_dsa.pub | ssh -p 2222 hdo@localhost "cat >> ~/.ssh/authorized_keys"
+    $ cat ~/.ssh/id_dsa.pub | ssh -p 2222 vagrant@localhost "cat > ./key; sudo mkdir -p /home/hdo/.ssh; sudo mv ./key /home/hdo/.ssh/authorized_keys; sudo chown -R hdo:hdo /home/hdo/.ssh"
 
 Launch the installation of the actual `hdo-site` code:
 
