@@ -40,14 +40,6 @@ class hdo::backend {
     ensure => present
   }
 
-  apache::vhost::redirect { "holderdeord.no":
-    port          => 80,
-    priority      => '10',
-    dest          => "http://beta.holderdeord.no",
-    serveraliases => 'www.holderdeord.no',
-    notify        => Service['httpd']
-  }
-
   apache::vhost { "beta.holderdeord.no":
     vhost_name => "*",
     port       => 80,
