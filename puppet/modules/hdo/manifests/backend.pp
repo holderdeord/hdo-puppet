@@ -20,6 +20,8 @@ class hdo::backend {
       "vim",
   ]
 
+  $serveradmin = 'teknisk@holderdeord.no'
+
   package { $requirements:
     ensure => "installed"
   }
@@ -29,7 +31,7 @@ class hdo::backend {
       name => "bundler";
   }
 
-  file { [ "/webapps", "/webapps/files" ]:
+  file { [ "/webapps" ]:
     ensure  => "directory",
     mode    => '0775',
     owner   => "hdo",
@@ -41,23 +43,24 @@ class hdo::backend {
   }
 
   apache::vhost { "beta.holderdeord.no":
-    vhost_name => "*",
-    port       => 80,
-    priority   => '20',
-    servername => "beta.holderdeord.no",
-    template   => "hdo/vhost.conf.erb",
-    docroot    => "/webapps/hdo-site/current/public",
-    options    => "-MultiViews",
-    notify     => Service['httpd'],
-    require    => A2mod['rewrite']
+    vhost_name  => "*",
+    port        => 80,
+    priority    => '20',
+    servername  => "beta.holderdeord.no",
+    serveradmin => $serveradmin,
+    template    => "hdo/vhost.conf.erb",
+    docroot     => "/webapps/hdo-site/current/public",
+    options     => "-MultiViews",
+    notify      => Service['httpd'],
+    require     => A2mod['rewrite']
   }
 
   apache::vhost { "files.holderdeord.no":
-    port     => 80,
-    priority => '30',
-    docroot  => "/webapps/files",
-    notify   => Service['httpd'],
-    require  => File['/webapps/files']
+    port        => 80,
+    priority    => '30',
+    docroot     => "/webapps/files",
+    serveradmin => $serveradmin,
+    notify      => Service['httpd'],
   }
 
 }
