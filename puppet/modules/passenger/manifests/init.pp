@@ -1,7 +1,7 @@
 class passenger {
-  $passenger_module        = '/var/lib/gems/1.9.1/gems/passenger-3.0.14/ext/apache2/mod_passenger.so'
+  $passenger_root          = '/var/lib/gems/1.9.1/gems/passenger-3.0.14'
+  $passenger_module        = "$passenger_root/ext/apache2/mod_passenger.so"
   $passenger_ruby          = '/usr/bin/ruby1.9.1'
-  $passenger_root          = '/usr/lib/phusion-passenger'
   $passenger_min_instances = 3
   $passenger_max_pool_size = 10
   $passenger_max_instances_per_app = 10 # only running one app

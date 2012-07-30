@@ -32,6 +32,10 @@ The first time you run this, Vagrant will download a pre-packaged VM image (`hdo
 On subsequent runs, this brings up the VM, sets up port forwarding/shared folders (as configured in the `Vagrantfile`),
 and provisions the VM with Puppet.
 
+If you just want to provision an already running VM:
+
+    $ vagrant provision
+
 ### Puppet code style
 
 To ensure a consistent code style we use the [puppet-lint](https://github.com/rodjek/puppet-lint) tool.
