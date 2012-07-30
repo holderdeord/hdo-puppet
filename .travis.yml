@@ -1,7 +1,10 @@
+language: ruby
 rvm:
   - 1.8.7
 notifications:
   recipients:
     - jari.bakken@gmail.com
   irc: "irc.freenode.net#holderdeord"
-script: ./bin/lint.sh
+script: 
+  - ./bin/lint.sh
+  - bundle exec puppet parser validate `find puppet -name "*.pp"`
