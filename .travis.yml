@@ -4,4 +4,4 @@ notifications:
   recipients:
     - jari.bakken@gmail.com
   irc: "irc.freenode.net#holderdeord"
-script: ./lint.sh
+script: ./bin/lint.sh
