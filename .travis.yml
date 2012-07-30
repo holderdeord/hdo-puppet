@@ -7,4 +7,4 @@ notifications:
   irc: "irc.freenode.net#holderdeord"
 script: 
   - ./bin/lint.sh
-  - bundle exec puppet parser validate `find puppet -name "*.pp"`
+  - 'bundle exec puppet parser validate `find puppet/modules/{hdo,ruby,passenger} -name "*.pp"`'
