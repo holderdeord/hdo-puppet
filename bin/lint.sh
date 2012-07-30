@@ -9,7 +9,7 @@ code=0
 
 for mod in "${our_modules[@]}"
 do
-  puppet-lint --log-format "${log_format}" --no-double_quoted_strings-check --no-autoloader_layout-check "${ROOT}/puppet/modules/${mod}"
+  puppet-lint --log-format "${log_format}" --no-double_quoted_strings-check "${ROOT}/puppet/modules/${mod}"
 
   ret=$?
   [[ "${code}" != "1" ]] && code="${ret}"
