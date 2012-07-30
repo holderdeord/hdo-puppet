@@ -31,11 +31,28 @@ class hdo::backend {
       name => "bundler";
   }
 
-  file { [ "/webapps" ]:
+  file { [ "/webapps", "/webapps/hdo-site" ]:
     ensure  => "directory",
     mode    => '0775',
     owner   => "hdo",
     require => User["hdo"],
+  }
+
+  #
+  # Work around the fact that the apache module wants to create the
+  # docroot for us by creating this dummy symlink which will be
+  # updated on deploy.
+  #
+
+  file { "/home/hdo/dummy":
+    ensure  => directory,
+    require => User['hdo']
+  }
+
+  file { "/webapps/hdo-site/current":
+    ensure  => symlink,
+    target  => "/home/hdo/dummy",
+    require => File['/home/hdo/dummy']
   }
 
   a2mod { "rewrite":
@@ -50,16 +67,19 @@ class hdo::backend {
     serveradmin => $serveradmin,
     template    => "hdo/vhost.conf.erb",
     docroot     => "/webapps/hdo-site/current/public",
-    options     => "-MultiViews",
+    logroot     => "/var/log/apache2/beta.holderdeord.no",
+    options     => "-MultiViews -Indexes",
     notify      => Service['httpd'],
-    require     => A2mod['rewrite']
+    require     => [A2mod['rewrite'], File["/webapps/hdo-site/current"]]
   }
 
   apache::vhost { "files.holderdeord.no":
     port        => 80,
     priority    => '30',
-    docroot     => "/webapps/files",
+    servername  => 'files.holderdeord.no',
     serveradmin => $serveradmin,
+    docroot     => "/webapps/files",
+    logroot     => "/var/log/apache2/files.holderdeord.no",
     notify      => Service['httpd'],
   }
 
