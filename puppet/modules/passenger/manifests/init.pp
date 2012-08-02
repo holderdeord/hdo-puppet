@@ -1,5 +1,6 @@
 class passenger {
-  $passenger_root          = '/var/lib/gems/1.9.1/gems/passenger-3.0.14'
+  $passenger_version       = '3.0.14'
+  $passenger_root          = "/var/lib/gems/1.9.1/gems/passenger-$passenger_version"
   $passenger_module        = "$passenger_root/ext/apache2/mod_passenger.so"
   $passenger_ruby          = '/usr/bin/ruby1.9.1'
   $passenger_min_instances = 3
@@ -19,7 +20,9 @@ class passenger {
       ensure => "installed";
   }
 
-  ruby::gem { "passenger": }
+  ruby::gem { "passenger":
+    version => $passenger_version
+  }
 
   # We don't use libapache2-mod-passenger I suspect because it's too old?
   exec { "passenger-apache":
