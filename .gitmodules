@@ -4,3 +4,6 @@
 [submodule "puppet/modules/firewall"]
 	path = puppet/modules/firewall
 	url = https://github.com/puppetlabs/puppetlabs-firewall.git
+[submodule "puppet/modules/postgresql"]
+	path = puppet/modules/postgresql
+	url = https://github.com/inkling/puppet-postgresql.git

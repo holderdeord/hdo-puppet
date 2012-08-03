@@ -1,8 +1,7 @@
 production:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
+  adapter: postgresql
+  encoding: unicode
   database: hdo_production
   pool: 5
   username: hdo
-  password: <%= mysql_hdo_password %>
+  password: <%= postgresql_hdo_password %>
