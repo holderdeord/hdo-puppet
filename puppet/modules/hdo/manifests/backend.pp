@@ -26,33 +26,22 @@ class hdo::backend {
     ensure => "installed"
   }
 
-  ruby::gem {
-    "bundler":
-      name => "bundler";
+  ruby::gem { "bundler":
+    name => "bundler"
   }
 
-  file { [ "/webapps", "/webapps/hdo-site" ]:
+  file { [ "/webapps", "/webapps/hdo-site", "/webapps/hdo-site/tmp" ]:
     ensure  => "directory",
     mode    => '0775',
-    owner   => "hdo",
-    require => User["hdo"],
+    owner   => "hdo"
   }
 
-  #
-  # Work around the fact that the apache module wants to create the
-  # docroot for us by creating this dummy symlink which will be
-  # updated on deploy.
-  #
-
-  file { "/home/hdo/dummy":
-    ensure  => directory,
-    require => User['hdo']
-  }
-
+  # work around the apache module's dependency on docroot being present
+  # in reality, this is managed by capistrano deployments
   file { "/webapps/hdo-site/current":
-    ensure  => symlink,
-    target  => "/home/hdo/dummy",
-    require => File['/home/hdo/dummy']
+    ensure  => link,
+    target  => "/webapps/hdo-site/tmp",
+    replace => false
   }
 
   a2mod { "rewrite":
@@ -60,17 +49,18 @@ class hdo::backend {
   }
 
   apache::vhost { "beta.holderdeord.no":
-    vhost_name  => "*",
-    port        => 80,
-    priority    => '20',
-    servername  => "beta.holderdeord.no",
-    serveradmin => $serveradmin,
-    template    => "hdo/vhost.conf.erb",
-    docroot     => "/webapps/hdo-site/current/public",
-    logroot     => "/var/log/apache2/beta.holderdeord.no",
-    options     => "-MultiViews -Indexes",
-    notify      => Service['httpd'],
-    require     => [A2mod['rewrite'], File["/webapps/hdo-site/current"]]
+    vhost_name    => "*",
+    port          => 80,
+    priority      => '20',
+    servername    => "beta.holderdeord.no",
+    serveradmin   => $serveradmin,
+    template      => "hdo/vhost.conf.erb",
+    docroot       => "/webapps/hdo-site/current/public",
+    docroot_owner => 'hdo',
+    docroot_group => 'hdo',
+    options       => "-MultiViews -Indexes",
+    notify        => Service['httpd'],
+    require       => [A2mod['rewrite'], User['hdo']]
   }
 
   apache::vhost { "files.holderdeord.no":
@@ -79,7 +69,6 @@ class hdo::backend {
     servername  => 'files.holderdeord.no',
     serveradmin => $serveradmin,
     docroot     => "/webapps/files",
-    logroot     => "/var/log/apache2/files.holderdeord.no",
     notify      => Service['httpd'],
   }
 
