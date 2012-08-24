@@ -21,7 +21,7 @@ class hdo::database {
   }
 
   postgresql::db { "hdo_production":
-    user => 'hdo',
+    user     => 'hdo',
     password => postgresql_password('hdo', $postgresql_hdo_password)
   }
 
