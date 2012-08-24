@@ -1,4 +1,4 @@
-define ruby::gem($version = nil) {
+define ruby::gem($version = false) {
   if $version {
     $install_cmd = "gem1.9.1 install $name --version $version"
     $search_cmd  = "gem1.9.1 search -i $name --version $version | grep false"
