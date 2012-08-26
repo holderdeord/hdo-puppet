@@ -25,12 +25,19 @@ class hdo::database {
     password => postgresql_password('hdo', $postgresql_hdo_password)
   }
 
-  file { "/home/hdo/.hdo-database.yml":
+  file { "/home/hdo/.hdo-database-pg.yml":
     owner   => "hdo",
     mode    => '0600',
     # See modules/hdo/templates/database.yml
     content => template("hdo/database.yml"),
     require => File["/home/hdo"]
+  }
+
+  #
+  # http://blog.gomiso.com/2011/07/28/adventures-in-scaling-part-2-postgresql/
+  #
+  package { "pgtune":
+    ensure => installed
   }
 
 }
