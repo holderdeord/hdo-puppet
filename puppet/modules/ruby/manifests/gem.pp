@@ -10,7 +10,7 @@ define ruby::gem($version = false) {
   exec { "${name}-gem":
     command   => $install_cmd,
     onlyif    => $search_cmd,
-    require   => Package["ruby1.9.1"],
+    require   => Package['ruby1.9.1'],
     logoutput => on_failure
   }
 }

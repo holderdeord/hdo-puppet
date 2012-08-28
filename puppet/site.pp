@@ -1,10 +1,10 @@
-Exec { path => "/usr/bin:/bin" } 
+Exec { path => '/usr/bin:/bin' }
 
-exec { "apt-update":
-  command => "/usr/bin/apt-get update",
+exec { 'apt-update':
+  command => '/usr/bin/apt-get update',
 }
 
-Exec["apt-update"] -> Package <| |>
+Exec['apt-update'] -> Package <| |>
 
 if ! $::osfamily {
   case $::operatingsystem {
@@ -26,4 +26,4 @@ if ! $::osfamily {
   }
 }
 
-import "nodes.pp"
+import 'nodes.pp'
