@@ -87,6 +87,9 @@ If you want to skip the re-creation of the VM (i.e you've already done a cold de
     $ export FACTER_postgresql_hdo_password=t0ps3cret
     $ puppet apply --modulepath=puppet/modules puppet/site.pp
 
+Then, locally from hdo-site:
+
+    $ cap deploy:setup deploy:cold
 
 ### Creating the Vagrant .box image
 
