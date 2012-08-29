@@ -44,7 +44,7 @@ The `lint.sh` script included in the repo will lint only the modules we maintain
 The tool requires a Ruby install + the puppet-lint gem:
 
     $ [sudo] gem install puppet-lint
-    $ ./lint.sh
+    $ bin/lint.sh
 
 ### Test the configuration
 
@@ -68,7 +68,7 @@ Launch the installation of the actual `hdo-site` code:
     $ VAGRANT=1 cap deploy:setup deploy:cold # only needed first time
     $ VAGRANT=1 cap deploy
 
-The test script can do this for you. By default, it will destroy and
+The `test.sh` script can do this for you. By default, it will destroy and
 recreate the VM, provision it, set up password-less login, and do a cold deploy of the app (assumed to be in `../hdo-site`):
 
     $ bin/test.sh
@@ -79,16 +79,14 @@ If you want to skip the re-creation of the VM (i.e you've already done a cold de
 
 ### Installation on production servers
 
-*UNTESTED, from Salve's earlier work*:
-
-    $ wget http://apt.puppetlabs.com/puppetlabs-release_1.0-3_all.deb
-    $ dpkg -i puppetlabs-release_1.0-3_all.deb
     $ apt-get update
     $ apt-get install puppet git-core
     $ git clone git://github.com/holderdeord/hdo-puppet.git
     $ cd hdo-puppet
     $ git submodule update --init
-    $ FACTER_mysql_root_password=t0ps3cret FACTER_mysql_hdo_password=s3cr3t puppet apply --modulepath=puppet/modules puppet/base.pp
+    $ export FACTER_postgresql_hdo_password=t0ps3cret
+    $ puppet apply --modulepath=puppet/modules puppet/site.pp
+
 
 ### Creating the Vagrant .box image
 
@@ -99,17 +97,3 @@ Ubuntu 12.04 server LTS i386.
 
 That's the image I was referring to earlier in this document
 when I talked about `hdo-devel.box` or `hdo-devel`.
-
-----
-
-*FOLLOWING INFORMATION REFERS TO SQUEEZE, SO IT'S OUTDATED*:
-
-You can follow this tutorial: http://vagrantup.com/v1/docs/base_boxes.html
-
-If you create a Virtualbox image named "HDO-Dev-Squeeze", you can recreate
-the vagrant .box image with the following commands:
-
- $ vagrant box remove hdo-squeeze32
- $ vagrant package --output ../hdo-squeeze32.box --base ~/VirtualBox\ VMs/HDO-Dev-Squeeze/HDO-Dev-Squeeze.vbox
-
-...and then go to the Development VM image setup step above.
