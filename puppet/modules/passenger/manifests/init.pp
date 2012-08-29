@@ -1,15 +1,7 @@
 class passenger {
-  $passenger_version       = '3.0.14'
-  $passenger_root          = "/var/lib/gems/1.9.1/gems/passenger-$passenger_version"
-  $passenger_module        = "$passenger_root/ext/apache2/mod_passenger.so"
-  $passenger_ruby          = '/usr/bin/ruby1.9.1'
-  $passenger_min_instances = 3
-  $passenger_max_pool_size = 10
-  $passenger_max_instances_per_app = 10 # only running one app
-  $passenger_pool_idle_time = 300
-
   include apache
   include ruby
+  include passenger::params
 
   package {
     'apache2-prefork-dev':
@@ -21,7 +13,7 @@ class passenger {
   }
 
   ruby::gem { 'passenger':
-    version => $passenger_version
+    version => $passenger::params::version
   }
 
   # We don't use libapache2-mod-passenger I suspect because it's too old?
@@ -31,7 +23,7 @@ class passenger {
     # so it's definitely more robust to rely on the /usr/local/bin copy
     path    => ['/bin', '/usr/bin', '/usr/local/bin'],
     command => 'passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled',
-    creates => $passenger_module,
+    creates => $passenger::params::module,
     require => [
       Ruby::Gem['passenger'],
       Package['apache2-prefork-dev'],

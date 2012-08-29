@@ -17,7 +17,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   CustomLog <%= logroot %>/<%= name %>_access.log combined
   ServerSignature Off
 
-  PassengerMinInstances <%= scope.lookupvar('passenger::passenger_min_instances') %>
+  PassengerMinInstances <%= scope.lookupvar('passenger::params::min_instances') %>
 
   RewriteEngine On
   RewriteLog Off
