@@ -47,7 +47,10 @@ Vagrant::Config.run do |config|
     puppet.manifests_path = "puppet"
     puppet.module_path    = "puppet/modules"
     puppet.manifest_file  = "site.pp"
-    # puppet.options        = "--verbose --debug"
+
+    puppet.options = ''
+    puppet.options << ' --verbose --debug' if ENV['DEBUG']
+    puppet.options << ' --noop' if ENV['NOOP']
   end
 
 end
