@@ -4,7 +4,6 @@ class hdo::common {
     ensure     => present,
     home       => '/home/hdo',
     managehome => true,
-    password   => '7ba6c44a47bd64d32fd2360d70087deaf222d55e',
     shell      => '/bin/bash',
     groups     => 'sudo'
   }
