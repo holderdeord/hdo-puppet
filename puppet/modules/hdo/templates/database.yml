@@ -1,3 +1,7 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+
 production:
   adapter: postgresql
   encoding: unicode

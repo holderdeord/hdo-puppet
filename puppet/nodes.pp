@@ -1,12 +1,24 @@
-node default {
-  include hdo::backend
+node 'default' {
+  include hdo::backend::nginx
   include hdo::database
 }
 
-# node my-host-name {
-#   include hdo::backend
-# }
+node 'beta.holderdeord.no' {
+  include hdo::backend::apache
+  include hdo::database
+}
+
+
 #
-# node my-other-host-name {
-#   include hdo::database
-# }
+# testing azure
+#
+
+node 'hdo01.cloudapp.net' {
+  include hdo::backend::nginx
+  include hdo::database
+}
+
+node 'hdo02.cloudapp.net' {
+  include hdo::backend::apache
+  include hdo::database
+}

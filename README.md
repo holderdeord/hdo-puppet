@@ -1,5 +1,5 @@
-"Holder de Ord" VM setup repository
-===================================
+Holder de Ord VM setup repository
+=================================
 
 [![Build Status](https://secure.travis-ci.org/holderdeord/hdo-puppet.png)](http://travis-ci.org/holderdeord/hdo-puppet)
 
@@ -48,6 +48,19 @@ The tool requires a Ruby install + the puppet-lint gem:
 
 ### Test the configuration
 
+#### Automatically
+
+The `test.sh` script can do this for you. By default, it will destroy and
+recreate the VM, provision it, set up password-less login, and do a cold deploy of the app (assumed to be in `../hdo-site`):
+
+    $ bin/test.sh
+
+If you want to skip the re-creation of the VM (i.e you've already done a cold deploy):
+
+    $ DEPLOY_ONLY=1 bin/test.sh
+
+#### Manually
+
 Check out the main website code repository:
 
     $ git checkout https://github.com/holderdeord/hdo-site.git ../hdo-site
@@ -67,15 +80,6 @@ Launch the installation of the actual `hdo-site` code:
     $ bundle install
     $ VAGRANT=1 cap deploy:setup deploy:cold # only needed first time
     $ VAGRANT=1 cap deploy
-
-The `test.sh` script can do this for you. By default, it will destroy and
-recreate the VM, provision it, set up password-less login, and do a cold deploy of the app (assumed to be in `../hdo-site`):
-
-    $ bin/test.sh
-
-If you want to skip the re-creation of the VM (i.e you've already done a cold deploy):
-
-    $ DEPLOY_ONLY=1 bin/test.sh
 
 ### Installation on production servers
 

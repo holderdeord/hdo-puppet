@@ -14,6 +14,6 @@
 
 class hdo {
 
-    include hdo::common
+  include hdo::common
 
 }

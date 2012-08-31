@@ -39,4 +39,8 @@ class hdo::database {
     ensure => installed
   }
 
+  package { 'libpq-dev':
+    ensure => installed
+  }
+
 }

@@ -1,14 +1,26 @@
 class hdo::apache {
   include apache
   include passenger
+  include hdo::params
+
+  a2mod { 'rewrite':
+    ensure => present
+  }
 
   # work around the apache module's dependency on docroot being present
   # in reality, this is managed by capistrano deployments
-  file { '/webapps/hdo-site/current':
+
+  file { "${hdo::params::deploy_root}/tmp":
+    ensure  => directory,
+    owner   => 'hdo',
+    require => [File[$hdo::params::deploy_root]]
+  }
+
+  file { $hdo::params::app_root:
     ensure  => link,
     target  => '/webapps/hdo-site/tmp',
     replace => false,
-    require => File['/webapps/hdo-site']
+    require => File["${hdo::params::deploy_root}/tmp"]
   }
 
   apache::vhost { 'beta.holderdeord.no':
@@ -18,7 +30,7 @@ class hdo::apache {
     servername    => 'beta.holderdeord.no',
     serveradmin   => 'teknisk@holderdeord.no',
     template      => 'hdo/vhost.conf.erb',
-    docroot       => '/webapps/hdo-site/current/public',
+    docroot       => $hdo::params::public_dir,
     docroot_owner => 'hdo',
     docroot_group => 'hdo',
     options       => '-MultiViews -Indexes',
