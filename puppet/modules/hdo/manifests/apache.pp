@@ -1,7 +1,7 @@
 class hdo::apache {
   include apache
   include passenger
-  
+
   # work around the apache module's dependency on docroot being present
   # in reality, this is managed by capistrano deployments
   file { '/webapps/hdo-site/current':
