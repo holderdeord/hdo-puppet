@@ -22,3 +22,8 @@ node 'hdo02.cloudapp.net' {
   include hdo::backend::apache
   include hdo::database
 }
+
+node 'hdo-staging.nuug.no' {
+  include hdo::backend::apache
+  include hdo::database
+}
