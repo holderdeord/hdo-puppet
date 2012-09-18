@@ -1,10 +1,10 @@
 define ruby::gem($version = false) {
   if $version {
-    $install_cmd = "gem1.9.1 install $name --version '$version'"
-    $search_cmd  = "gem1.9.1 search -i $name --version '$version' | grep false"
+    $install_cmd = "gem1.9.1 install ${name} --version '${version}'"
+    $search_cmd  = "gem1.9.1 search -i ${name} --version '${version}' | grep false"
   } else {
-    $install_cmd = "gem1.9.1 install $name"
-    $search_cmd  = "gem1.9.1 search -i $name | grep false"
+    $install_cmd = "gem1.9.1 install ${name}"
+    $search_cmd  = "gem1.9.1 search -i ${name} | grep false"
   }
 
   exec { "${name}-gem":
