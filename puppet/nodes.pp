@@ -1,5 +1,5 @@
 node 'default' {
-  include hdo::backend::nginx
+  include hdo::backend::apache
   include hdo::database
 }
 
