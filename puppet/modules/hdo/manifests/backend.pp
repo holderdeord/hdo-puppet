@@ -38,5 +38,12 @@ class hdo::backend {
     content => template('hdo/profile.sh')
   }
 
+  file { '/etc/etckeeper/etckeeper.conf':
+    ensure  => file,
+    mode    => '0644',
+    content => template('hdo/etckeeper.conf'),
+    require => Package['etckeeper']
+  }
+
 }
 
