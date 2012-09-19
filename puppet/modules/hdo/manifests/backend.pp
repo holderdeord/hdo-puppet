@@ -14,6 +14,7 @@ class hdo::backend {
       'libcurl4-openssl-dev',   # libcurl6?
       'imagemagick',
       'vim',
+      'etckeeper'
   ]
 
   package { $requirements:
