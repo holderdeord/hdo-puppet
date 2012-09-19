@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 [ ! -n "$1" ] && exit 1
 
 SERVER=$1

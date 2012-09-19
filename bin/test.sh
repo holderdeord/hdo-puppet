@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 ROOT=$(dirname $0)/../
 
 export VAGRANT=1 # important.
