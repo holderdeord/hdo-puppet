@@ -6,9 +6,9 @@ class munin::master(
     require hdo::backend::apache
 
  
-    notice("Dette er i master")
-    notice("package_name $package_name")
-    notice("common_packagei $common_package")
+    #notice("Dette er i master")
+    #notice("package_name $package_name")
+    #notice("common_package $common_package")
     
      
     define packages() {

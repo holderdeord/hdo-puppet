@@ -4,7 +4,8 @@
 	    $server_package_name = "munin"
 
             #From where do you allow access to munin webinterface?
-	    $allow_from = "all"
+	    $allow_from = ["10.0.2.2"]
+
             
             #packages on munin node
 	    $node_package_name = ["munin-node", "munin-plugins-extra"]
