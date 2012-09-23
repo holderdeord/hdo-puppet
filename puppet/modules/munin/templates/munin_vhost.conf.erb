@@ -1,0 +1,35 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+
+NameVirtualHost <%= vhost_name %>:<%= port %>
+<VirtualHost <%= vhost_name %>:<%= port %>>
+  SetEnv LC_ALL en_US.UTF-8
+
+  ServerName <%= srvname %>
+  DocumentRoot /var/cache/munin/www
+
+  <Location />
+    Options None
+    AllowOverride None
+    Order allow,deny
+    Allow from localhost 127.0.0.0/8 ::1
+    <% allow_from.each do |ip| -%>
+    Allow from <%= ip %>
+    <% end -%>
+    <IfModule mod_expires.c>
+        ExpiresActive On
+    	ExpiresDefault M310
+    </IfModule>
+  </Location>
+
+
+
+
+  ErrorLog <%= logroot %>/<%= name %>_error.log
+  LogLevel warn
+  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  ServerSignature Off
+
+</VirtualHost>
+

@@ -1,6 +1,8 @@
 node 'default' {
   include hdo::backend::apache
   include hdo::database
+  include munin::master
+  include munin::node
 }
 
 node 'beta.holderdeord.no' {
