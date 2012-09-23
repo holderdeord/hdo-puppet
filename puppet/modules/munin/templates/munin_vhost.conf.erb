@@ -7,51 +7,24 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   SetEnv LC_ALL en_US.UTF-8
 
   ServerName <%= srvname %>
-  DocumentRoot <%= docroot %>
-  <Directory <%= docroot %>>
-    Options <%= options %>
+  DocumentRoot /var/cache/munin/www
+
+  <Location />
+    Options None
     AllowOverride None
     Order allow,deny
     Allow from localhost 127.0.0.0/8 ::1
     <% allow_from.each do |ip| -%>
     Allow from <%= ip %>
     <% end -%>
-  </Directory>
-
-
-
-Alias /munin /var/cache/munin/www
-<Directory /var/cache/munin/www>
-        Options None
-
-
-	# This file can be used as a .htaccess file, or a part of your apache
-	# config file.
-	#
-	# For the .htaccess file option to work the munin www directory
-	# (/var/cache/munin/www) must have "AllowOverride all" or something 
-	# close to that set.
-	#
-
-	# AuthUserFile /etc/munin/munin-htpasswd
-	# AuthName "Munin"
-	# AuthType Basic
-	# require valid-user
-
-	# This next part requires mod_expires to be enabled.
-	#
-	
-	# Set the default expiration time for files to 5 minutes 10 seconds from
-	# their creation (modification) time.  There are probably new files by
-	# that time. 
-	#
-
     <IfModule mod_expires.c>
         ExpiresActive On
     	ExpiresDefault M310
     </IfModule>
+  </Location>
 
-</Directory> 
+
+
 
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
