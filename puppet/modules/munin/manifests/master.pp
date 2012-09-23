@@ -1,7 +1,11 @@
 class munin::master(
   $package_name   = $munin::params::server_package_name,
   $common_package = $munin::params::common_package_name,
-  $package_ensure = "present") inherits munin::params {
+  $package_ensure = "present",
+  $docroot        = $munin::params::docroot,
+  $servername     = $munin::params::servername,
+  $port           = $munin::params::port,
+  $serveradmin    = $munin::params::serveradmin) inherits munin::params {
 
   include apache
      
@@ -18,12 +22,12 @@ class munin::master(
 
     apache::vhost { 'munin.holderdeord.no':
       vhost_name    => '*',
-      port          => 80,
+      port          => $port,
       priority      => '99',
-      servername    => 'munin.holderdeord.no',
-      serveradmin   => 'kontakt@holderdeord.no',
+      servername    => $servername,
+      serveradmin   => $serveradmin,
       template      => 'munin/munin_vhost.conf.erb',
-      docroot       => $hdo::params::public_dir,
+      docroot       => $docroot,
       docroot_owner => 'munin',
       docroot_group => 'munin',
       notify        => Service['httpd'],

@@ -2,8 +2,13 @@ class munin::params {
   #munin server package
   $server_package_name = "munin"
 
-  #From where do you allow access to munin webinterface?
-  $allow_from = ["10.0.2.2"]
+  #apache settings
+  $allow_from  = ["10.0.2.2"]
+  $docroot     = "/var/cache/munin/www"
+  $servername  = "munin.holderdeord.no"
+  $port        = 80
+  $serveradmin = 'kontakt@holderdeord.no'
+  
 
   #packages on munin node
   $node_package_name = ["munin-node", "munin-plugins-extra"]
