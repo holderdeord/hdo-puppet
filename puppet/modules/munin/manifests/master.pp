@@ -1,23 +1,23 @@
 class munin::master(
   $package_name   = $munin::params::server_package_name,
   $common_package = $munin::params::common_package_name,
-  $package_ensure = "present",
+  $package_ensure = 'present',
   $docroot        = $munin::params::docroot,
   $servername     = $munin::params::servername,
   $port           = $munin::params::port,
   $serveradmin    = $munin::params::serveradmin) inherits munin::params {
 
   include apache
-     
+
   define packages() {
     package { $package_name: ensure => $package_ensure, }
     package { $common_package: ensure => $package_ensure, }
   }
 
   define config(){
-    file {"/etc/munin/munin.conf": 
+    file { '/etc/munin/munin.conf':
       ensure  => present,
-      content => template("munin/munin.conf")
+      content => template('munin/munin.conf')
   }
 
     apache::vhost { 'munin.holderdeord.no':
@@ -34,17 +34,17 @@ class munin::master(
     }
   }
 
-  config{"configfiles":
+  config { 'configfiles':
     notify  => Exec['graceful'],
     require => Packages['muninserver'],
   }
 
-  packages{"muninserver":
+  packages { 'muninserver':
     notify => Exec['graceful'],
   }
-    
-  exec {"graceful":
-    command => "/usr/sbin/apache2ctl graceful",
+
+  exec { 'graceful':
+    command     => '/usr/sbin/apache2ctl graceful',
     refreshonly => true,
   }
 }
