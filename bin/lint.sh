@@ -21,7 +21,6 @@ code=0
 
 for mod in ${ROOT}/puppet/modules/*
 do
-  echo "${mod}"
 
   if is_our_module "${mod}"
   then
