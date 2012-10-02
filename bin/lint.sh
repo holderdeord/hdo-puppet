@@ -2,19 +2,34 @@
 
 set -e
 
-ROOT=$(dirname $0)/../
+ROOT=$(dirname $0)/..
 
-our_modules=( "hdo" "ruby" "passenger" )
-log_format="%{fullpath}:%{linenumber} %{KIND} %{message}"
+is_our_module () {
+  local path=`basename "${1}"`
+  local not_ours=( "apache" "firewall" "postgresql" "puppetlabs-stdlin" )
+  local mod
+
+  for mod in "${not_ours[@]}"
+  do
+    [[ "${mod}" == "${path}" ]] && return 1
+  done
+
+  return 0
+}
 
 code=0
 
-for mod in "${our_modules[@]}"
+for mod in ${ROOT}/puppet/modules/*
 do
-  puppet-lint --log-format "${log_format}" --no-documentation-check --no-80chars-check --fail-on-warnings "${ROOT}/puppet/modules/${mod}"
+  echo "${mod}"
 
-  ret=$?
-  [[ "${code}" != "1" ]] && code="${ret}"
+  if is_our_module "${mod}"
+  then
+    puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" --no-documentation-check --no-80chars-check --fail-on-warnings "${mod}"
+
+    ret=$?
+    [[ "${code}" != "1" ]] && code="${ret}"
+  fi
 done
 
 exit "${code}"
