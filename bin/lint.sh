@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 ROOT=$(dirname $0)/..
 
 is_our_module () {
