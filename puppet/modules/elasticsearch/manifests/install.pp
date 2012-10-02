@@ -4,6 +4,14 @@ class elasticsearch::install(
 
   notice("elastic_package: $elastic_package")
 
+  define download() {
+    exec {"download":
+      command => "wget https://github.com/downloads/elasticsearch/elasticsearch/$elastic_package -O /root/$elastic_package",
+    }
+  }
+
+  download {"elasticsearch": }
+
   package {$dependencies:
     ensure => installed, 
   }
@@ -12,12 +20,9 @@ class elasticsearch::install(
     provider => dpkg,
     ensure   => latest,
     source   => "/root/$elastic_package",
-    require  => Package[$dependencies],
+    #require  => Package[$dependencies],
+    require  => [ Download['elasticsearch'], Package[$dependencies] ],
+
   }
 
-  file {"/root/$elastic_package":
-    ensure => present,
-    source => "puppet:///modules/elasticsearch/$elastic_package",
-    before => Package[$elastic_package],
-  }
 }
