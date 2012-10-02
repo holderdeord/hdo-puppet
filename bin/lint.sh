@@ -11,7 +11,7 @@ code=0
 
 for mod in "${our_modules[@]}"
 do
-  puppet-lint --log-format "${log_format}" --no-80chars-check --fail-on-warnings "${ROOT}/puppet/modules/${mod}"
+  puppet-lint --log-format "${log_format}" --no-documentation-check --no-80chars-check --fail-on-warnings "${ROOT}/puppet/modules/${mod}"
 
   ret=$?
   [[ "${code}" != "1" ]] && code="${ret}"
