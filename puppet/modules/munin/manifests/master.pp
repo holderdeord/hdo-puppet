@@ -9,15 +9,17 @@ class munin::master(
 
   include apache
 
-  define packages() {
-    package { $package_name: ensure => $package_ensure, }
-    package { $common_package: ensure => $package_ensure, }
-  }
+  $package_list = [ $package_name, $common_package ]
 
-  define config(){
-    file { '/etc/munin/munin.conf':
-      ensure  => present,
-      content => template('munin/munin.conf')
+  package { $package_list: }
+
+  Package { ensure => present }
+
+  file { '/etc/munin/munin.conf':
+    ensure  => present,
+    content => template('munin/munin.conf'),
+    notify => Exec['graceful'],
+    require => Package[$package_list],
   }
 
     apache::vhost { 'munin.holderdeord.no':
@@ -31,17 +33,8 @@ class munin::master(
       docroot_owner => 'munin',
       docroot_group => 'munin',
       notify        => Service['httpd'],
+      require       => Package[$package_list],
     }
-  }
-
-  config { 'configfiles':
-    notify  => Exec['graceful'],
-    require => Packages['muninserver'],
-  }
-
-  packages { 'muninserver':
-    notify => Exec['graceful'],
-  }
 
   exec { 'graceful':
     command     => '/usr/sbin/apache2ctl graceful',
