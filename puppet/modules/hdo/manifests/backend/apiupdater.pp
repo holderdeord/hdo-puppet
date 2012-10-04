@@ -15,7 +15,7 @@ class hdo::backend::apiupdater {
   cron { 'api-update':
     command     => "cd ${hdo::params::app_root} && bundle exec script/import daily >> ${logfile} 2>&1",
     user        => hdo,
-    environment => 'RAILS_ENV=production',
+    environment => ['RAILS_ENV=production', 'PATH=/usr/local/bin:/usr/bin:/bin'],
     require     => [Class['hdo::backend'], File[$logfile]],
     minute      => '*/30' # for testing
   }
