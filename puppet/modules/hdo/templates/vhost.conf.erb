@@ -28,6 +28,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 
   # More Info: http://www.shiftcommathree.com/articles/make-your-rails-maintenance-page-respond-with-a-503
   ErrorDocument 503 /system/maintenance.html
+  RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
   RewriteCond %{REQUEST_URI} !.(css|gif|jpg|png)$
   RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
   RewriteCond %{SCRIPT_FILENAME} !maintenance.html
