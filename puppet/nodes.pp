@@ -15,13 +15,9 @@ node 'beta.holderdeord.no' {
 # testing azure
 #
 
-node 'hdo01.cloudapp.net' {
-  include hdo::backend::nginx
-  include hdo::database
-}
-
-node 'hdo02.cloudapp.net' {
+node 'hdo01' {
   include hdo::backend::apache
+  include hdo::backend::apiupdater
   include hdo::database
 }
 
