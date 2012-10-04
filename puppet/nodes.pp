@@ -15,7 +15,7 @@ node 'beta.holderdeord.no' {
 # testing azure
 #
 
-node 'hdo01' {
+node 'hdo01', 'hdo02' {
   include hdo::backend::apache
   include hdo::backend::apiupdater
   include hdo::database
