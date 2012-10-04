@@ -13,7 +13,7 @@ class hdo::backend::apiupdater {
   }
 
   cron { 'api-update':
-    command     => "cd ${hdo::params::webapp_root} && bundle exec script/import daily >> ${logfile} 2>&1",
+    command     => "cd ${hdo::params::app_root} && bundle exec script/import daily >> ${logfile} 2>&1",
     user        => hdo,
     environment => 'RAILS_ENV=production',
     require     => [Class['hdo::backend'], File[$logfile]],
