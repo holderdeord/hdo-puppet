@@ -22,7 +22,7 @@ class hdo::backend::apiupdater($ensure = present) {
     user        => hdo,
     environment => ['RAILS_ENV=production', 'PATH=/usr/local/bin:/usr/bin:/bin', 'MAILTO=jari@holderdeord.no'],
     require     => [Class['hdo::backend'], File[$logfile]],
-    hour        => 6,
+    hour        => 1,
     minute      => 30
   }
 }
