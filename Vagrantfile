@@ -13,6 +13,8 @@ Vagrant::Config.run do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.holderdeord.no/dev/setup/hdo-devel.box"
 
+  config.vm.host_name = "hdo-devel.holderdeord.no"
+
   # Access the box as 'hdo' user (with 'vagrant ssh')
   # config.ssh.username = "hdo"
 
