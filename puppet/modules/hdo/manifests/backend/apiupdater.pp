@@ -18,10 +18,11 @@ class hdo::backend::apiupdater($ensure = present) {
 
   cron { 'api-update':
     ensure      => $ensure,
-    command     => "cd ${hdo::params::app_root} && bundle exec rake import:daily >> ${logfile} 2>&1",
+    command     => "cd ${hdo::params::app_root} && bundle exec script/import daily >> ${logfile} 2>&1",
     user        => hdo,
-    environment => ['RAILS_ENV=production', 'PATH=/usr/local/bin:/usr/bin:/bin'],
+    environment => ['RAILS_ENV=production', 'PATH=/usr/local/bin:/usr/bin:/bin', 'MAILTO=jari@holderdeord.no'],
     require     => [Class['hdo::backend'], File[$logfile]],
-    minute      => '*/30' # for testing
+    hour        => 6,
+    minute      => 30
   }
 }
