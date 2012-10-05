@@ -41,4 +41,12 @@ class postfix(
     require => Package['postfix'],
   }
 
+  $port = 25
+
+  # not sure if this actully works.
+
+  firewall { "0100-INPUT DROP ${port}":
+      action => 'drop',
+      dport  => $port
+  }
 }
