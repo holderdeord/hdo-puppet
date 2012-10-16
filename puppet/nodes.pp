@@ -1,8 +1,9 @@
 node 'default' {
-  include hdo::backend::apache
-  include hdo::database
-  include munin::master
-  include munin::node
+  #include hdo::backend::apache
+  #include hdo::database
+  #include munin::master
+  #include munin::node
+  include elasticsearch
 }
 
 node 'beta.holderdeord.no' {
