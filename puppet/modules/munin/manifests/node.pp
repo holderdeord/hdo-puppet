@@ -2,7 +2,7 @@ class munin::node(
   $node_package = $munin::params::node_package_name,)
   inherits munin::params {
 
-  package { $node_package_name: }
+  package { $node_package: }
   Package { ensure => present }
 
 
