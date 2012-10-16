@@ -44,6 +44,5 @@ class hdo::backend {
     content => template('hdo/etckeeper.conf'),
     require => Package['etckeeper']
   }
-
 }
 

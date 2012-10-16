@@ -4,7 +4,7 @@ ROOT=$(dirname $0)/..
 
 is_our_module () {
   local path=`basename "${1}"`
-  local not_ours=( "apache" "firewall" "postgresql" "puppetlabs-stdlin" )
+  local not_ours=( "apache" "firewall" "postgresql" "puppetlabs-stdlib" )
   local mod
 
   for mod in "${not_ours[@]}"
@@ -19,10 +19,14 @@ code=0
 
 for mod in ${ROOT}/puppet/modules/*
 do
-
   if is_our_module "${mod}"
   then
-    puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" --no-documentation-check --no-80chars-check --fail-on-warnings "${mod}"
+    puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" \
+      --no-documentation-check \
+      --no-80chars-check \
+      --no-class_inherits_from_params_class-check \
+      --fail-on-warnings \
+      "${mod}"
 
     ret=$?
     [[ "${code}" != "1" ]] && code="${ret}"
