@@ -21,7 +21,12 @@ for mod in ${ROOT}/puppet/modules/*
 do
   if is_our_module "${mod}"
   then
-    puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" --no-documentation-check --no-80chars-check --fail-on-warnings "${mod}"
+    puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" \
+      --no-documentation-check \
+      --no-80chars-check \
+      --no-class_inherits_from_params_class-check \
+      --fail-on-warnings \
+      "${mod}"
 
     ret=$?
     [[ "${code}" != "1" ]] && code="${ret}"
