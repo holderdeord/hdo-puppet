@@ -18,7 +18,7 @@ class munin::master(
   file { '/etc/munin/munin.conf':
     ensure  => present,
     content => template('munin/munin.conf'),
-    notify => Exec['graceful'],
+    notify  => Exec['graceful'],
     require => Package[$package_list],
   }
 
