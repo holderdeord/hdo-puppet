@@ -41,6 +41,12 @@ class postfix(
     require => Package['postfix'],
   }
 
+  exec { 'create-aliases-db':
+    command => '/usr/bin/newaliases',
+    creates => '/etc/aliases.db',
+    require => Package['postfix']
+  }
+
   $port = 25
 
   # not sure if this actully works.
