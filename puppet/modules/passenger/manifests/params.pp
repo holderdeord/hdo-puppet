@@ -1,7 +1,6 @@
 class passenger::params {
-  $version               = '3.0.14'
+  $version               = '3.0.17'
   $root                  = "/var/lib/gems/1.9.1/gems/passenger-${version}"
-  $module                = "${root}/ext/apache2/mod_passenger.so"
   $ruby                  = '/usr/bin/ruby1.9.1'
   $min_instances         = 3
   $max_pool_size         = 10

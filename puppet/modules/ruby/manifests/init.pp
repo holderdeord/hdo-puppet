@@ -1,5 +1,3 @@
-import 'gem.pp'
-
 #
 # Installs Ruby 1.9.1
 #

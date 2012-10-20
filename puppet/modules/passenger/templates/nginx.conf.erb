@@ -1,0 +1,52 @@
+user                              www-data;
+worker_processes                  1;
+pid                               /var/run/nginx.pid;
+
+events {
+  worker_connections              1024;
+  # multi_accept                  on;
+}
+
+http {
+  sendfile                        on;
+  tcp_nopush                      on;
+  tcp_nodelay                     on;
+  keepalive_timeout               75s;
+  types_hash_max_size             2048;
+  client_max_body_size            25m;
+  client_body_buffer_size         128k;
+
+  # server_tokens                 off;
+  # server_names_hash_bucket_size 64;
+  # server_name_in_redirect       off;
+
+  include                         <%= config_dir %>/mime.types;
+  default_type                    application/octet-stream;
+
+  access_log                      <%= log_dir %>/access.log;
+  error_log                       <%= log_dir %>/error.log;
+
+  gzip                            on;
+  gzip_disable                    "msie6";
+
+  gzip_vary                       on;
+  gzip_http_version               1.1;
+  gzip_proxied                    any;
+  gzip_min_length                 1100;
+  gzip_comp_level                 3;
+  gzip_buffers                    16 8k;
+  gzip_types                      text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+  #
+  # http://www.modrails.com/documentation/Users%20guide%20Nginx.html
+  #
+
+  passenger_root                 <%= scope.lookupvar('passenger::params::root') %>;
+  passenger_ruby                 <%= scope.lookupvar('passenger::params::ruby') %>;
+  passenger_max_pool_size        <%= scope.lookupvar('passenger::params::max_pool_size') %>;
+  passenger_pool_idle_time       <%= scope.lookupvar('passenger::params::pool_idle_time') %>;
+  passenger_friendly_error_pages off;
+
+  # virtual hosts
+  include                        <%= sites_dir %>/*.conf;
+}

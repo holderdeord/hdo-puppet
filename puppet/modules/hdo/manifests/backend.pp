@@ -13,8 +13,6 @@ class hdo::backend {
       'libxslt1-dev',
       'libcurl4-openssl-dev',   # libcurl6?
       'imagemagick',
-      'vim',
-      'etckeeper'
   ]
 
   package { $requirements:
@@ -36,13 +34,6 @@ class hdo::backend {
     ensure  => file,
     mode    => '0775',
     content => template('hdo/profile.sh')
-  }
-
-  file { '/etc/etckeeper/etckeeper.conf':
-    ensure  => file,
-    mode    => '0644',
-    content => template('hdo/etckeeper.conf'),
-    require => Package['etckeeper']
   }
 }
 

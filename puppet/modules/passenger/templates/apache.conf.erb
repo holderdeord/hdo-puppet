@@ -1,4 +1,4 @@
-LoadModule passenger_module <%= scope.lookupvar('passenger::params::module') %>
+LoadModule passenger_module <%= passenger_module %>
 
 PassengerRoot <%= scope.lookupvar('passenger::params::root') %>
 PassengerRuby <%= scope.lookupvar('passenger::params::ruby') %>
