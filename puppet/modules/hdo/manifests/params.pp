@@ -1,6 +1,6 @@
 class hdo::params {
   $user                     = 'hdo'
-  $group                    = 'sudo'
+  $group                    = 'adm'
 
   $webapp_root              = '/webapps'
   $files_root               = "${webapp_root}/files"
