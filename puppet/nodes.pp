@@ -13,12 +13,6 @@ node 'hetzner02' {
   include hdo::database
 }
 
-node 'beta.holderdeord.no' {
-  include hdo::webapp::apache
-  include hdo::database
-}
-
-
 #
 # testing azure
 #
