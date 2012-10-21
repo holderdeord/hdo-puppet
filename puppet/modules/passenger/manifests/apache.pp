@@ -17,17 +17,17 @@ class passenger::apache inherits passenger {
     # Real path is /var/lib/gems/1.9.1/gems/passenger-3.0.14/bin, but
     # the command is also installed (hardlink?) in /usr/local/bin,
     # so it's definitely more robust to rely on the /usr/local/bin copy
-    path    => ['/bin', '/usr/bin', '/usr/local/bin'],
-    command => 'passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled',
-    creates => $passenger_module,
-    require => [
+    path      => ['/bin', '/usr/bin', '/usr/local/bin'],
+    command   => 'passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled',
+    creates   => $passenger_module,
+    logoutput => on_failure,
+    require   => [
       Ruby::Gem['passenger'],
       Package['apache2-prefork-dev'],
       Package['libapr1-dev'],
       Package['libaprutil1-dev'],
       Package['libcurl4-openssl-dev']
     ],
-    logoutput => on_failure
   }
 
   file { '/etc/apache2/conf.d/passenger.conf':

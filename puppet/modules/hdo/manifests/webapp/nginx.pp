@@ -1,7 +1,7 @@
 class hdo::webapp::nginx inherits hdo::webapp {
   include passenger::nginx
 
-  $server_name             = "beta.holderdeord.no"
+  $server_name             = 'beta.holderdeord.no'
   $www_root                = $hdo::params::public_dir
   $passenger_min_instances = $passenger::params::min_instances
 
