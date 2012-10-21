@@ -11,7 +11,6 @@ class hdo::webapp {
       'libxml2',
       'libxml2-dev',
       'libxslt1-dev',
-      'libcurl4-openssl-dev',   # libcurl6?
       'imagemagick',
   ]
 

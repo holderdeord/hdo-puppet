@@ -12,7 +12,7 @@ class passenger::nginx inherits passenger {
     path      => ['/bin', '/usr/bin', '/usr/local/bin'],
     command   => "passenger-install-nginx-module --auto --auto-download --prefix ${root}",
     creates   => $root,
-    require   => Ruby::Gem['passenger'],
+    require   => [Ruby::Gem['passenger'], Package['libcurl4-openssl-dev']],
     logoutput => on_failure
   }
 

@@ -13,7 +13,7 @@ class passenger::apache inherits passenger {
   }
 
   # We don't use libapache2-mod-passenger I suspect because it's too old?
-  exec { 'passenger-apache':
+  exec { 'install-passenger-apache':
     # Real path is /var/lib/gems/1.9.1/gems/passenger-3.0.14/bin, but
     # the command is also installed (hardlink?) in /usr/local/bin,
     # so it's definitely more robust to rely on the /usr/local/bin copy
@@ -25,14 +25,16 @@ class passenger::apache inherits passenger {
       Package['apache2-prefork-dev'],
       Package['libapr1-dev'],
       Package['libaprutil1-dev'],
+      Package['libcurl4-openssl-dev']
     ],
+    logoutput => on_failure
   }
 
   file { '/etc/apache2/conf.d/passenger.conf':
     owner   => root,
     mode    => '0644',
     content => template('passenger/apache.conf.erb'),
-    require => [Ruby::Gem['passenger'], Exec['passenger-apache']],
+    require => [Ruby::Gem['passenger'], Exec['install-passenger-apache']],
     notify  => Service['httpd']
   }
 
