@@ -1,6 +1,6 @@
 server {
     listen                  80;
-    server_name             <%= server_name %>;
+    server_name             beta.holderdeord.no;
     root                    <%= www_root %>;
 
     location ~ .(php)$ {
@@ -81,4 +81,16 @@ server {
     if (-f $document_root/cache/$uri) {
       rewrite (.*) /cache/$1 break;
     }
+}
+
+server {
+  server_name files.holderdeord.no;
+  root /webapps/files;
+}
+
+server {
+  server_name www.holderdeord.no;
+  server_name holderdeord.no;
+
+  rewrite ^(.*) http://beta.holderdeord.no$1 redirect;
 }

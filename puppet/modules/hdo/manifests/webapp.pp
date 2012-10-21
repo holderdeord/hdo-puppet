@@ -23,7 +23,7 @@ class hdo::webapp {
     version => '>= 1.2.0'
   }
 
-  file { [ $hdo::params::webapp_root, $hdo::params::deploy_root ]:
+  file { [ $hdo::params::webapp_root, $hdo::params::deploy_root, $hdo::params::files_root ]:
     ensure  => 'directory',
     mode    => '0775',
     owner   => 'hdo'

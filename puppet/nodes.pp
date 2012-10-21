@@ -1,5 +1,5 @@
 node 'default' {
-  include hdo::webapp::apache
+  include hdo::webapp::nginx
   include hdo::database
   # include munin::master
   # include munin::node
