@@ -4,12 +4,30 @@ class hdo::webapp::nginx inherits hdo::webapp {
   $www_root                = $hdo::params::public_dir
   $passenger_min_instances = $passenger::params::min_instances
 
+  file { "${passenger::nginx::sites_dir}/beta.holderdeord.no.conf":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('hdo/nginx-beta-vhost.conf.erb'),
+    notify  => Service['nginx']
+  }
+
   file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
     ensure  => file,
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => template('hdo/nginx-vhost.conf.erb'),
+    content => template('hdo/nginx-www-vhost.conf.erb'),
+    notify  => Service['nginx']
+  }
+
+  file { "${passenger::nginx::sites_dir}/files.holderdeord.no.conf":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('hdo/nginx-files-vhost.conf.erb'),
     notify  => Service['nginx']
   }
 }
