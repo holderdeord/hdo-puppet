@@ -4,7 +4,7 @@ class hdo::webapp::nginx inherits hdo::webapp {
   $www_root                = $hdo::params::public_dir
   $passenger_min_instances = $passenger::params::min_instances
 
-  file { "${passenger::nginx::sites_dir}/beta.holderdeord.no.conf":
+  file { "${passenger::nginx::sites_dir}/10-beta.holderdeord.no.conf":
     ensure  => file,
     owner   => root,
     group   => root,
@@ -13,7 +13,7 @@ class hdo::webapp::nginx inherits hdo::webapp {
     notify  => Service['nginx']
   }
 
-  file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
+  file { "${passenger::nginx::sites_dir}/20-holderdeord.no.conf":
     ensure  => file,
     owner   => root,
     group   => root,
@@ -22,7 +22,7 @@ class hdo::webapp::nginx inherits hdo::webapp {
     notify  => Service['nginx']
   }
 
-  file { "${passenger::nginx::sites_dir}/files.holderdeord.no.conf":
+  file { "${passenger::nginx::sites_dir}/30-files.holderdeord.no.conf":
     ensure  => file,
     owner   => root,
     group   => root,
