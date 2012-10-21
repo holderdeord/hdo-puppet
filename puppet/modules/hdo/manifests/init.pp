@@ -1,9 +1,9 @@
 #
 # Further classes are defined into hdo/{class}.pp
-# for example hdo/backend.pp and hdo/database.pp
+# for example hdo/webapp.pp and hdo/database.pp
 # and you can include them with:
 #
-# include hdo::backend
+# include hdo::webapp
 # include hdo::database
 #
 # Basically this is an empty container

@@ -1,4 +1,4 @@
-class hdo::backend::nginx inherits hdo::backend {
+class hdo::webapp::nginx inherits hdo::webapp {
   include passenger::nginx
 
   $server_name             = "beta.holderdeord.no"

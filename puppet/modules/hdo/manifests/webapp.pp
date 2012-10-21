@@ -1,4 +1,4 @@
-class hdo::backend {
+class hdo::webapp {
   include ruby
   include hdo::common
   include hdo::params
@@ -30,7 +30,7 @@ class hdo::backend {
     owner   => 'hdo'
   }
 
-  file { '/etc/profile.d/hdo-backend.sh':
+  file { '/etc/profile.d/hdo-webapp.sh':
     ensure  => file,
     mode    => '0775',
     content => template('hdo/profile.sh')

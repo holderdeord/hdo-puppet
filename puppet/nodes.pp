@@ -1,5 +1,5 @@
 node 'default' {
-  include hdo::backend::nginx
+  include hdo::webapp::nginx
   include hdo::database
   # include munin::master
   # include munin::node
@@ -7,7 +7,7 @@ node 'default' {
 }
 
 node 'beta.holderdeord.no' {
-  include hdo::backend::apache
+  include hdo::webapp::apache
   include hdo::database
 }
 
@@ -17,12 +17,12 @@ node 'beta.holderdeord.no' {
 #
 
 node 'hdo01', 'hdo02' {
-  include hdo::backend::apache
-  include hdo::backend::apiupdater
+  include hdo::webapp::apache
+  include hdo::webapp::apiupdater
   include hdo::database
 }
 
 node 'hdo-staging.nuug.no' {
-  include hdo::backend::apache
+  include hdo::webapp::apache
   include hdo::database
 }

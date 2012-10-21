@@ -1,4 +1,4 @@
-class hdo::backend::apache inherits hdo::backend {
+class hdo::webapp::apache inherits hdo::webapp {
   include ::apache
   include passenger::apache
   include hdo::params
