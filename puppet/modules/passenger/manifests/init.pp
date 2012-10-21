@@ -6,7 +6,14 @@ class passenger {
     ensure => installed,
   }
 
+  if ! defined(Package['build-essential']) {
+    package { 'build-essential':
+      ensure => installed,
+    }
+  }
+
   ruby::gem { 'passenger':
-    version => $passenger::params::version
+    version => $passenger::params::version,
+    require => Package['build-essential']
   }
 }
