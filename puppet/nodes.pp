@@ -24,6 +24,15 @@ node 'hdo01', 'hdo02' {
 }
 
 node 'hdo-staging.nuug.no' {
-  include hdo::webapp::apache
+  include postfix
+  include elasticsearch
+
+  include hdo::webapp::nginx
   include hdo::database
+
+  # in staging, run earlier than prod
+  class { 'hdo::webapp::apiupdater':
+    hour   => 18,
+    minute => 30
+  }
 }

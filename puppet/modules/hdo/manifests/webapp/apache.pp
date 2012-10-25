@@ -12,7 +12,7 @@ class hdo::webapp::apache inherits hdo::webapp {
     port          => 80,
     priority      => '20',
     servername    => 'beta.holderdeord.no',
-    serveradmin   => 'kontakt@holderdeord.no',
+    serveradmin   => $hdo::params::admin_email,
     template      => 'hdo/apache-vhost.conf.erb',
     docroot       => $hdo::params::public_dir,
     docroot_owner => 'hdo',
@@ -26,7 +26,7 @@ class hdo::webapp::apache inherits hdo::webapp {
     port        => 80,
     priority    => '30',
     servername  => 'files.holderdeord.no',
-    serveradmin => 'kontakt@holderdeord.no',
+    serveradmin => $hdo::params::admin_email,
     docroot     => '/webapps/files',
     notify      => Service['httpd'],
   }

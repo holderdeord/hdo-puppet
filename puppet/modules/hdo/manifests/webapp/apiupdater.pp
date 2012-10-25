@@ -2,7 +2,11 @@
 # this should only run on a single node!
 #
 
-class hdo::webapp::apiupdater($ensure = present) {
+class hdo::webapp::apiupdater(
+  $ensure          = present,
+  $hour            = 1,
+  $minute          = 30
+) {
   include hdo::params
 
   if ! ($ensure in [ 'present', 'absent' ]) {
@@ -20,7 +24,7 @@ class hdo::webapp::apiupdater($ensure = present) {
     ensure      => $ensure,
     command     => "cd ${hdo::params::app_root} && bundle exec script/import daily >> ${logfile} 2>&1",
     user        => hdo,
-    environment => ['RAILS_ENV=production', 'PATH=/usr/local/bin:/usr/bin:/bin', 'MAILTO=jari@holderdeord.no'],
+    environment => ['RAILS_ENV=production', 'PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Class['hdo::webapp'], File[$logfile]],
     hour        => 1,
     minute      => 30

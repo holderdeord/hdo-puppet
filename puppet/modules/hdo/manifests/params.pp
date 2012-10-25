@@ -1,6 +1,7 @@
 class hdo::params {
   $user                     = 'hdo'
   $group                    = 'adm'
+  $admin_email              = 'ops@holderdeord.no'
 
   $webapp_root              = '/webapps'
   $files_root               = "${webapp_root}/files"

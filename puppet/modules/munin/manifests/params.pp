@@ -7,7 +7,7 @@ class munin::params {
   $docroot     = '/var/cache/munin/www'
   $servername  = 'munin.holderdeord.no'
   $port        = 80
-  $serveradmin = 'kontakt@holderdeord.no'
+  $serveradmin = 'ops@holderdeord.no'
 
   #packages on munin node
   $node_package_name = ['munin-node', 'munin-plugins-extra']
