@@ -2,7 +2,7 @@ class elasticsearch::install(
   $elastic_package = $elasticsearch::params::package,
   $dependencies = $elasticsearch::params::dependencies) inherits elasticsearch::params {
 
-  exec {'elastichsearch-download':
+  exec {'elasticsearch-download':
     # need to depend on wget?
     command => "wget https://github.com/downloads/elasticsearch/elasticsearch/${elastic_package} -O /root/${elastic_package}",
     creates => "/root/${elastic_package}",
