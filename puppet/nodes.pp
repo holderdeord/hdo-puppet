@@ -1,9 +1,9 @@
 node 'default' {
-  include hdo::webapp::nginx
-  include hdo::database
+  # include hdo::webapp::nginx
+  # include hdo::database
   # include munin::master
   # include munin::node
-  # include elasticsearch
+  include elasticsearch
 }
 
 node 'hetzner02' {
