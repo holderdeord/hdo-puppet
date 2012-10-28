@@ -11,6 +11,9 @@ node 'hetzner02' {
   include hdo::webapp::nginx
   include hdo::webapp::apiupdater
   include hdo::database
+
+  include elasticsearch
+  include elasticsearch::emailmonitor
 }
 
 #
