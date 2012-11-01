@@ -3,9 +3,9 @@
 #
 
 class hdo::webapp::apiupdater(
-  $ensure          = present,
-  $hour            = 1,
-  $minute          = 30
+  $ensure = present,
+  $hour   = 1,
+  $minute = 30
 ) {
   include hdo::params
 
