@@ -4,7 +4,7 @@ ROOT=$(dirname $0)/..
 
 is_our_module () {
   local path=`basename "${1}"`
-  local not_ours=( "apache" "firewall" "postgresql" "puppetlabs-stdlib" )
+  local not_ours=( "apache" "firewall" "postgresql" "stdlib" )
   local mod
 
   for mod in "${not_ours[@]}"
@@ -21,6 +21,8 @@ for mod in ${ROOT}/puppet/modules/*
 do
   if is_our_module "${mod}"
   then
+    echo "checking `basename ${mod}`..."
+
     puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" \
       --no-documentation-check \
       --no-80chars-check \
