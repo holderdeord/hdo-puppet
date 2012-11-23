@@ -40,5 +40,7 @@ class munin::params {
               'swap',
               'threads',
               'uptime',
-              'vmstat']
+              'vmstat',
+              'nginx_request',
+              'nginx_status']
 }
