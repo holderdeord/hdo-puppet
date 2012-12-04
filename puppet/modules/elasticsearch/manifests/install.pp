@@ -8,11 +8,11 @@ class elasticsearch::install(
     creates => "/root/${elastic_package}",
   }
 
-  package {$dependencies:
+  package { $dependencies:
     ensure => installed,
   }
 
-  package {$elastic_package:
+  package { $elastic_package:
     ensure   => latest,
     provider => dpkg,
     source   => "/root/${elastic_package}",
