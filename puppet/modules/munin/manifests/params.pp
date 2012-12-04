@@ -14,9 +14,7 @@ class munin::params {
   $common_package_name = 'munin-common'
 
   #Enabled plugins
-  $plugins = ['apache_accesses',
-              'apache_volume',
-              'cpu',
+  $plugins = ['cpu',
               'df',
               'df_inode',
               'diskstats',
@@ -40,5 +38,8 @@ class munin::params {
               'swap',
               'threads',
               'uptime',
-              'vmstat']
+              'vmstat',
+              'nginx_connection_request',
+              'nginx_memory',
+              'nginx_request']
 }

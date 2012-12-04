@@ -3,7 +3,7 @@ node 'default' {
   # include hdo::database
   # include munin::master
   # include munin::node
-  include elasticsearch
+  #include elasticsearch
 }
 
 node 'hetzner02' {
@@ -11,9 +11,17 @@ node 'hetzner02' {
   include hdo::webapp::nginx
   include hdo::webapp::apiupdater
   include hdo::database
+  include munin::node
+  include nagios::target
 
-  include elasticsearch
-  include elasticsearch::emailmonitor
+  #include elasticsearch
+  #include elasticsearch::emailmonitor
+}
+
+node 'ops1' {
+  include munin::master
+  include nagios::monitor
+  include nagios::target
 }
 
 #
