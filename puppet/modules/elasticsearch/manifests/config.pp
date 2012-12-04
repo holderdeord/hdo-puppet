@@ -3,6 +3,12 @@ class elasticsearch::config inherits elasticsearch::params {
   $root_logger  = 'DEBUG, console, file' # default INFO
   $es_heap_size = '2g'
 
+  file { '/etc/default/elasticsearch':
+    ensure  => present,
+    mode    => '0644',
+    content => template('elasticsearch/default.erb')
+  }
+
   file {'/etc/init.d/elasticsearch':
     ensure  => present,
     mode    => '0750',
