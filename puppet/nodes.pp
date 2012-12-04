@@ -7,11 +7,11 @@ node 'default' {
 }
 
 node 'hetzner02' {
-#  include postfix
-#  include hdo::webapp::nginx
-#  include hdo::webapp::apiupdater
-#  include hdo::database
-#  include munin::node
+  include postfix
+  include hdo::webapp::nginx
+  include hdo::webapp::apiupdater
+  include hdo::database
+  include munin::node
   include nagios::target
 
   include elasticsearch
@@ -19,7 +19,7 @@ node 'hetzner02' {
 }
 
 node 'ops1' {
-#  include munin::master
+  include munin::master
   include nagios::monitor
   include nagios::target
 }
