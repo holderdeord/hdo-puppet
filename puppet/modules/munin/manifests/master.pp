@@ -5,7 +5,8 @@ class munin::master(
   $docroot        = $munin::params::docroot,
   $servername     = $munin::params::servername,
   $port           = $munin::params::port,
-  $serveradmin    = $munin::params::serveradmin) inherits munin::params {
+  $serveradmin    = $munin::params::serveradmin,
+  $allow_from     = $munin::params::allow_from) inherits munin::params {
 
   include apache
 
