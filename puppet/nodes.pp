@@ -14,8 +14,8 @@ node 'hetzner02' {
   include munin::node
   include nagios::target
 
-  #include elasticsearch
-  #include elasticsearch::emailmonitor
+  include elasticsearch
+  include elasticsearch::emailmonitor
 }
 
 node 'ops1' {
