@@ -30,4 +30,13 @@ class hdo::webapp::nginx inherits hdo::webapp {
     content => template('hdo/nginx-files-vhost.conf.erb'),
     notify  => Service['nginx']
   }
+
+  file { "${passenger::nginx::sites_dir}/99-files.server_status.conf":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('hdo/nginx_server_status.vhost.conf.erb'),
+    notify  => Service['nginx']
+  }
 }
