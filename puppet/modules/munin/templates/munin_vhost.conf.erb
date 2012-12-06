@@ -14,7 +14,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     AllowOverride None
     Order allow,deny
     Allow from localhost 127.0.0.0/8 ::1
-    <% allow_from.each do |ip| -%>
+    <% scope.lookupvar('allow_from').each do |ip| -%>
     Allow from <%= ip %>
     <% end -%>
     <IfModule mod_expires.c>
@@ -22,9 +22,6 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     	ExpiresDefault M310
     </IfModule>
   </Location>
-
-
-
 
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
