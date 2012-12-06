@@ -1,11 +1,3 @@
-node 'default' {
-   include hdo::database
-   include munin::master
-   include munin::node
-   include hdo::webapp::nginx
-   include elasticsearch
-}
-
 node 'hetzner02' {
   include postfix
   include hdo::webapp::nginx

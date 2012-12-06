@@ -48,7 +48,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet"
     puppet.module_path    = "puppet/modules"
-    puppet.manifest_file  = "site.pp"
+    puppet.manifest_file  = "vagrant.pp"
 
     puppet.options = ''
     puppet.options << ' --verbose --debug' if ENV['DEBUG']

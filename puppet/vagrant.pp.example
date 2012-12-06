@@ -1,0 +1,5 @@
+import "site.pp"
+
+node 'hdo-devel' {
+   include elasticsearch
+}

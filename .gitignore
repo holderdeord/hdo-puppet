@@ -1,3 +1,4 @@
 .vagrant
 Gemfile.lock
 .tm_properties
+puppet/vagrant.pp

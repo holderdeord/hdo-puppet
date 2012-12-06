@@ -23,6 +23,10 @@ After the inital checkout of the repo, you need check out the required submodule
     $ git submodule init
     $ git submodule update
 
+Configure what you want to run on the VM:
+
+    $ cp puppet/vagrant.pp.example puppet/vagrant.pp
+
 After this, bringing up the VM is pretty simple (but can take some time depending on your hardware):
 
     $ vagrant up
