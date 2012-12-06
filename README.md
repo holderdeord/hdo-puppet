@@ -87,17 +87,17 @@ Launch the installation of the actual `hdo-site` code:
 
 ### Installation on production servers
 
+Install Puppet >= 3.0:
+
+    $ wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
+    $ dpkg -i puppetlabs-release-precise.deb
     $ apt-get update
-    $ apt-get install puppet git-core
-    $ git clone git://github.com/holderdeord/hdo-puppet.git
-    $ cd hdo-puppet
-    $ git submodule update --init
-    $ export FACTER_postgresql_hdo_password=t0ps3cret
-    $ puppet apply --modulepath=puppet/modules puppet/site.pp
 
-Then, locally from hdo-site:
+Configure node to talk to the puppetmaster by adding the following to /etc/puppet/puppet.conf:
 
-    $ cap deploy:setup deploy:cold
+    [agent]
+    server = puppet.holderdeord.no
+    pluginsync = true
 
 ### Creating the Vagrant .box image
 
