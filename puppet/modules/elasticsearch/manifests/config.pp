@@ -1,8 +1,4 @@
 class elasticsearch::config inherits elasticsearch::params {
-  $host         = '127.0.0.1' # default: 0.0.0.0
-  $root_logger  = 'DEBUG, console, file' # default INFO
-  $es_heap_size = '2g'
-
   file { '/etc/default/elasticsearch':
     ensure  => present,
     mode    => '0644',
