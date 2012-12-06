@@ -8,7 +8,7 @@ class elasticsearch::params {
   $host         = '127.0.0.1' # default: 0.0.0.0
   $root_logger  = 'DEBUG, console, file' # default INFO
 
-  case $hostname {
+  case $::hostname {
     'hdo-devel': {
       $es_heap_size = '512m'
     }
