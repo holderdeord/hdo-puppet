@@ -53,6 +53,7 @@ Vagrant::Config.run do |config|
     puppet.options = ''
     puppet.options << ' --verbose --debug' if ENV['DEBUG']
     puppet.options << ' --noop' if ENV['NOOP']
+    puppet.options << ' --show_diff' if ENV['DIFF']
   end
 
 end
