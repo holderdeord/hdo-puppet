@@ -31,7 +31,7 @@ class hdo::webapp::nginx inherits hdo::webapp {
     notify  => Service['nginx']
   }
 
-  file { "${passenger::nginx::sites_dir}/99-files.server_status.conf":
+  file { "${passenger::nginx::sites_dir}/99-server_status.conf":
     ensure  => file,
     owner   => root,
     group   => root,
