@@ -2,10 +2,10 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
-production:
+<%= scope.lookupvar('hdo::params::environment') %>:
   adapter: postgresql
   encoding: unicode
-  database: hdo_production
+  database: hdo_<%= scope.lookupvar('hdo::params::environment') %>
   pool: 5
-  username: hdo
-  password: <%= postgresql_hdo_password %>
+  username: <%= scope.lookupvar('hdo::params::db_username') %>
+  password: <%= scope.lookupvar('hdo::params::db_password') %>

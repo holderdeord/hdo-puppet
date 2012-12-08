@@ -85,7 +85,38 @@ Launch the installation of the actual `hdo-site` code:
     $ VAGRANT=1 cap deploy:setup deploy:cold # only needed first time
     $ VAGRANT=1 cap deploy
 
-### Installation on production servers
+### Production
+
+#### Puppetmaster
+
+TODO (Bjørn?): Describe how to set up the puppetmaster.
+
+##### Hiera
+
+Once the puppetmaster is running, add [Hiera](http://projects.puppetlabs.com/projects/hiera):
+
+```console
+$ cat > /etc/puppet/hiera.yaml
+---
+:hierarchy:
+  - '%{hostname}'
+  - common
+
+:logger: console
+
+:backends:
+  - yaml
+
+:yaml:
+  :datadir: '/etc/puppet/hieradata'
+^D
+$ mkdir /etc/puppet/hieradata
+```
+
+Special configuration that shouldn't be checked into version control can now be added to `/etc/puppet/hieradata/%{hostname}.yaml`. Double check that
+configuration here is only readable by root.
+
+####
 
 Install Puppet >= 3.0:
 

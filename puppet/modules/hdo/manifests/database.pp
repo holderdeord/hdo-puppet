@@ -2,12 +2,6 @@ class hdo::database {
 
   include hdo::common
 
-  # TODO Move out users/passwords and DB creation from puppet?
-  #      maybe we should do this within the app deployment part...
-
-  if $postgresql_root_password {} else { $postgresql_root_password = 'dont-use-this' }
-  if $postgresql_hdo_password  {} else { $postgresql_hdo_password  = 'dont-use-this' }
-
   class { 'postgresql::server':
     # no idea why this is necessary - either the module isn't properly tested on ubuntu,
     # or something is non-standard about our VM image.
@@ -15,20 +9,13 @@ class hdo::database {
     service_provider => init,         # defaults to upstart
 
     config_hash      => {
-        'postgres_password' => $postgresql_root_password,
+        'postgres_password' => $hdo::params::db_server_password,
     }
   }
 
-  postgresql::db { 'hdo_production':
-    user     => 'hdo',
-    password => postgresql_password('hdo', $postgresql_hdo_password)
-  }
-
-  file { '/home/hdo/.hdo-database-pg.yml':
-    owner   => 'hdo',
-    mode    => '0600',
-    content => template('hdo/database.yml'),
-    require => File['/home/hdo']
+  postgresql::db { "hdo_${hdo::params::environment}":
+    user     => $hdo::params::db_username,
+    password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
   }
 
   #

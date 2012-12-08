@@ -34,5 +34,14 @@ class hdo::webapp {
     mode    => '0775',
     content => template('hdo/profile.sh')
   }
+
+  file { '/home/hdo/.hdo-database-pg.yml':
+    owner   => 'hdo',
+    mode    => '0600',
+    content => template('hdo/database.yml'),
+    require => File['/home/hdo']
+  }
+
+
 }
 
