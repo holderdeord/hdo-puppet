@@ -113,11 +113,11 @@ $ cat > /etc/puppet/hiera.yaml
 $ mkdir /etc/puppet/hieradata
 ```
 
-Special configuration that shouldn't be checked into version control can now be added to `/etc/puppet/hieradata/%{hostname}.yaml`. After creating these, 
+Special configuration that shouldn't be checked into version control can now be added to `/etc/puppet/hieradata/%{hostname}.yaml`. After creating these,
 the permission should be writable by root and readable by the puppet group:
 
     $ chown root:puppet /etc/puppet/hieradata/*
-    $ chmod 0644 /etc/puppet/hieradata/*
+    $ chmod 0640 /etc/puppet/hieradata/*
 
 ####
 
@@ -126,12 +126,15 @@ Install Puppet >= 3.0:
     $ wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
     $ dpkg -i puppetlabs-release-precise.deb
     $ apt-get update
+    $ apt-get install puppet
 
-Configure node to talk to the puppetmaster by adding the following to /etc/puppet/puppet.conf:
+Configure the node to talk to the puppetmaster by adding the following to /etc/puppet/puppet.conf:
 
     [agent]
     server = puppet.holderdeord.no
     pluginsync = true
+
+Then do the sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
 
 ### Creating the Vagrant .box image
 

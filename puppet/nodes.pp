@@ -10,6 +10,9 @@ node 'hetzner02' {
   include elasticsearch::emailmonitor
 }
 
+node 'hetzner03' {
+}
+
 node 'ops1' {
   include munin::master
   include nagios::monitor
