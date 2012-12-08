@@ -113,8 +113,11 @@ $ cat > /etc/puppet/hiera.yaml
 $ mkdir /etc/puppet/hieradata
 ```
 
-Special configuration that shouldn't be checked into version control can now be added to `/etc/puppet/hieradata/%{hostname}.yaml`. Double check that
-configuration here is only readable by root.
+Special configuration that shouldn't be checked into version control can now be added to `/etc/puppet/hieradata/%{hostname}.yaml`. After creating these, 
+the permission should be writable by root and readable by the puppet group:
+
+    $ chown root:puppet /etc/puppet/hieradata/*
+    $ chmod 0644 /etc/puppet/hieradata/*
 
 ####
 
