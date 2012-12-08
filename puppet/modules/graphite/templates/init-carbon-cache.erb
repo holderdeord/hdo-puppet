@@ -1,0 +1,40 @@
+#!/bin/sh
+
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+
+
+### BEGIN INIT INFO
+# chkconfig: 2345 99 80
+# Provides: carbon-cache
+# Required-Start: $remote_fs $network $time
+# Required-Stop: $remote_fs $network
+# Default-Start:  2 3 4 5
+# Default-Stop:   0 1 6
+# Short-Description: Start/Stop carbon-cache
+# Description: Enables Graphites carbon-cache data collecting engine
+### END INIT INFO
+
+case "$1" in
+	start)
+		python <%= scope.lookupvar('graphite::params::root') %>/bin/carbon-cache.py start
+		;;
+	stop)
+		python <%= scope.lookupvar('graphite::params::root') %>/bin/carbon-cache.py stop
+		;;
+	status)
+		python <%= scope.lookupvar('graphite::params::root') %>/bin/carbon-cache.py status
+		;;
+	restart)
+		$0 stop ; sleep 3 ; $0 start
+		RC=$?
+		exit $RC
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac
+
+exit
