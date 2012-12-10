@@ -50,6 +50,13 @@ The tool requires a Ruby install + the puppet-lint gem:
     $ [sudo] gem install puppet-lint
     $ bin/lint.sh
 
+### Dependencies
+
+We currently manage dependencies using git submodules. To add a new dependency:
+
+1. `git submodule add [repository] puppet/modules/<name>`
+2. Edit `bin/lint.sh` to exclude the new repo.
+
 ### Test the configuration
 
 #### Automatically

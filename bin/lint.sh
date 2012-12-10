@@ -4,7 +4,7 @@ ROOT=$(dirname $0)/..
 
 is_our_module () {
   local path=`basename "${1}"`
-  local not_ours=( "apache" "firewall" "postgresql" "stdlib" )
+  local not_ours=( "apache" "firewall" "postgresql" "stdlib" "logrotate" )
   local mod
 
   for mod in "${not_ours[@]}"

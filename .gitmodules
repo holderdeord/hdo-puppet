@@ -10,3 +10,6 @@
 [submodule "puppet/modules/stdlib"]
 	path = puppet/modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "puppet/modules/logrotate"]
+	path = puppet/modules/logrotate
+	url = git://github.com/rodjek/puppet-logrotate.git
