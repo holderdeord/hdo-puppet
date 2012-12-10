@@ -16,8 +16,6 @@ node 'hetzner03' {
 node 'ops1' {
   include munin::master
   include nagios::monitor
-  include nagios::target
-  include nagios::page_checks
 }
 
 #
