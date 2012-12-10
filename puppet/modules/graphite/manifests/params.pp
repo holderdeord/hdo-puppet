@@ -14,6 +14,7 @@ class graphite::params {
   $prefix           = '/opt'
   $root             = "${prefix}/graphite"
   $docroot          = "${root}/webapp"
+  $storageroot      = "${root}/storage"
   $owner            = 'www-data'
 
   $graphite_version = 'graphite-web-0.9.10'

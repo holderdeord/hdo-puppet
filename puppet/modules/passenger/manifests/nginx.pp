@@ -49,4 +49,14 @@ class passenger::nginx inherits passenger {
     hasstatus  => true,
     require    => File[$init_script],
   }
+
+  logrotate::rule { 'nginx':
+    path         => "${log_dir}/*.log",
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
+  }
+
 }

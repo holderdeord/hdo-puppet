@@ -27,8 +27,17 @@ class statsd(
 
   file { '/var/log/statsd':
     ensure => directory,
-    group  => 'nogroup',
+    group  => ['nogroup', 'adm'],
     mode   => '0770',
+  }
+
+  logrotate::rule { 'statsd':
+    path         => '/var/log/statsd/*',
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
   }
 
   file { '/usr/share/statsd':
@@ -54,10 +63,7 @@ class statsd(
 
   service { 'statsd':
     ensure     => $ensure,
-    enable     => $ensure,
     provider   => 'upstart',
     require    => [File['/etc/init/statsd.conf'], File['/var/log/statsd']]
   }
-
-
 }

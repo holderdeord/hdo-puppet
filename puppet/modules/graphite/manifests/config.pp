@@ -13,7 +13,7 @@ class graphite::config inherits graphite::params {
   }
 
   # need make sure apache can read this
-  file { "${graphite::params::root}/storage":
+  file { $graphite::params::storageroot:
     ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
@@ -62,6 +62,18 @@ class graphite::config inherits graphite::params {
     ensure  => present,
     mode    => '0750',
     content => template('graphite/init-carbon-cache.erb')
+  }
+
+  logrotate::rule { 'graphite':
+    path         => [
+      "${graphite::params::storageroot}/log/*/*.log",
+      "${graphite::params::storageroot}/log/*/*/*.log"
+    ],
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
   }
 
   service { 'carbon-cache':

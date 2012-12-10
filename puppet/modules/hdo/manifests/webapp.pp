@@ -42,6 +42,13 @@ class hdo::webapp {
     require => File['/home/hdo']
   }
 
-
+  logrotate::rule { 'hdo-site':
+    path         => "${hdo::params::deploy_root}/shared/log/*.log",
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
+  }
 }
 

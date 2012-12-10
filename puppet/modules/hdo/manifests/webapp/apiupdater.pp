@@ -13,11 +13,27 @@ class hdo::webapp::apiupdater(
     fail('apiupdater ensure parameter must be absent or present')
   }
 
-  $logfile = '/var/log/hdo-api-updater.log'
+  $logdir  = '/var/log/hdo-api-updater'
+  $logfile = "${logdir}/updater.log"
+
+  file { $logdir:
+    ensure => directory,
+    owner  => hdo
+  }
 
   file { $logfile:
     ensure => file,
     owner  => hdo
+  }
+
+  logrotate::rule { 'hdo-api-updater':
+    ensure       => $ensure,
+    path         => $logfile,
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
   }
 
   cron { 'api-update':
