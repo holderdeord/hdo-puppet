@@ -22,6 +22,10 @@ class graphite::config inherits graphite::params {
     require => Exec['create-graphite-db-django']
   }
 
+  a2mod { 'headers':
+    ensure => present
+  }
+
   apache::vhost { 'graphite.holderdeord.no':
     vhost_name    => '*',
     priority      => '70',
@@ -30,7 +34,7 @@ class graphite::config inherits graphite::params {
     docroot       => $graphite::params::docroot,
     docroot_owner => $graphite::params::owner,
     notify        => Service['httpd'],
-    require       => File["${graphite::params::root}/storage"],
+    require       => [File["${graphite::params::root}/storage"], A2mod['headers']],
   }
 
   #

@@ -2,6 +2,18 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 <VirtualHost *:80>
+  ServerName <%= srvname %>
+  ServerSignature Off
+
+  ErrorLog <%= logroot %>/<%= name %>_error.log
+  LogLevel warn
+  CustomLog <%= logroot %>/<%= name %>_access.log combined
+
+  # https://github.com/obfuscurity/tasseo#graphite-server-configuration
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, OPTIONS"
+  Header set Access-Control-Allow-Headers "origin, authorization, accept"
+
   <Location />
     SetHandler python-program
     PythonPath "['<%= docroot %>'] + sys.path"
@@ -9,6 +21,14 @@
     SetEnv DJANGO_SETTINGS_MODULE graphite.settings
     PythonDebug Off
     PythonAutoReload Off
+
+    # TODO: basic auth
+    # AuthName "graphite.holderdeord.no"
+    # AuthType Basic
+    # AuthUserFile /etc/apache2/htpasswd
+    # <LimitExcept OPTIONS>
+    #   require valid-user
+    # </LimitExcept>
   </Location>
 
   Alias /content/ <%= docroot %>/content/
