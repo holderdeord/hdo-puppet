@@ -12,7 +12,7 @@ server {
     location @passenger {
       passenger_enabled       on;
       passenger_min_instances <%= passenger_min_instances %>;
-      rails_env production;
+      rails_env <%= scope.lookupvar('hdo::params::environment') %>;
     }
 
     error_page 500 502 504 /500.html;
