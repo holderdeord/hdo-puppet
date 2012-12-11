@@ -21,7 +21,7 @@ for mod in ${ROOT}/puppet/modules/*
 do
   if is_our_module "${mod}"
   then
-    echo "checking `basename ${mod}`..."
+    echo -n "checking `basename ${mod}`..."
 
     puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" \
       --no-documentation-check \
@@ -31,6 +31,13 @@ do
       "${mod}"
 
     ret=$?
+
+    if [[ "${ret}" == "0" ]]; then
+      echo "ok"
+    else
+      echo "failed"
+    fi
+
     [[ "${code}" != "1" ]] && code="${ret}"
   fi
 done
