@@ -1,4 +1,6 @@
-class hdo::webapp::nginx inherits hdo::webapp {
+class hdo::webapp::nginx(
+  $listen = '80'
+) inherits hdo::webapp {
   include passenger::nginx
 
   $www_root                = $hdo::params::public_dir
