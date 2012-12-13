@@ -4,6 +4,7 @@ class statsd(
   $port          = 8125,
   $graphite_host = 'localhost',
   $graphite_port = 2003,
+  $allow_from    = false,
 ) {
 
   include nodejs
@@ -65,5 +66,14 @@ class statsd(
     ensure     => $ensure,
     provider   => 'upstart',
     require    => [File['/etc/init/statsd.conf'], File['/var/log/statsd']]
+  }
+
+  if $allow_from != false {
+    firewall { '100 accept statsd':
+      proto    => 'udp',
+      action   => 'accept',
+      port     => $port,
+      source   => $allow_from
+    }
   }
 }

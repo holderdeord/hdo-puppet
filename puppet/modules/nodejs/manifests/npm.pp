@@ -22,6 +22,7 @@ define nodejs::npm(
       unless    => "npm ${global_flag} list -p -l | grep '${package_name}'",
       require   => Class['nodejs'],
       logoutput => on_failure,
+      tries     => 3,
     }
   } else {
     exec { "npm-remove ${name}":

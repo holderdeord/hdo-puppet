@@ -52,7 +52,7 @@ class postfix(
   # not sure if this actully works.
 
   firewall { "0100-INPUT DROP ${port}":
-      action => 'drop',
-      dport  => $port
+    action => 'drop',
+    dport  => $port
   }
 }
