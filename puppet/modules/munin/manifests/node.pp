@@ -1,10 +1,9 @@
 class munin::node(
-  $node_package = $munin::params::node_package_name,)
-  inherits munin::params {
+  $node_package = $munin::params::node_package_name,
+) inherits munin::params {
 
   package { $node_package: }
   Package { ensure => present }
-
 
   file { '/etc/munin/munin-node.conf':
     ensure  => present,

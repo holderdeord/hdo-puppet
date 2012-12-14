@@ -1,17 +1,17 @@
-class hdo::webapp::nginx(
-  $listen = '80'
-) inherits hdo::webapp {
-  include passenger::nginx
+class hdo::webapp::beta inherits hdo::webapp {
+  $listen      = '80'
+  $server_name = 'beta.holderdeord.no'
 
-  $www_root                = $hdo::params::public_dir
-  $passenger_min_instances = $passenger::params::min_instances
+  if $hdo::params::environment != 'production' {
+    warning("including hdo::webapp::beta, but hdo::params::environment == ${hdo::params::environment}")
+  }
 
-  file { "${passenger::nginx::sites_dir}/10-beta.holderdeord.no.conf":
+  file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
     ensure  => file,
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => template('hdo/nginx-beta-vhost.conf.erb'),
+    content => template('hdo/nginx-app-vhost.conf.erb'),
     notify  => Service['nginx']
   }
 
@@ -30,15 +30,6 @@ class hdo::webapp::nginx(
     group   => root,
     mode    => '0644',
     content => template('hdo/nginx-files-vhost.conf.erb'),
-    notify  => Service['nginx']
-  }
-
-  file { "${passenger::nginx::sites_dir}/40-status.conf":
-    ensure  => file,
-    owner   => root,
-    group   => root,
-    mode    => '0644',
-    content => template('hdo/nginx-status-vhost.conf.erb'),
     notify  => Service['nginx']
   }
 }

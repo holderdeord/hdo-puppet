@@ -3,7 +3,7 @@ class hdo::common {
 
   $home = "/home/${hdo::params::user}"
 
-  package { ['etckeeper', 'vim']:
+  package { ['etckeeper', 'vim', 'build-essential']:
     ensure => installed,
   }
 
@@ -46,7 +46,6 @@ class hdo::common {
     type   => 'ssh-rsa',
     key    => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAsTd38lUZZygRAQKigMb30yW+9CPDJlcYTzLivgE7pcjr5fFMsdcvqJp7raMAFjx8lyf8lljFKnRwPuWMvyUfvxuEyFCUbvgLF8wsSc1lIAsNO0hs5/ejp/ra6LqQ3p3Fz0O2bjd1jQgRu38PPu228ryZHw9jV1cO0Szjxh+S3iqDSU5U9b/HkdHOP8n5b+9YEDSWfePZc8LrE802qb7f43mGs44DX37erq69SrSc05ddlxe13nxIm3DeNlROxZeA02OasnD7DrnLkayYqT9sINn2viajtaWhZIH+C3nua28gygrEUKp333KJjXV4luSzIKUc7zDuxTURAa3E2F9hsw=='
   }
-
 
   file { "${home}/.gemrc":
     ensure  => file,

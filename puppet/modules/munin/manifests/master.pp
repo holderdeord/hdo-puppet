@@ -6,7 +6,8 @@ class munin::master(
   $servername     = $munin::params::servername,
   $port           = $munin::params::port,
   $serveradmin    = $munin::params::serveradmin,
-  $allow_from     = $munin::params::allow_from) inherits munin::params {
+  $allow_from     = $munin::params::allow_from
+) inherits munin::params {
 
   include apache
 
@@ -19,7 +20,7 @@ class munin::master(
   file { '/etc/munin/munin.conf':
     ensure  => present,
     content => template('munin/munin.conf'),
-    notify  => Exec['graceful'],
+    notify  => Service['httpd'],
     require => Package[$package_list],
   }
 
@@ -35,10 +36,5 @@ class munin::master(
     docroot_group => 'munin',
     notify        => Service['httpd'],
     require       => Package[$package_list],
-  }
-
-  exec { 'graceful':
-    command     => '/usr/sbin/apache2ctl graceful',
-    refreshonly => true,
   }
 }

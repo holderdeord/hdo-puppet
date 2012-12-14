@@ -3,15 +3,16 @@ class hdo::webapp {
   include hdo::common
   include hdo::params
 
+  include passenger::nginx
+
   $requirements = [
-      'htop',
-      'dpkg',
-      'build-essential',
-      'git-core',
-      'libxml2',
-      'libxml2-dev',
-      'libxslt1-dev',
-      'imagemagick',
+    'htop',
+    'dpkg',
+    'git-core',
+    'libxml2',
+    'libxml2-dev',
+    'libxslt1-dev',
+    'imagemagick',
   ]
 
   package { $requirements:

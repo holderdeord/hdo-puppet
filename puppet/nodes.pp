@@ -1,8 +1,8 @@
 node 'hetzner02' {
   include postfix
-  include hdo::webapp::nginx
-  include hdo::webapp::apiupdater
   include hdo::database
+  include hdo::webapp::beta
+  include hdo::webapp::apiupdater
   include munin::node
   include nagios::target
 
@@ -32,7 +32,7 @@ node 'hdo-staging.nuug.no' {
   include postfix
   include elasticsearch
 
-  include hdo::webapp::nginx
+  include hdo::webapp::staging
   include hdo::database
 
   # in staging, run earlier than prod

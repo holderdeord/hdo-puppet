@@ -59,4 +59,14 @@ class passenger::nginx inherits passenger {
     missingok    => true
   }
 
+  file { "${sites_dir}/99-status.conf":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('passenger/nginx-status-vhost.conf.erb'),
+    notify  => Service['nginx']
+  }
+
+
 }
