@@ -1,18 +1,18 @@
 class hdo::webhooks {
   include hdo::common
   include passenger::apache
-  
+
   $appdir = '/opt/hdo-site'
   $root   = '/webapps/hdo-webhook-deployer'
   $logdir = "${root}/log"
   $tmpdir = "${root}/tmp"
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
-  
-  file { [$appdir, $logdir, $tmpdir]: 
+
+  file { [$appdir, $logdir, $tmpdir]:
     ensure => directory,
     owner  => hdo,
   }
-  
+
   exec { 'git-clone-hdo-webhook-deployer':
     command   => "git clone https://github.com/holderdeord/hdo-webhook-deployer.git ${root}",
     user      => hdo,
@@ -21,7 +21,7 @@ class hdo::webhooks {
     notify    => Exec['bundle-install-hdo-webhook-deployer'],
     require   => Class['passenger']
   }
-  
+
   exec { 'bundle-install-hdo-webhook-deployer':
     command     => 'bundle install --deployment --without test development',
     user        => hdo,
@@ -30,21 +30,21 @@ class hdo::webhooks {
     refreshonly => true,
     require     => Class['passenger'],
   }
-  
-  exec { 'restart-hdo-webhook-deployer': 
+
+  exec { 'restart-hdo-webhook-deployer':
     command     => "touch ${tmpdir}/restart.txt",
     user        => hdo,
     refreshonly => true,
   }
-  
-  exec { 'git-clone-hdo-site': 
+
+  exec { 'git-clone-hdo-site':
     command   => "git clone https://github.com/holderdeord/hdo-site.git ${appdir}",
     user      => hdo,
     creates   => "${appdir}/Gemfile",
     logoutput => on_failure,
     require   => File[$appdir],
   }
-  
+
   file { "${root}/config/production.json":
     ensure  => file,
     owner   => hdo,
@@ -53,7 +53,7 @@ class hdo::webhooks {
     require => Exec['git-clone-hdo-webhook-deployer'],
     notify  => Exec['restart-hdo-webhook-deployer'],
   }
-  
+
   logrotate::rule { 'hdo-webhook-deployer':
     path         => "${logdir}/*",
     compress     => true,
@@ -62,7 +62,7 @@ class hdo::webhooks {
     ifempty      => false,
     missingok    => true
   }
-  
+
   apache::vhost { 'hooks.holderdeord.no':
     vhost_name    => '*',
     port          => 80,
@@ -77,5 +77,5 @@ class hdo::webhooks {
     notify        => Service['httpd'],
     require       => [Exec['git-clone-hdo-webhook-deployer'], User['hdo']],
   }
-  
+
 }
