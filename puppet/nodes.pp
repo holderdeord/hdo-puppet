@@ -43,11 +43,8 @@ node 'hetzner03' {
   include hdo::database
   include hdo::webapp::staging
 
-  # in staging, run earlier than prod
   class { 'hdo::webapp::apiupdater':
-    ensure => absent,
-    hour   => 18,
-    minute => 30
+    ensure => absent
   }
 
   class { 'varnish':

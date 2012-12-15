@@ -6,16 +6,17 @@ class munin::master(
   $servername     = $munin::params::servername,
   $port           = $munin::params::port,
   $serveradmin    = $munin::params::serveradmin,
-  $allow_from     = $munin::params::allow_from
+  $auth           = $munin::params::auth
 ) inherits munin::params {
 
   include apache
 
-  $package_list = [ $package_name, $common_package ]
+  $package_list = [
+    $package_name,
+    $common_package
+  ]
 
-  package { $package_list: }
-
-  Package { ensure => present }
+  package { $package_list: ensure => present }
 
   # TODO: service resource for munin-master + restart on config change
   file { '/etc/munin/munin.conf':
@@ -23,6 +24,15 @@ class munin::master(
     content => template('munin/munin.conf'),
     notify  => Service['httpd'],
     require => Package[$package_list],
+  }
+
+  $htpasswd_path = '/etc/apache2/munin.htpasswd'
+
+  exec { 'create-munin-htpasswd':
+    command   => "htpasswd -b -s -c ${htpasswd_path} ${auth}",
+    creates   => $htpasswd_path,
+    require   => Class['apache'],
+    logoutput => on_failure
   }
 
   apache::vhost { 'munin.holderdeord.no':
@@ -38,4 +48,6 @@ class munin::master(
     notify        => Service['httpd'],
     require       => Package[$package_list],
   }
+
+
 }

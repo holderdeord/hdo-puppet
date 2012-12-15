@@ -16,6 +16,7 @@ class graphite::params {
   $docroot          = "${root}/webapp"
   $storageroot      = "${root}/storage"
   $owner            = 'www-data'
+  $auth             = hiera('basic_auth', 'hdo hdo')
 
   $graphite_version = 'graphite-web-0.9.10'
   $carbon_version   = 'carbon-0.9.10'

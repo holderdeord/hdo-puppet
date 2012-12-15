@@ -1,7 +1,6 @@
 #
 # This file is managed by Puppet. Local edits will be lost.
 #
-
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   SetEnv LC_ALL en_US.UTF-8
@@ -10,16 +9,20 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   DocumentRoot /var/cache/munin/www
 
   <Location />
-    Options None
+    Options <%= options %>
+
+    AuthType Basic
+    AuthName "<%= srvname %>"
+    AuthUserFile /etc/apache2/munin.htpasswd
+    Require valid-user
+
     AllowOverride None
     Order allow,deny
-    Allow from localhost 127.0.0.0/8 ::1
-    <% scope.lookupvar('allow_from').each do |ip| -%>
-    Allow from <%= ip %>
-    <% end -%>
+    Allow from all
+
     <IfModule mod_expires.c>
-        ExpiresActive On
-    	ExpiresDefault M310
+      ExpiresActive On
+      ExpiresDefault M310
     </IfModule>
   </Location>
 
