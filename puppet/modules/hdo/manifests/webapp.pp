@@ -1,12 +1,10 @@
 class hdo::webapp {
-  include ruby
   include hdo::common
   include hdo::params
 
   $requirements = [
     'htop',
     'dpkg',
-    'git-core',
     'libxml2',
     'libxml2-dev',
     'libxslt1-dev',
@@ -15,11 +13,6 @@ class hdo::webapp {
 
   package { $requirements:
     ensure => 'installed'
-  }
-
-  ruby::gem { 'bundler':
-    name    => 'bundler',
-    version => '>= 1.2.0'
   }
 
   file { [ $hdo::params::webapp_root, $hdo::params::deploy_root, $hdo::params::files_root ]:

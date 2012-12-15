@@ -1,10 +1,16 @@
 class hdo::common {
+  include ruby
   include hdo::params
 
   $home = "/home/${hdo::params::user}"
 
-  package { ['etckeeper', 'vim', 'build-essential']:
+  package { ['etckeeper', 'vim', 'build-essential', 'git-core']:
     ensure => installed,
+  }
+
+  ruby::gem { 'bundler':
+    name    => 'bundler',
+    version => '>= 1.2.0'
   }
 
   user { $hdo::params::user:
@@ -13,6 +19,12 @@ class hdo::common {
     managehome => true,
     shell      => '/bin/bash',
     groups     => $hdo::params::group
+  }
+
+  file { $hdo::params::webapp_root:
+    ensure  => 'directory',
+    mode    => '0775',
+    owner   => 'hdo'
   }
 
   file { "/home/${hdo::params::user}":

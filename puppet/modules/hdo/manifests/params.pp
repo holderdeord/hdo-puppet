@@ -9,7 +9,7 @@ class hdo::params {
   $app_root           = "${deploy_root}/current"
   $public_dir         = "${app_root}/public"
 
-  $environment        = hiera('hdo_environment',        'production')
+  $environment        = hiera('hdo_environment',        'staging')
   $db_server_password = hiera('hdo_db_server_password', 'dont-use-this')
   $db_username        = hiera('hdo_db_username',        'hdo')
   $db_password        = hiera('hdo_db_password',        'dont-use-this')
