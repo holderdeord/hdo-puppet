@@ -15,7 +15,7 @@ class hdo::webapp {
     ensure => 'installed'
   }
 
-  file { [ $hdo::params::webapp_root, $hdo::params::deploy_root, $hdo::params::files_root ]:
+  file { [ $hdo::params::deploy_root, $hdo::params::files_root ]:
     ensure  => 'directory',
     mode    => '0775',
     owner   => 'hdo'
