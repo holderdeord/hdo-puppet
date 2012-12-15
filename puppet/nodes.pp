@@ -1,10 +1,12 @@
 #
-# {ops1,munin,puppet}.holderdeord.no
+# {ops1,munin,puppet,hooks}.holderdeord.no
 #
 
 node 'ops1' {
   include munin::master
   include nagios::monitor
+
+  include hdo::webhooks
 }
 
 #
