@@ -59,6 +59,13 @@ class hdo::common {
     key    => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAsTd38lUZZygRAQKigMb30yW+9CPDJlcYTzLivgE7pcjr5fFMsdcvqJp7raMAFjx8lyf8lljFKnRwPuWMvyUfvxuEyFCUbvgLF8wsSc1lIAsNO0hs5/ejp/ra6LqQ3p3Fz0O2bjd1jQgRu38PPu228ryZHw9jV1cO0Szjxh+S3iqDSU5U9b/HkdHOP8n5b+9YEDSWfePZc8LrE802qb7f43mGs44DX37erq69SrSc05ddlxe13nxIm3DeNlROxZeA02OasnD7DrnLkayYqT9sINn2viajtaWhZIH+C3nua28gygrEUKp333KJjXV4luSzIKUc7zDuxTURAa3E2F9hsw=='
   }
 
+  ssh_authorized_key { 'ops@holderdeord.no':
+    ensure => present
+    user   => $hdo::params::user,
+    type   => 'ssh-rsa',
+    key    => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDSYddSmN5x3TOb5y/b1VjM4Kbj+FDtYM/putIEcXCPqlwMu29THjKOqg9FUqj21oRckbPEVMxU+ouKV8Siauz5jcFxcfaJwN39W2yerpNchOKL4v8MYE6mAL4PiYcQhWe4Ynv7n4Ivlk2BpR4mV5qZ4AHHrU7m66ZcBeLkgWtDDSDuXMqT5G0FtZCRQVswu8XV0lOeKe1aEOMJIB4mipIgq8Y7TaN4uN8rpMjGuY34zZOzCp0Uf3KUg2LTn6Mwau5ZDOj9jz+fUixojdbi0J1kf18iL6EQWj5dc2vPpWGessW45VHruCQHnsAdfcXesqqDCRBfUuXG6L4baEHg9tdT'
+  }
+
   file { "${home}/.gemrc":
     ensure  => file,
     owner   => $hdo::params::user,
