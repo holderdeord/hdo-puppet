@@ -1,5 +1,5 @@
 #
-# this should only run on a single node!
+# this should only run once per database
 #
 
 class hdo::webapp::apiupdater(

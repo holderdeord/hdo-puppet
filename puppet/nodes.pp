@@ -1,17 +1,6 @@
-node 'hetzner02' {
-  include postfix
-  include hdo::database
-  include hdo::webapp::beta
-  include hdo::webapp::apiupdater
-  include munin::node
-  include nagios::target
-
-  include elasticsearch
-  include elasticsearch::emailmonitor
-}
-
-node 'hetzner03' {
-}
+#
+# {ops1,munin,puppet}.holderdeord.no
+#
 
 node 'ops1' {
   include munin::master
@@ -19,13 +8,48 @@ node 'ops1' {
 }
 
 #
-# testing azure
+# beta.holderdeord.no
 #
 
-node 'hdo01', 'hdo02' {
-  include hdo::webapp::apache
-  include hdo::webapp::apiupdater
+node 'hetzner02' {
+  include postfix
+
+  include munin::node
+  include nagios::target
+
   include hdo::database
+  include hdo::webapp::beta
+  include hdo::webapp::apiupdater
+
+  include elasticsearch
+  include elasticsearch::emailmonitor
+}
+
+#
+# next.holderdeord.no
+#
+
+node 'hetzner03' {
+  include postfix
+
+  include munin::node
+  include nagios::target
+
+  include elasticsearch
+  include elasticsearch::emailmonitor
+
+  include hdo::database
+  include hdo::webapp::staging
+
+  # in staging, run earlier than prod
+  class { 'hdo::webapp::apiupdater':
+    hour   => 18,
+    minute => 30
+  }
+
+  class { 'varnish':
+    listen_port => 80
+  }
 }
 
 node 'hdo-staging.nuug.no' {
