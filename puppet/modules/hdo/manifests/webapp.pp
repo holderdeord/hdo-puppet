@@ -3,8 +3,6 @@ class hdo::webapp {
   include hdo::common
   include hdo::params
 
-  include passenger::nginx
-
   $requirements = [
     'htop',
     'dpkg',

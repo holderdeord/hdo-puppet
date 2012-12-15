@@ -1,10 +1,12 @@
 class hdo::webapp::beta inherits hdo::webapp {
-  $listen      = '80'
-  $server_name = 'beta.holderdeord.no'
-
   if $hdo::params::environment != 'production' {
     warning("including hdo::webapp::beta, but hdo::params::environment == ${hdo::params::environment}")
   }
+
+  $listen      = '80'
+  $server_name = 'beta.holderdeord.no'
+
+  class { 'passenger::nginx': port => $listen }
 
   file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
     ensure  => file,

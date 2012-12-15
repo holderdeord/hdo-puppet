@@ -63,21 +63,18 @@ class varnish(
     notify  => Service['varnish'],
   }
 
-    # munin::plugin::custom { "varnish_": }
-    #
-    # munin::plugin { [
-    #     "varnish_backend_traffic",
-    #     "varnish_expunge",
-    #     "varnish_hit_rate",
-    #     "varnish_memory_usage",
-    #     "varnish_objects",
-    #     "varnish_request_rate",
-    #     "varnish_threads",
-    #     "varnish_transfer_rates",
-    #     "varnish_uptime"
-    #     ]:
-    #     ensure => present,
-    #     plugin_name => "varnish_",
-    # }
+  munin::plugin { [
+    'varnish_backend_traffic',
+    'varnish_expunge',
+    'varnish_hit_rate',
+    'varnish_memory_usage',
+    'varnish_objects',
+    'varnish_request_rate',
+    'varnish_threads',
+    'varnish_transfer_rates',
+    'varnish_uptime'
+    ]:
+      plugin_name => 'varnish_',
+  }
 
 }

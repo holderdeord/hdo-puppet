@@ -4,7 +4,7 @@
 
 # nginx status
 server {
-  listen 80;
+  listen <%= listen %>;
   server_name localhost <%= scope.lookupvar('::fqdn') %>;
   location /nginx_status {
     stub_status on;

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-<% plugins.each do |plugin| -%>
-  if [ ! -f  /etc/munin/plugins/<%= plugin %> ];
-  then
-    echo "Creating symbolic link /etc/munin/plugins/<%= plugin %> "
-    ln -sn /usr/share/munin/plugins/<%= plugin %> /etc/munin/plugins/<%= plugin %>
-  fi
-<% end -%>

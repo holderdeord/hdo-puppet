@@ -3,10 +3,8 @@ Vagrant::Config.run do |config|
   config.vm.box       = "hdo-devel-3"
   config.vm.box_url   = "http://files.holderdeord.no/dev/setup/hdo-devel-3.box"
 
-  # web
+  # web/varnish
   config.vm.forward_port 80, 8585
-  # varnish
-  config.vm.forward_port 6081, 6081
   # statsd
   config.vm.forward_port 8125, 8125, :protocol => "udp"
 
