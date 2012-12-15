@@ -45,6 +45,7 @@ node 'hetzner03' {
 
   # in staging, run earlier than prod
   class { 'hdo::webapp::apiupdater':
+    ensure => absent,
     hour   => 18,
     minute => 30
   }
