@@ -17,7 +17,7 @@ define munin::plugin($source = false, $plugin_name = $name) {
       ensure  => file,
       owner   => 'root',
       group   => 'root',
-      mode    => '0755',
+      mode    => '0777',
       source  => $source,
     }
   } else {
