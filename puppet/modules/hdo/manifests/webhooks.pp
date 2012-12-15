@@ -25,7 +25,7 @@ class hdo::webhooks {
   file { [$logdir, $tmpdir]:
     ensure  => directory,
     owner   => hdo,
-    require => Exec['git-cloen-hdo-webhook-deployer'],
+    require => Exec['git-clone-hdo-webhook-deployer'],
   }
 
   exec { 'bundle-install-hdo-webhook-deployer':
