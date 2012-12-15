@@ -17,6 +17,7 @@ class graphite::params {
   $storageroot      = "${root}/storage"
   $owner            = 'www-data'
   $auth             = hiera('basic_auth', 'hdo hdo')
+  $htpasswd_path    = '/etc/apache2/graphite.htpasswd'
 
   $graphite_version = 'graphite-web-0.9.10'
   $carbon_version   = 'carbon-0.9.10'

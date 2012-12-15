@@ -26,11 +26,9 @@ class graphite::config inherits graphite::params {
     ensure => present
   }
 
-  $htpasswd_path = '/etc/apache2/graphite.htpasswd'
-
   exec { 'create-graphite-htpasswd':
-    command   => "htpasswd -b -c ${htpasswd_path} ${auth}",
-    creates   => $htpasswd_path,
+    command   => "htpasswd -b -c ${graphite::params::htpasswd_path} ${graphite::params::auth}",
+    creates   => $graphite::params::htpasswd_path,
     require   => Class['apache'],
     logoutput => on_failure
   }
