@@ -8,7 +8,7 @@ class hdo::webhooks {
   $tmpdir = "${root}/tmp"
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
 
-  file { [$appdir, $logdir, $tmpdir]:
+  file { $appdir:
     ensure => directory,
     owner  => hdo,
   }
@@ -20,6 +20,12 @@ class hdo::webhooks {
     logoutput => on_failure,
     notify    => Exec['bundle-install-hdo-webhook-deployer'],
     require   => Class['passenger']
+  }
+
+  file { [$logdir, $tmpdir]:
+    ensure  => directory,
+    owner   => hdo,
+    require => Exec['git-cloen-hdo-webhook-deployer'],
   }
 
   exec { 'bundle-install-hdo-webhook-deployer':

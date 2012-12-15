@@ -10,6 +10,8 @@ class munin::node(
     content => template('munin/munin-node.conf')
   }
 
+  # TODO: service resource for munin-node + restart on config change
+
   # default set of plugins
   munin::plugin { 'cpu': }
   munin::plugin { 'df': }

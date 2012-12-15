@@ -17,6 +17,7 @@ class munin::master(
 
   Package { ensure => present }
 
+  # TODO: service resource for munin-master + restart on config change
   file { '/etc/munin/munin.conf':
     ensure  => present,
     content => template('munin/munin.conf'),
