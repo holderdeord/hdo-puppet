@@ -30,6 +30,10 @@ class nagios::monitor {
     ensure => absent
   }
 
+  a2mod { 'rewrite':
+    ensure => present
+  }
+
   apache::vhost { 'nagios.holderdeord.no':
     vhost_name    => '*',
     port          => 80,
