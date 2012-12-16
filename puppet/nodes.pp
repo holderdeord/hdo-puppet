@@ -6,6 +6,8 @@ node 'ops1' {
   include munin::master
   include nagios::monitor
 
+  include graphite
+
   include hdo::webhooks
 }
 
