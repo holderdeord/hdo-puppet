@@ -3,7 +3,7 @@ class hdo::webapp::beta inherits hdo::webapp {
     warning("including hdo::webapp::beta, but hdo::params::environment == ${hdo::params::environment}")
   }
 
-  $listen      = '80'
+  $listen      = '0.0.0.0:80'
   $server_name = 'beta.holderdeord.no'
 
   class { 'passenger::nginx': port => $listen }

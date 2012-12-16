@@ -1,4 +1,4 @@
-class passenger::nginx($port = 80) inherits passenger {
+class passenger::nginx($listen = '0.0.0.0:80') inherits passenger {
   $root        = '/opt/nginx'
   $init_script = '/etc/init.d/nginx'
   $config_dir  = "${root}/conf"
@@ -6,7 +6,6 @@ class passenger::nginx($port = 80) inherits passenger {
   $sites_dir   = "${config_dir}/sites-enabled"
   $config      = "${config_dir}/nginx.conf"
   $daemon      = "${root}/sbin/nginx"
-  $listen      = $port
 
   exec { 'install-passenger-nginx':
     path      => ['/bin', '/usr/bin', '/usr/local/bin'],
@@ -69,5 +68,5 @@ class passenger::nginx($port = 80) inherits passenger {
     notify  => Service['nginx']
   }
 
-  class { 'munin::nginx': port => $listen }
+  class { 'munin::nginx': listen => $listen }
 }

@@ -1,4 +1,4 @@
-class munin::nginx($port = 80) {
+class munin::nginx($listen = '0.0.0.0:80') {
   include munin::node
 
   file { "${munin::params::plugin_conf_dir}/nginx":
@@ -8,7 +8,7 @@ class munin::nginx($port = 80) {
     mode    => '0644',
     content => "
 [nginx*]
-    env.url http://localhost:${port}/nginx_status
+    env.url http://${listen}/nginx_status
     env.ua nginx-status-verifier/0.1
 "
   }
