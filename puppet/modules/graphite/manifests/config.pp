@@ -17,7 +17,7 @@ class graphite::config inherits graphite::params {
     ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
-    mode    => '0644',
+    mode    => '0755',
     recurse => true,
     require => Exec['create-graphite-db-django']
   }
