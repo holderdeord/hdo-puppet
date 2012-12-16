@@ -6,7 +6,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   SetEnv LC_ALL en_US.UTF-8
 
   ServerName <%= srvname %>
-  DocumentRoot /var/cache/munin/www
+  DocumentRoot <%= docroot %>
 
   <Location />
     Options <%= options %>

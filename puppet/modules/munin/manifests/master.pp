@@ -35,6 +35,14 @@ class munin::master(
     logoutput => on_failure
   }
 
+  #
+  # use our custom apache config
+  #
+
+  file { '/etc/apache2/conf.d/munin'
+    ensure => absent
+  }
+
   apache::vhost { 'munin.holderdeord.no':
     vhost_name    => '*',
     port          => $port,
@@ -48,6 +56,4 @@ class munin::master(
     notify        => Service['httpd'],
     require       => Package[$package_list],
   }
-
-
 }

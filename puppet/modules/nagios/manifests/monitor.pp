@@ -8,7 +8,7 @@ class nagios::monitor {
     subscribe => [ Package['nagios3'], Package['nagios-plugins'] ],
   }
 
-  $htpasswd_path = '/etc/nagios/htpasswd.users'
+  $htpasswd_path = '/etc/apache2/nagios.htpasswd'
   $auth          = hiera('basic_auth', 'hdo hdo')
 
   exec { 'create-nagios-htpasswd':
@@ -16,6 +16,28 @@ class nagios::monitor {
     creates   => $htpasswd_path,
     require   => Package['nagios3'],
     logoutput => on_failure
+  }
+
+  #
+  # use our custom apache config
+  #
+
+  file { '/etc/apache2/conf.d/nagios3.conf'
+    ensure => absent
+  }
+
+  apache::vhost { 'nagios.holderdeord.no':
+    vhost_name    => '*',
+    port          => 80,
+    priority      => '60',
+    servername    => 'nagios.holderdeord.no',
+    serveradmin   => 'nagios.holderdeord.no',
+    template      => 'nagios/nagios_vhost.conf.erb',
+    docroot       => '/usr/share/nagios3/htdocs',
+    docroot_owner => 'root',
+    docroot_group => 'root',
+    notify        => Service['httpd'],
+    require       => Package['nagios3'],
   }
 
   # collect resources and populate /etc/nagios/nagios_*.cfg

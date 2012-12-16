@@ -1,0 +1,38 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+NameVirtualHost <%= vhost_name %>:<%= port %>
+<VirtualHost <%= vhost_name %>:<%= port %>>
+  SetEnv LC_ALL en_US.UTF-8
+
+  ServerName <%= srvname %>
+  DocumentRoot <%= docroot %>
+
+  ErrorLog <%= logroot %>/<%= name %>_error.log
+  LogLevel warn
+  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  ServerSignature Off
+
+  ScriptAlias /cgi-bin/nagios3 /usr/lib/cgi-bin/nagios3
+  ScriptAlias /nagios3/cgi-bin /usr/lib/cgi-bin/nagios3
+
+  <DirectoryMatch (/usr/share/nagios3/htdocs|/usr/lib/cgi-bin/nagios3|/etc/nagios3/stylesheets)>
+    Options FollowSymLinks
+
+    DirectoryIndex index.php index.html
+
+    AllowOverride AuthConfig
+    Order Allow,Deny
+    Allow From All
+
+    AuthName "Nagios Access"
+    AuthType Basic
+    AuthUserFile /etc/apache2/nagios.htpasswd
+    Require valid-user
+  </DirectoryMatch>
+
+  <Directory /usr/share/nagios3/htdocs>
+    Options +ExecCGI
+  </Directory>
+</VirtualHost>
+
