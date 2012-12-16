@@ -3,10 +3,10 @@ class hdo::webapp::staging inherits hdo::webapp {
     warning("including hdo::webapp::staging, but hdo::params::environment == ${hdo::params::environment}")
   }
 
-  $listen      = '127.0.0.1:8080' # varnish in front
+  $listen      = '8080' # varnish in front
   $server_name = 'staging.holderdeord.no'
 
-  class { 'passenger::nginx': listen => $listen }
+  class { 'passenger::nginx': port => $listen }
 
   file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
     ensure  => file,
