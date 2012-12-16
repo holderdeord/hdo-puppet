@@ -1,5 +1,6 @@
 {
   "logdir": "<%= logdir %>",
+  "statsd": "ops1.holderdeord.no:8125",
   "projects": {
     "holderdeord/hdo-site#master": {
       "directory": "<%= appdir %>",
