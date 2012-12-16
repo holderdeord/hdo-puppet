@@ -1,5 +1,5 @@
 #
-# {ops1,munin,puppet,hooks}.holderdeord.no
+# {ops1,munin,puppet,hooks,graphite,nagios}.holderdeord.no
 #
 
 node 'ops1' {
