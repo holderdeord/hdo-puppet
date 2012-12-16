@@ -23,7 +23,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 
     AuthName "Nagios Access"
     AuthType Basic
-    AuthUserFile /etc/apache2/nagios.htpasswd
+    AuthUserFile /etc/nagios3/htpasswd.users
     require valid-user
   </DirectoryMatch>
 

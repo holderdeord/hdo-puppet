@@ -12,7 +12,7 @@ class nagios::monitor {
   Nagios_host    <<||>> { notify => Service['nagios'] }
   Nagios_service <<||>> { notify => Service['nagios'] }
 
-  $htpasswd_path = '/etc/apache2/nagios.htpasswd'
+  $htpasswd_path = '/etc/nagios3/htpasswd.users'
   $auth          = hiera('basic_auth', 'hdo hdo')
 
   exec { 'create-nagios-htpasswd':
