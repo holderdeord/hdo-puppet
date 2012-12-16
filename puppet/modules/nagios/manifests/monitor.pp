@@ -13,10 +13,10 @@ class nagios::monitor {
   Nagios_service <<||>> { notify => Service['nagios'] }
 
   $htpasswd_path = '/etc/nagios3/htpasswd.users'
-  $auth          = hiera('basic_auth', 'hdo hdo')
+  $auth          = hiera('nagios_password', 'hdo123')
 
   exec { 'create-nagios-htpasswd':
-    command   => "htpasswd -b -s -c ${htpasswd_path} ${auth}",
+    command   => "htpasswd -b -c ${htpasswd_path} nagiosadmin ${auth}",
     creates   => $htpasswd_path,
     require   => Package['nagios3'],
     logoutput => on_failure
