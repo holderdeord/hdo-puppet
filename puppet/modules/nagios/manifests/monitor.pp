@@ -22,7 +22,7 @@ class nagios::monitor {
   # use our custom apache config
   #
 
-  file { '/etc/apache2/conf.d/nagios3.conf'
+  file { '/etc/apache2/conf.d/nagios3.conf':
     ensure => absent
   }
 

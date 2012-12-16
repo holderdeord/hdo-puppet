@@ -39,7 +39,7 @@ class munin::master(
   # use our custom apache config
   #
 
-  file { '/etc/apache2/conf.d/munin'
+  file { '/etc/apache2/conf.d/munin':
     ensure => absent
   }
 
