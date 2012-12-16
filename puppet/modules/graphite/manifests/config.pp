@@ -54,6 +54,7 @@ class graphite::config inherits graphite::params {
     mode    => '0644',
     source  => "${graphite::params::root}/conf/storage-schemas.conf.example",
     require => Class['graphite::install'],
+    notify  => Service['carbon-cache'],
   }
 
   $carbon_user = $graphite::params::owner
@@ -63,6 +64,7 @@ class graphite::config inherits graphite::params {
     mode    => '0644',
     content => template('graphite/carbon.conf.erb'),
     require => Class['graphite::install'],
+    notify  => Service['carbon-cache'],
   }
 
   file { '/etc/init.d/carbon-cache':
