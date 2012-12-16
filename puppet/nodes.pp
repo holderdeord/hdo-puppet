@@ -7,6 +7,7 @@ node 'ops1' {
   include nagios::monitor
 
   include graphite
+  include statsd
 
   include hdo::webhooks
 }
