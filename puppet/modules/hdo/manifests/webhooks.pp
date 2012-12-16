@@ -72,7 +72,7 @@ class hdo::webhooks {
   apache::vhost { 'hooks.holderdeord.no':
     vhost_name    => '*',
     port          => 80,
-    priority      => '80',
+    priority      => '10',
     servername    => 'hooks.holderdeord.no',
     serveradmin   => $hdo::params::admin_email,
     template      => 'hdo/apache-webhooks-vhost.conf.erb',

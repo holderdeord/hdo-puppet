@@ -8,6 +8,10 @@ class nagios::monitor {
     subscribe => [ Package['nagios3'], Package['nagios-plugins'] ],
   }
 
+  # collect resources and populate /etc/nagios/nagios_*.cfg
+  Nagios_host    <<||>> { notify => Service['nagios'] }
+  Nagios_service <<||>> { notify => Service['nagios'] }
+
   $htpasswd_path = '/etc/apache2/nagios.htpasswd'
   $auth          = hiera('basic_auth', 'hdo hdo')
 
@@ -40,7 +44,4 @@ class nagios::monitor {
     require       => Package['nagios3'],
   }
 
-  # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host    <<||>> { notify => Service['nagios'] }
-  Nagios_service <<||>> { notify => Service['nagios'] }
 }
