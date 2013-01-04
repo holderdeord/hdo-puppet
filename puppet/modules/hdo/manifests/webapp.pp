@@ -9,6 +9,7 @@ class hdo::webapp {
     'libxml2-dev',
     'libxslt1-dev',
     'imagemagick',
+    'libpq-dev',
   ]
 
   package { $requirements:
