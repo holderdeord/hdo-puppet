@@ -5,7 +5,8 @@
     "holderdeord/hdo-site#master": {
       "directory": "<%= appdir %>",
       "command": ["cap", "staging", "deploy:web:disable", "deploy:migrations", "deploy:web:enable"],
-      "token": "<%= token %>"
+      "token": "<%= token %>",
+      "timeout": 180
     }
   }
 }
