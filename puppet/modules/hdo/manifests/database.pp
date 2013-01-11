@@ -9,9 +9,9 @@ class hdo::database {
     file {'/home/hdo/nagioschecks/postgresql':
       ensure => present,
       source => 'puppet:///modules/hdo/nagioschecks/postgresql',
-      mode => '0700',
-      owner => 'hdo',
-      group => 'hdo'
+      mode   => '0700',
+      owner  => 'hdo',
+      group  => 'hdo'
     }
 
     service_name     => 'postgresql', # defaults to postgresql-9.1
