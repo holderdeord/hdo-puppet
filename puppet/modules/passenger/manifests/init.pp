@@ -2,6 +2,14 @@ class passenger {
   include ruby
   include passenger::params
 
+  file {"/home/hdo/nagioschecks/passenger":
+    ensure => present,
+    source => 'puppet:///modules/passenger/nagioschecks/passenger',
+    owner => 'hdo',
+    group => 'hdo',
+    mode => '0700,
+  }
+
   package { 'libcurl4-openssl-dev':
     ensure => installed,
   }

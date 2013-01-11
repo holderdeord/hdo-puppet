@@ -1,0 +1,14 @@
+#!/bin/bash
+procs=$(ps aux) 
+echo $procs | grep Passenger > /dev/null 2>&1
+
+retcode=$?
+
+if [ $retcode -gt 0 ]
+then
+  echo "Ingen Passenger prosess funnet"
+  exit 2
+else
+  echo "Passenger process funnet"
+  exit 0
+fi
