@@ -4,7 +4,7 @@ class nagios::target {
   file {'/home/hdo/nagioschecks':
     ensure => directory,
   }
-  
+ 
   file {'/home/hdo/nagios.sh':
     ensure => present,
     source => 'puppet:///modules/nagios/nagios.sh',
