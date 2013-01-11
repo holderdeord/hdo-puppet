@@ -1,5 +1,18 @@
 # This class exports nagios host and service check resources
 class nagios::target {
+
+  file {'/home/hdo/nagioschecks':
+    ensure => directory,
+  }
+ 
+  file {'/home/hdo/nagios.sh':
+    ensure => present,
+    source => 'puppet:///modules/nagios/nagios.sh',
+    owner => 'hdo',
+    group => 'hdo',
+    mode => '0700'
+  }
+
   @@nagios_host { $::fqdn:
     ensure  => present,
     alias   => $::hostname,
@@ -21,6 +34,14 @@ class nagios::target {
     host_name           => $::fqdn,
     notification_period => '24x7',
     service_description => "${::hostname}_check_http",
+  }
+
+  @@nagios_service { "check_over_ssh${::hostname}":
+    check_command       => "check_over_ssh",
+    use                 => 'generic-service',
+    host_name           => $::fqdn,
+    notification_period => '24x7',
+    service_description => "${::hostname}_check_over_ssh",
   }
 
 }
