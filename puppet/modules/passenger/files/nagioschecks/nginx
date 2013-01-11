@@ -1,0 +1,14 @@
+#!/bin/bash
+procs=$(ps aux) 
+echo $procs | grep nginx > /dev/null 2>&1
+
+retcode=$?
+
+if [ $retcode -gt 0 ]
+then
+  echo "Ingen nginx prosess funnet"
+  exit 2
+else
+  echo "nginx process funnet"
+  exit 0
+fi
