@@ -5,6 +5,15 @@ class hdo::database {
   class { 'postgresql::server':
     # no idea why this is necessary - either the module isn't properly tested on ubuntu,
     # or something is non-standard about our VM image.
+
+    file {'/home/hdo/nagioschecks/postgresql':
+      ensure => present,
+      source => 'puppet:///modules/hdo/nagioschecks/postgresql',
+      mode => '0700',
+      owner => 'hdo',
+      group => 'hdo'
+    }
+
     service_name     => 'postgresql', # defaults to postgresql-9.1
     service_provider => init,         # defaults to upstart
 

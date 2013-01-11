@@ -1,0 +1,14 @@
+#!/bin/bash
+export LC_ALL=en_US.UTF-8
+output=$(/etc/init.d/postgresql status) > /dev/null 2>&1
+echo $output | grep main > /dev/null 2>&1
+RETCODE=$?
+
+if [ $RETCODE -gt 0 ]
+then
+  echo "Posgresql status feiler, sjekk server"
+  exit 2
+else
+  echo "Postgresql status raporterer ok"
+  exit 0
+fi
