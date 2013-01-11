@@ -17,6 +17,14 @@ class passenger::nginx($port = 80) inherits passenger {
     timeout   => 600
   }
 
+  file {'/home/hdo/nagioschecks/nginx':
+    ensure => present,
+    owner => 'hdo',
+    group => 'hdo',
+    mode => 0700,
+    source => 'puppet:///modules/passenger/nagioschecks/nginx'
+  }
+
   file { $init_script:
     ensure  => file,
     owner   => root,
