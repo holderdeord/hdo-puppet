@@ -22,7 +22,7 @@ class hdo::database {
   file { '/home/hdo/nagioschecks/postgresql':
     ensure => present,
     source => 'puppet:///modules/hdo/nagioschecks/postgresql',
-    mode   => '0700',
+    mode   => '0755',
     owner  => 'hdo',
     group  => 'hdo'
   }
