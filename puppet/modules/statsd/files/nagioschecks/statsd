@@ -1,0 +1,15 @@
+#!/bin/bash
+
+output=$(/sbin/status statsd)
+echo $output | grep 'running' > /dev/null 2>&1
+
+retcode=$?
+
+if [ $retcode -gt 0 ]
+then
+  echo "status statsd raporterer ikke ok"
+  exit 2
+else
+  echo "status statsd raporterer ok"
+  exit 0
+fi
