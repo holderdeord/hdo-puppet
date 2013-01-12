@@ -1,5 +1,10 @@
 # This class exports nagios host and service check resources
 class nagios::target {
+
+  package { 'nagios-plugins':
+    ensure => installed
+  }
+
   file {'/home/hdo/nagioschecks':
     ensure => directory,
   }
@@ -41,6 +46,14 @@ class nagios::target {
     host_name           => $::fqdn,
     notification_period => '24x7',
     service_description => "${::hostname}_check_over_ssh",
+  }
+
+  @@nagios_service { "remote_disk_${::hostname}":
+    check_command       => 'remote_disk!22!20%!10%!/',
+    use                 => 'generic-service',
+    host_name           => $::fqdn,
+    notification_period => '24x7',
+    service_description => "${::hostname}_remote_disk",
   }
 }
 
