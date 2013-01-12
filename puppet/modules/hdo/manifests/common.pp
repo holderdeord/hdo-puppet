@@ -70,7 +70,7 @@ class hdo::common {
     ensure => present,
     user   => $hdo::params::user,
     type   => 'ssh-rsa',
-    key    => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDSYddSmN5x3TOb5y/b1VjM4Kbj+FDtYM/putIEcXCPqlwMu29THjKOqg9FUqj21oRckbPEVMxU+ouKV8Siauz5jcFxcfaJwN39W2yerpNchOKL4v8MYE6mAL4PiYcQhWe4Ynv7n4Ivlk2BpR4mV5qZ4AHHrU7m66ZcBeLkgWtDDSDuXMqT5G0FtZCRQVswu8XV0lOeKe1aEOMJIB4mipIgq8Y7TaN4uN8rpMjGuY34zZOzCp0Uf3KUg2LTn6Mwau5ZDOj9jz+fUixojdbi0J1kf18iL6EQWj5dc2vPpWGessW45VHruCQHnsAdfcXesqqDCRBfUuXG6L4baEHg9tdT ops@holderdeord.no'
+    key    => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDSYddSmN5x3TOb5y/b1VjM4Kbj+FDtYM/putIEcXCPqlwMu29THjKOqg9FUqj21oRckbPEVMxU+ouKV8Siauz5jcFxcfaJwN39W2yerpNchOKL4v8MYE6mAL4PiYcQhWe4Ynv7n4Ivlk2BpR4mV5qZ4AHHrU7m66ZcBeLkgWtDDSDuXMqT5G0FtZCRQVswu8XV0lOeKe1aEOMJIB4mipIgq8Y7TaN4uN8rpMjGuY34zZOzCp0Uf3KUg2LTn6Mwau5ZDOj9jz+fUixojdbi0J1kf18iL6EQWj5dc2vPpWGessW45VHruCQHnsAdfcXesqqDCRBfUuXG6L4baEHg9tdT'
   }
 
 
