@@ -1,0 +1,16 @@
+#!/bin/bash
+
+output=$(GET -dS -t 5  http://localhost:9200)
+echo $output | grep '200 OK' > /dev/null 2>&1
+
+retcode=$?
+
+if [ $retcode -gt 0 ]
+then
+  echo "Får ikke http 200 kode fra elsaticsearch"
+  exit 2
+else
+  echo "elasticsearch svarer 200"
+  exit 0
+fi
+
