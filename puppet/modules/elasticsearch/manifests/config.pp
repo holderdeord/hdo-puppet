@@ -22,4 +22,12 @@ class elasticsearch::config inherits elasticsearch::params {
     mode    => '0644',
     content => template('elasticsearch/logging.yml.erb')
   }
+
+  file { '/home/hdo/nagioschecks/elasticsearch':
+    ensure => present,
+    mode   => '0700',
+    owner  => 'hdo',
+    group  => 'hdo',
+    source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch'
+  }
 }
