@@ -55,5 +55,13 @@ class nagios::target {
     notification_period => '24x7',
     service_description => "${::hostname}_remote_disk",
   }
+
+  @@nagios_service { "remote_load_${::hostname}":
+    check_command       => 'remote_load!22!3.0,2.0,1.0!4.0,2.0,1.0',
+    use                 => 'generic-service',
+    host_name           => $::fqdn,
+    notification_period => '24x7',
+    service_description => "${::hostname}_remote_load",
+  }
 }
 
