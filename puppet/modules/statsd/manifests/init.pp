@@ -17,6 +17,14 @@ class statsd(
     ensure => directory
   }
 
+  file { '/home/hdo/nagioschecks/statsd':
+    ensure => present,
+    mode   => '0755',
+    owner  => 'hdo',
+    group  => 'hdo',
+    source => 'puppet:///modules/statsd/nagioschecks/statsd'
+  }
+
   file { '/etc/statsd/config.js':
     ensure  => file,
     mode    => '0644',
