@@ -1,0 +1,124 @@
+backend default {
+    .host = "127.0.0.1";
+    .port = "8080";
+
+    # https://www.varnish-cache.org/trac/wiki/BackendPolling
+    .probe = {
+      .url       = "/healthz";
+      .timeout   = 2s;
+      .interval  = 1s;
+      .window    = 10;
+      .threshold = 8;
+    }
+}
+
+# NOTE: vcl_recv is called at the beginning of a request, after the complete
+# request has been received and parsed. Its purpose is to decide whether or not
+# to serve the request, how to do it, and, if applicable, which backend to use.
+sub vcl_recv {
+  # If the backend is healthy, only accept objects that are 30 seconds old,
+  # but if the backend is sick, accept objects that are up to an hour old.
+  # https://www.varnish-cache.org/trac/wiki/VCLExampleGrace
+  if (req.backend.healthy) {
+    set req.grace = 30s;
+  } else {
+    set req.grace = 1h;
+  }
+
+  # Normalize Accept-Encoding to prevent duplicates in the cache
+  # https://www.varnish-cache.org/trac/wiki/VCLExampleNormalizeAcceptEncoding
+  if (req.http.Accept-Encoding) {
+    if (req.http.Accept-Encoding ~ "gzip") {
+      set req.http.Accept-Encoding = "gzip";
+    } elsif (req.http.Accept-Encoding ~ "deflate") {
+      set req.http.Accept-Encoding = "deflate";
+    } else {
+      # unkown algorithm
+      remove req.http.Accept-Encoding;
+    }
+  }
+
+  # This rule is to insert the client's ip address into the request header
+  if (req.restarts == 0) {
+    if (req.http.x-forwarded-for) {
+      set req.http.X-Forwarded-For = req.http.X-Forwarded-For + ", " + client.ip;
+    } else {
+      set req.http.X-Forwarded-For = client.ip;
+    }
+  }
+
+  # Force lookup if the request is a no-cache request from the client
+  # IE - shift-reload causes cache refresh - We may not want this in
+  # production but useful during initial deployment and testing
+  if (req.http.Cache-Control ~ "no-cache") {
+    ban_url(req.url);
+  }
+
+  # Don't cache POST, PUT, or DELETE requests
+  if (req.request == "POST" || req.request == "PUT" || req.request == "DELETE") {
+    return(pass);
+  }
+
+  # Strip cookies from static content
+  if (req.request == "GET" && req.url ~ "\.(png|gif|jpg|swf|css|js|eot|otf|ttf|woff)$") {
+    unset req.http.cookie;
+  }
+
+  # We will try to retrieve every request from the cache. There will be no
+  # intelligence on the varnish side to determine whether to look or not look
+  # at the cache.
+  return(lookup);
+}
+
+sub vcl_pipe {
+  # Note that only the first request to the backend will have
+  # X-Forwarded-For set.  If you use X-Forwarded-For and want to
+  # have it set for all requests, make sure to have:
+  # set bereq.http.connection = "close";
+  # here.  It is not set by default as it might break some broken web
+  # applications, like IIS with NTLM authentication.
+  set bereq.http.connection = "close";
+  return(pipe);
+}
+
+# NOTE: vcl_fetch is called after a document has been successfully retrieved
+# from the backend. Normal tasks her are to alter the response headers, trigger
+# ESI processing, try alternate backend servers in case the request failed.
+sub vcl_fetch {
+  # Keep objects 1 hour in cache past their expiry time. This allows varnish
+  # to server stale content if the backend is sick. Should be set to the maximum
+  # value req.grace (above) will ever have.
+  set beresp.grace = 1h;
+
+  # If header specifies "no-cache", don't cache.
+  if (
+    beresp.http.Pragma        ~ "no-cache" ||
+    beresp.http.Cache-Control ~ "no-cache" ||
+    beresp.http.Cache-Control ~ "private"
+  ) {
+    return(hit_for_pass);
+  }
+
+  # If header specifies "max-age", remove any cookie and deliver into the cache.
+  # The idea here is to trust the backend. If the backend set a max-age in
+  # the Cache-Control header, then the response should be cached even if there
+  # is a Set-Cookie header. The cleaner way to handle this is the not set a
+  # Set-Cookie header in the backend, but unfortunately Rails always sets one.
+  if (beresp.http.Cache-Control ~ "max-age") {
+     unset beresp.http.Set-Cookie;
+     return(deliver);
+  }
+
+  # Do not deliver into cache otherwise.
+  return(hit_for_pass);
+}
+
+sub vcl_deliver {
+  # The below provides custom headers to indicate whether the response came from
+  # varnish cache or directly from the app.
+  if (obj.hits > 0) {
+    set resp.http.X-Varnish-Cache = "HIT";
+  } else {
+    set resp.http.X-Varnish-Cache = "MISS";
+  }
+}

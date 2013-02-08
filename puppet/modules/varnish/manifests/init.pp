@@ -38,6 +38,16 @@ class varnish(
     require => Package['varnish'],
   }
 
+  file { '/etc/varnish/default.vcl':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/varnish/default.vcl',
+    require => Package['varnish'],
+    notify  => Service['varnish'],
+  }
+
   exec { 'update-sysctl':
     command     => '/sbin/sysctl -p /etc/sysctl.conf',
     subscribe   => File['/etc/sysctl.conf'],
@@ -49,7 +59,8 @@ class varnish(
     subscribe => Package['varnish'],
     require   => [
       Package['varnish'],
-      File['/etc/sysctl.conf']
+      File['/etc/sysctl.conf'],
+      File['/etc/varnish/default.vcl']
     ],
   }
 
