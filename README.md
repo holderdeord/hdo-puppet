@@ -89,8 +89,8 @@ Launch the installation of the actual `hdo-site` code:
 
     $ cd ../hdo-site
     $ bundle install
-    $ VAGRANT=1 cap deploy:setup deploy:cold # only needed first time
-    $ VAGRANT=1 cap deploy
+    $ cap vagrant deploy:setup deploy:cold # only needed first time
+    $ cap vagrant deploy
 
 ### Production
 
