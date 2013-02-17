@@ -7,7 +7,7 @@ retcode=$?
 
 if [ $retcode -gt 0 ]
 then
-  echo "Får ikke http 200 kode fra elsaticsearch"
+  echo "Får ikke http 200 kode fra elasticsearch"
   exit 2
 else
   echo "elasticsearch svarer 200"
