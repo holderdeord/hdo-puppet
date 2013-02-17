@@ -126,7 +126,7 @@ the permission should be writable by root and readable by the puppet group:
     $ chown root:puppet /etc/puppet/hieradata/*
     $ chmod 0640 /etc/puppet/hieradata/*
 
-####
+#### Setting up agent on a new server
 
 Install Puppet >= 3.0:
 
