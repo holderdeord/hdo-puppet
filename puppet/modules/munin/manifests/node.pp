@@ -7,10 +7,13 @@ class munin::node(
 
   file { '/etc/munin/munin-node.conf':
     ensure  => present,
-    content => template('munin/munin-node.conf')
+    content => template('munin/munin-node.conf'),
+    notify  => Service['munin-node'],
   }
 
-  # TODO: service resource for munin-node + restart on config change
+  service { 'munin-node':
+    ensure => running,
+  }
 
   # default set of plugins
   munin::plugin { 'cpu': }
