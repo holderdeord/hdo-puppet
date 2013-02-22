@@ -55,6 +55,31 @@ node 'hetzner03' {
   }
 }
 
+#
+# cache servers
+#
+
+node 'cache1' {}
+
+#
+# app servers
+#
+
+node 'app1' {}
+
+#
+# elasticsearch servers
+#
+
+node 'es1' {}
+
+#
+# db servers
+#
+
+node 'db1' {}
+
+
 node 'hdo-staging.nuug.no' {
   include postfix
   include elasticsearch
