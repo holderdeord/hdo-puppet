@@ -59,25 +59,33 @@ node 'hetzner03' {
 # cache servers
 #
 
-node 'cache1' {}
+node 'cache1' {
+  include munin::node
+}
 
 #
 # app servers
 #
 
-node 'app1' {}
+node 'app1', 'app2' {
+  include munin::node
+}
 
 #
 # elasticsearch servers
 #
 
-node 'es1' {}
+node 'es1' {
+  include munin::node
+}
 
 #
 # db servers
 #
 
-node 'db1' {}
+node 'db1' {
+  include munin::node
+}
 
 
 node 'hdo-staging.nuug.no' {
