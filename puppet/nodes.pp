@@ -85,6 +85,7 @@ node 'es1' {
 
 node 'db1' {
   include munin::node
+  include hdo::database
 }
 
 
