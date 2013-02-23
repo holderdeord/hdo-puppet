@@ -128,6 +128,8 @@ the permission should be writable by root and readable by the puppet group:
 
 #### Setting up agent on a new server
 
+[This script](https://gist.github.com/jarib/ed769214bac6a10a12b0) automates the process below.
+
 Install Puppet >= 3.0:
 
     $ wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
