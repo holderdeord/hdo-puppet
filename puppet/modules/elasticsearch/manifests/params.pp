@@ -5,7 +5,7 @@ class elasticsearch::params {
     'java7-runtime'
   ]
 
-  $host         = '0.0.0.0' 
+  $host         = '0.0.0.0'
   $root_logger  = 'DEBUG, console, file' # default INFO
 
   case $::hostname {
