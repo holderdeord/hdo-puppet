@@ -77,6 +77,8 @@ node 'app1', 'app2' {
 
 node 'es1' {
   include munin::node
+  include elasticsearch
+  include elasticsearch::emailmonitor
 }
 
 #
