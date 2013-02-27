@@ -16,7 +16,13 @@ class hdo::webapp {
     ensure => 'installed'
   }
 
-  file { [ $hdo::params::deploy_root, $hdo::params::files_root ]:
+  file {
+    [
+      $hdo::params::deploy_root,
+      $hdo::params::files_root,
+      $hdo::params::shared_root,
+      $hdo::params::config_root
+    ]:
     ensure  => 'directory',
     mode    => '0775',
     owner   => 'hdo'
@@ -28,15 +34,22 @@ class hdo::webapp {
     content => template('hdo/profile.sh')
   }
 
-  file { '/home/hdo/.hdo-database-pg.yml':
+  file { "${hdo::params::config_root}/database.yml":
     owner   => 'hdo',
     mode    => '0600',
     content => template('hdo/database.yml'),
-    require => File['/home/hdo']
+    require => File[$hdo::params::config_root]
+  }
+
+  file { "${hdo::params::config_root}/env.yml":
+    owner   => 'hdo',
+    mode    => '0600',
+    content => template('hdo/env.yml'),
+    require => File[$hdo::params::config_root]
   }
 
   logrotate::rule { 'hdo-site':
-    path         => "${hdo::params::deploy_root}/shared/log/*.log",
+    path         => "${hdo::params::shared_root}/log/*.log",
     compress     => true,
     copytruncate => true,
     dateext      => true,
