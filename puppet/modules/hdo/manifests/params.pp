@@ -7,6 +7,7 @@ class hdo::params {
   $files_root            = "${webapp_root}/files"
   $deploy_root           = "${webapp_root}/hdo-site"
   $shared_root           = "${deploy_root}/shared"
+  $config_root           = "${deploy_root}/shared/config"
   $app_root              = "${deploy_root}/current"
   $public_dir            = "${app_root}/public"
 
