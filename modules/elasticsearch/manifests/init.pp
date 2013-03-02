@@ -1,3 +1,5 @@
 class elasticsearch {
-  include elasticsearch::config, elasticsearch::install, elasticsearch::service
+  include elasticsearch::install
+  include elasticsearch::config
+  include elasticsearch::service
 }
