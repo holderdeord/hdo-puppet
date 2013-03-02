@@ -11,6 +11,5 @@ notifications:
     on_failure: change
     template:
       - "%{author} | %{commit} | %{message} | %{build_url}"
-script: 
-  - ./bin/lint.sh
-  - 'bundle exec puppet parser validate `find puppet/modules/{hdo,ruby,passenger,elasticsearch,graphite,munin,nagios,nodejs,ruby,statsd,varnish} -name "*.pp"`'
+script:
+  - script/lint

@@ -1,5 +1,5 @@
 #!/bin/bash
-procs=$(ps aux) 
+procs=$(ps aux)
 echo $procs | grep nginx > /dev/null 2>&1
 
 retcode=$?

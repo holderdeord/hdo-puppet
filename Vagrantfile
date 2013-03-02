@@ -9,8 +9,8 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 8125, 8125, :protocol => "udp"
 
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "puppet"
-    puppet.module_path    = "puppet/modules"
+    puppet.manifests_path = "manifests"
+    puppet.module_path    = "modules"
     puppet.manifest_file  = "vagrant.pp"
 
     puppet.options = '--show_diff'

@@ -1,31 +1,36 @@
-Holder de Ord VM setup repository
-=================================
+HDO server setup
+================
 
 [![Build Status](https://secure.travis-ci.org/holderdeord/hdo-puppet.png)](http://travis-ci.org/holderdeord/hdo-puppet)
 
-### Installing Vagrant
+### Getting started
 
-Full tutorial about Vagrant can be found at http://devops.me/2011/10/05/vagrant/
+You need Ruby/Rubygems installed. Then simply run:
 
-    $ sudo apt-get install vagrant
+    $ script/bootstrap
 
-or:
+To get familiar with our setup, look at [nodes.pp](manifests/nodes.pp)
 
-    $ [sudo] gem install vagrant
+### Puppet code style
 
-Note that the `hdo-devel` VM image *requires at least Virtualbox 4.1.16*.
-For installation instructions, see [this link](http://www.ubuntugeek.com/virtualbox-4-1-16-released-and-ubuntu-installation-instructions-included.html).
+To ensure a consistent code style we use [puppet-lint](https://github.com/rodjek/puppet-lint).
+This is also part of the [Travis CI](http://travis-ci.org/holderdeord/hdo-puppet) build.
 
-### Bring up the VM instance
+To run syntax check + lint, use:
 
-After the inital checkout of the repo, you need check out the required submodules:
+    $ script/lint
 
-    $ git submodule init
-    $ git submodule update
+### Dependencies
+
+Dependencies are managed using [librarian-puppet](https://github.com/rodjek/librarian-puppet).
+
+### Testing with Vagrant
+
+Install Vagrant from [http://vagrantup.com].
 
 Configure what you want to run on the VM:
 
-    $ cp puppet/vagrant.pp.example puppet/vagrant.pp
+    $ cp manifests/vagrant.pp.example manifests/vagrant.pp
 
 After this, bringing up the VM is pretty simple (but can take some time depending on your hardware):
 
@@ -40,43 +45,13 @@ If you just want to provision an already running VM:
 
     $ vagrant provision
 
-### Puppet code style
+### Deploying hdo-site to Vagrant
 
-To ensure a consistent code style we use the [puppet-lint](https://github.com/rodjek/puppet-lint) tool.
-The `lint.sh` script included in the repo will lint only the modules we maintain, and is used on [Travis CI](http://travis-ci.org/holderdeord/hdo-puppet).
-
-The tool requires a Ruby install + the puppet-lint gem:
-
-    $ [sudo] gem install puppet-lint
-    $ bin/lint.sh
-
-### Dependencies
-
-We currently manage dependencies using git submodules. To add a new dependency:
-
-1. `git submodule add [repository] puppet/modules/<name>`
-2. Edit `bin/lint.sh` to exclude the new repo.
-
-### Test the configuration
-
-#### Automatically
-
-The `test.sh` script can do this for you. By default, it will destroy and
-recreate the VM, provision it, set up password-less login, and do a cold deploy of the app (assumed to be in `../hdo-site`):
-
-    $ bin/test.sh
-
-If you want to skip the re-creation of the VM (i.e you've already done a cold deploy):
-
-    $ DEPLOY_ONLY=1 bin/test.sh
-
-#### Manually
-
-Check out the main website code repository:
+Check out the main website code repo:
 
     $ git checkout https://github.com/holderdeord/hdo-site.git ../hdo-site
 
-Bring up the VM instance:
+Configure manifests/vagrant.pp with the necessary dependencies, then bring up the VM instance:
 
     $ vagrant up
 
@@ -85,7 +60,7 @@ The password for these commands is 'vagrant':
 
     $ cat ~/.ssh/id_dsa.pub | ssh -p 2222 vagrant@localhost "cat > ./key; sudo mkdir -p /home/hdo/.ssh; sudo mv ./key /home/hdo/.ssh/authorized_keys; sudo chown -R hdo:hdo /home/hdo/.ssh"
 
-Launch the installation of the actual `hdo-site` code:
+Deploy hdo-site:
 
     $ cd ../hdo-site
     $ bundle install
@@ -144,13 +119,3 @@ Configure the node to talk to the puppetmaster by adding the following to /etc/p
     pluginsync = true
 
 Then do the sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
-
-### Creating the Vagrant .box image
-
-If you can find a vagrant base box on www.vagrantbox.es, then
-it's quite easy. Unfortunately, there is none available (at least
-as of July 2012), so I had to build a custom image based on
-Ubuntu 12.04 server LTS i386.
-
-That's the image I was referring to earlier in this document
-when I talked about `hdo-devel.box` or `hdo-devel`.

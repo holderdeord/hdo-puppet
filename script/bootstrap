@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+ROOT="$(dirname $0)/.."
+
+gem spec bundler -v '~> 1.0' > /dev/null 2>&1
+
+if [[ "$?" != "0" ]]; then
+  if ruby -rubygems -e 'Gem.path.any? { |e| File.writable?(e) } or exit 1'; then
+    gem install --no-rdoc --no-ri bundler
+  else
+    sudo gem install --no-rdoc --no-ri bundler
+  fi
+fi
+
+# We don't want old config hanging around.
+rm -rf .bundle/config
+rm -rf .librarian/puppet/config
+
+# Bundle install unless we're already up to date.
+bundle install --binstubs bin --path .bundle --quiet "$@"
+
+# Install puppet modules
+${ROOT}/bin/librarian-puppet install
