@@ -7,7 +7,7 @@ class passenger {
     source => 'puppet:///modules/passenger/nagioschecks/passenger',
     owner  => 'hdo',
     group  => 'hdo',
-    mode   => '0700',
+    mode   => '0755',
   }
 
   package { 'libcurl4-openssl-dev':
