@@ -9,6 +9,6 @@ then
   echo "Posgresql status feiler, sjekk server"
   exit 2
 else
-  echo "Postgresql status raporterer ok"
+  echo "Postgresql status rapporterer ok"
   exit 0
 fi

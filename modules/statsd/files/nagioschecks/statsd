@@ -7,9 +7,9 @@ retcode=$?
 
 if [ $retcode -gt 0 ]
 then
-  echo "status statsd raporterer ikke ok"
+  echo "status statsd rapporterer ikke ok"
   exit 2
 else
-  echo "status statsd raporterer ok"
+  echo "status statsd rapporterer ok"
   exit 0
 fi
