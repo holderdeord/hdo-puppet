@@ -24,6 +24,11 @@ To run syntax check + lint, use:
 
 Dependencies are managed using [librarian-puppet](https://github.com/rodjek/librarian-puppet).
 
+To update a dependency, edit the [Puppetfile](Puppetfile), then run:
+
+	$ script/bootstrap
+
+
 ### Testing with Vagrant
 
 Install Vagrant from [http://vagrantup.com].
