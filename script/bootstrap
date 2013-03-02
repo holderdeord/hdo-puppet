@@ -1,8 +1,10 @@
 #!/bin/bash
 
 set -e
-ROOT="$(dirname $0)/.."
+[ -n "$DEBUG" ] && set -x
 
+
+ROOT="$(dirname $0)/.."
 gem spec bundler -v '~> 1.0' > /dev/null 2>&1
 
 if [[ "$?" != "0" ]]; then
