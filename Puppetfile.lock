@@ -1,0 +1,118 @@
+FORGE
+  remote: http://forge.puppetlabs.com
+  specs:
+    puppetlabs/firewall (0.1.1)
+    puppetlabs/stdlib (3.2.0)
+
+GIT
+  remote: git://github.com/puppetlabs/puppet-postgresql.git
+  ref: 847a5919dde8b25766408b2a37034a9a00be55d3
+  sha: 847a5919dde8b25766408b2a37034a9a00be55d3
+  specs:
+    postgresql (0.3.0)
+      puppetlabs/firewall (>= 0.0.4)
+      puppetlabs/stdlib (>= 2.4.0)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-apache.git
+  ref: 66d5ce9aef8ef6c589a36323bba2879dd0d66fd1
+  sha: 66d5ce9aef8ef6c589a36323bba2879dd0d66fd1
+  specs:
+    apache (0.4.0)
+      puppetlabs/firewall (>= 0.0.4)
+      puppetlabs/stdlib (>= 2.2.1)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-firewall.git
+  ref: 63fd4339faf10721020bf49439cd4462c725151a
+  sha: 63fd4339faf10721020bf49439cd4462c725151a
+  specs:
+    firewall (0.0.4)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
+  ref: 6961179007dce76d7fb9bd1fc361273acb4129a7
+  sha: 6961179007dce76d7fb9bd1fc361273acb4129a7
+  specs:
+    stdlib (3.0.1)
+
+GIT
+  remote: git://github.com/rodjek/puppet-logrotate.git
+  ref: 1a8431fda63809794e0732a6b0ae4bd6f968b16e
+  sha: 1a8431fda63809794e0732a6b0ae4bd6f968b16e
+  specs:
+    logrotate (1.0.2)
+
+PATH
+  remote: hdo-modules/elasticsearch
+  specs:
+    elasticsearch (0.0.1)
+
+PATH
+  remote: hdo-modules/graphite
+  specs:
+    graphite (0.0.1)
+
+PATH
+  remote: hdo-modules/hdo
+  specs:
+    hdo (0.0.1)
+
+PATH
+  remote: hdo-modules/munin
+  specs:
+    munin (0.0.1)
+
+PATH
+  remote: hdo-modules/nagios
+  specs:
+    nagios (0.0.1)
+
+PATH
+  remote: hdo-modules/nodejs
+  specs:
+    nodejs (0.0.1)
+
+PATH
+  remote: hdo-modules/passenger
+  specs:
+    passenger (0.0.1)
+
+PATH
+  remote: hdo-modules/postfix
+  specs:
+    postfix (0.0.1)
+
+PATH
+  remote: hdo-modules/ruby
+  specs:
+    ruby (0.0.1)
+
+PATH
+  remote: hdo-modules/statsd
+  specs:
+    statsd (0.0.1)
+
+PATH
+  remote: hdo-modules/varnish
+  specs:
+    varnish (0.0.1)
+
+DEPENDENCIES
+  apache (>= 0)
+  elasticsearch (>= 0)
+  firewall (>= 0)
+  graphite (>= 0)
+  hdo (>= 0)
+  logrotate (>= 0)
+  munin (>= 0)
+  nagios (>= 0)
+  nodejs (>= 0)
+  passenger (>= 0)
+  postfix (>= 0)
+  postgresql (>= 0)
+  ruby (>= 0)
+  statsd (>= 0)
+  stdlib (>= 0)
+  varnish (>= 0)
+

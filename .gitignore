@@ -1,4 +1,9 @@
-.vagrant
-Gemfile.lock
-.tm_properties
-puppet/vagrant.pp
+/.vagrant
+/Gemfile.lock
+/.tm_properties
+/manifests/vagrant.pp
+/.tmp/
+/modules/
+/bin/
+/.bundle
+/.librarian
