@@ -3,7 +3,7 @@
 /.tm_properties
 /manifests/vagrant.pp
 /.tmp/
-/modules/
+/third-party
 /bin/
 /.bundle
 /.librarian

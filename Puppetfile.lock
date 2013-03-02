@@ -43,76 +43,10 @@ GIT
   specs:
     logrotate (1.0.2)
 
-PATH
-  remote: hdo-modules/elasticsearch
-  specs:
-    elasticsearch (0.0.1)
-
-PATH
-  remote: hdo-modules/graphite
-  specs:
-    graphite (0.0.1)
-
-PATH
-  remote: hdo-modules/hdo
-  specs:
-    hdo (0.0.1)
-
-PATH
-  remote: hdo-modules/munin
-  specs:
-    munin (0.0.1)
-
-PATH
-  remote: hdo-modules/nagios
-  specs:
-    nagios (0.0.1)
-
-PATH
-  remote: hdo-modules/nodejs
-  specs:
-    nodejs (0.0.1)
-
-PATH
-  remote: hdo-modules/passenger
-  specs:
-    passenger (0.0.1)
-
-PATH
-  remote: hdo-modules/postfix
-  specs:
-    postfix (0.0.1)
-
-PATH
-  remote: hdo-modules/ruby
-  specs:
-    ruby (0.0.1)
-
-PATH
-  remote: hdo-modules/statsd
-  specs:
-    statsd (0.0.1)
-
-PATH
-  remote: hdo-modules/varnish
-  specs:
-    varnish (0.0.1)
-
 DEPENDENCIES
   apache (>= 0)
-  elasticsearch (>= 0)
   firewall (>= 0)
-  graphite (>= 0)
-  hdo (>= 0)
   logrotate (>= 0)
-  munin (>= 0)
-  nagios (>= 0)
-  nodejs (>= 0)
-  passenger (>= 0)
-  postfix (>= 0)
   postgresql (>= 0)
-  ruby (>= 0)
-  statsd (>= 0)
   stdlib (>= 0)
-  varnish (>= 0)
 

@@ -10,7 +10,7 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
-    puppet.module_path    = "modules"
+    puppet.module_path    = "modules:third-party"
     puppet.manifest_file  = "vagrant.pp"
 
     puppet.options = '--show_diff'

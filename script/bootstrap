@@ -22,5 +22,5 @@ rm -rf .librarian/puppet/config
 # Bundle install unless we're already up to date.
 bundle install --binstubs bin --path .bundle --quiet "$@"
 
-# Install puppet modules
-${ROOT}/bin/librarian-puppet install
+# Install third-party puppet modules
+${ROOT}/bin/librarian-puppet install --path=third-party
