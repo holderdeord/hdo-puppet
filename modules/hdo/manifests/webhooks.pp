@@ -3,9 +3,11 @@ class hdo::webhooks {
   include passenger::apache
 
   $appdir = '/opt/hdo-site'
-  $root   = '/webapps/hdo-webhook-deployer/current'
-  $logdir = "${root}/log"
-  $tmpdir = "${root}/tmp"
+  $root   = '/webapps/hdo-webhook-deployer'
+  $current = "${root}/current"
+  $logdir = "${current}/log"
+  $tmpdir = "${current}/tmp"
+
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
 
   file { $appdir:
@@ -33,7 +35,7 @@ class hdo::webhooks {
   }
 
   logrotate::rule { 'hdo-webhook-deployer':
-    path         => "${logdir}/*",
+    path         => "${root}/shared/log/*",
     compress     => true,
     copytruncate => true,
     dateext      => true,
