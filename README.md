@@ -26,29 +26,30 @@ Dependencies are managed using [librarian-puppet](https://github.com/rodjek/libr
 
 To update a dependency, edit the [Puppetfile](Puppetfile), then run:
 
-	$ script/bootstrap
+  $ script/bootstrap
 
 
 ### Testing with Vagrant
 
-Install Vagrant from [http://vagrantup.com].
+Install Vagrant from [http://vagrantup.com]. We're using a [multi-VM setup](http://docs.vagrantup.com/v1/docs/multivm.html) to more closely emulate the production environment.
+The VMs have their [own node definitions](manifests/vagrant.pp), and can be brought up or destroyed independently:
 
-Configure what you want to run on the VM:
+    $ vagrant up <name>
+    $ vagrant destroy <name>
 
-    $ cp manifests/vagrant.pp.example manifests/vagrant.pp
+E.g.
 
-After this, bringing up the VM is pretty simple (but can take some time depending on your hardware):
+    $ vagrant up ops
+    $ vagrant up cache
+    $ vagrant up app
+    $ vagrant up es
+    $ vagrant up db
 
-    $ vagrant up
-
-The first time you run this, Vagrant will download a pre-packaged VM image (`hdo-devel.box`).
-
-On subsequent runs, this brings up the VM, sets up port forwarding/shared folders (as configured in the `Vagrantfile`),
-and provisions the VM with Puppet.
+Check out the [Vagrantfile](Vagrantfile) to see how the VMs are set up.
 
 If you just want to provision an already running VM:
 
-    $ vagrant provision
+    $ vagrant provision <name>
 
 ### Deploying hdo-site to Vagrant
 
@@ -58,7 +59,7 @@ Check out the main website code repo:
 
 Configure manifests/vagrant.pp with the necessary dependencies, then bring up the VM instance:
 
-    $ vagrant up
+    $ vagrant up app
 
 Set up password-less logins as `hdo` user, which is needed for Capistrano deployment.
 The password for these commands is 'vagrant':

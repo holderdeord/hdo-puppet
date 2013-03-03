@@ -1,7 +1,6 @@
 /.vagrant
 /Gemfile.lock
 /.tm_properties
-/manifests/vagrant.pp
 /.tmp/
 /third-party
 /bin/
