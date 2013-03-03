@@ -15,8 +15,13 @@ class hdo::webhooks {
 
   file { [$logdir, $tmpdir]:
     ensure  => directory,
-    owner   => hdo,
-    require => Exec['git-clone-hdo-webhook-deployer'],
+    owner   => hdo
+  }
+
+  exec { 'restart-hdo-webhook-deployer':
+    command     => "touch ${tmpdir}/restart.txt",
+    user        => hdo,
+    refreshonly => true,
   }
 
   file { "${root}/config/production.json":
@@ -24,7 +29,6 @@ class hdo::webhooks {
     owner   => hdo,
     mode    => '0644',
     content => template('hdo/webhooks.json'),
-    require => Exec['git-clone-hdo-webhook-deployer'],
     notify  => Exec['restart-hdo-webhook-deployer'],
   }
 
