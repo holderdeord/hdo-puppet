@@ -82,7 +82,7 @@ node 'app1', 'app2' {
 node 'es1' {
   include munin::node
   include nagios::target
-  
+
   include elasticsearch
   class { 'elasticsearch::emailmonitor': ensure => absent }
 }
@@ -94,6 +94,6 @@ node 'es1' {
 node 'db1' {
   include munin::node
   include nagios::target
-  
+
   include hdo::database
 }
