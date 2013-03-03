@@ -50,7 +50,7 @@ class hdo::webhooks {
     servername    => 'hooks.holderdeord.no',
     serveradmin   => $hdo::params::admin_email,
     template      => 'hdo/apache-webhooks-vhost.conf.erb',
-    docroot       => "${root}/public",
+    docroot       => "${current}/public",
     docroot_owner => hdo,
     docroot_group => hdo,
     options       => '-MultiViews -Indexes',
