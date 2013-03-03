@@ -76,25 +76,4 @@ class statsd(
     provider   => 'upstart',
     require    => [File['/etc/init/statsd.conf'], File['/var/log/statsd']]
   }
-
-  # We should use the firewall module for this (which is already a dependency),
-  # but it's not yet well supported in Puppet 3:
-  #
-  # * http://projects.puppetlabs.com/issues/16675
-  # * https://github.com/puppetlabs/puppetlabs-firewall/pull/98
-  # * https://travis-ci.org/puppetlabs/puppetlabs-firewall
-  #
-  # If the need arises for more advanced firewalling, we should
-  # definitely re-investigate that option.
-
-  exec { 'statsd-firewall':
-    logoutput => on_failure,
-    command   => "bash -c '
-      /sbin/iptables -A INPUT -s 5.9.145.15/32 -p udp -m multiport --ports ${port} -j ACCEPT &&
-      /sbin/iptables -A INPUT -s 188.40.124.142/32 -p udp -m multiport --ports ${port} -j ACCEPT &&
-      /sbin/iptables -A INPUT -s 10.0.2.2/32 -p udp -m multiport --ports ${port} -j ACCEPT &&
-      /sbin/iptables -A INPUT -i lo -p udp -m multiport --ports ${port} -j ACCEPT &&
-      /sbin/iptables -A INPUT -p udp -m multiport --ports ${port} -j DROP &&
-      /sbin/iptables-save > /etc/iptables.rules'"
-  }
 }
