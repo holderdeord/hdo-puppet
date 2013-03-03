@@ -1,5 +1,5 @@
 class elasticsearch::params {
-  $package = 'elasticsearch-0.20.2.deb'
+  $package = 'elasticsearch-0.20.5.deb'
   $dependencies = [
     'java7-runtime-headless',
     'java7-runtime'
