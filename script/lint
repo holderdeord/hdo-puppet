@@ -1,9 +1,13 @@
 #!/bin/bash
 
+set -e
+
+echo -n "Linting..."
+
 ROOT="$(dirname $0)/.."
 
-${ROOT}/script/bootstrap || abort "unable to bootstrap"
-${ROOT}/bin/puppet parser validate $(find modules/ -name "*.pp") || exit 1
+${ROOT}/script/bootstrap
+${ROOT}/bin/puppet parser validate $(find modules/ -name "*.pp")
 
 ${ROOT}/bin/puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" \
   --no-documentation-check \
@@ -11,3 +15,5 @@ ${ROOT}/bin/puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{messag
   --no-class_inherits_from_params_class-check \
   --fail-on-warnings \
   modules/
+
+echo "All good!"
