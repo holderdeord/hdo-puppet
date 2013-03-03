@@ -26,7 +26,7 @@ class hdo::webhooks {
     refreshonly => true,
   }
 
-  file { "${root}/config/production.json":
+  file { "${current}/config/production.json":
     ensure  => file,
     owner   => hdo,
     mode    => '0644',
