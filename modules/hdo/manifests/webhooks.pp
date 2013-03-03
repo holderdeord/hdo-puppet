@@ -3,7 +3,7 @@ class hdo::webhooks {
   include passenger::apache
 
   $appdir = '/opt/hdo-site'
-  $root   = '/webapps/hdo-webhook-deployer'
+  $root   = '/webapps/hdo-webhook-deployer/current'
   $logdir = "${root}/log"
   $tmpdir = "${root}/tmp"
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
@@ -13,42 +13,10 @@ class hdo::webhooks {
     owner  => hdo,
   }
 
-  exec { 'git-clone-hdo-webhook-deployer':
-    command   => "git clone https://github.com/holderdeord/hdo-webhook-deployer.git ${root}",
-    user      => hdo,
-    creates   => $root,
-    logoutput => on_failure,
-    notify    => Exec['bundle-install-hdo-webhook-deployer'],
-    require   => Class['passenger']
-  }
-
   file { [$logdir, $tmpdir]:
     ensure  => directory,
     owner   => hdo,
     require => Exec['git-clone-hdo-webhook-deployer'],
-  }
-
-  exec { 'bundle-install-hdo-webhook-deployer':
-    command     => 'bundle install --deployment --without test development',
-    user        => hdo,
-    cwd         => $root,
-    logoutput   => on_failure,
-    refreshonly => true,
-    require     => Class['passenger'],
-  }
-
-  exec { 'restart-hdo-webhook-deployer':
-    command     => "touch ${tmpdir}/restart.txt",
-    user        => hdo,
-    refreshonly => true,
-  }
-
-  exec { 'git-clone-hdo-site':
-    command   => "git clone https://github.com/holderdeord/hdo-site.git ${appdir}",
-    user      => hdo,
-    creates   => "${appdir}/Gemfile",
-    logoutput => on_failure,
-    require   => File[$appdir],
   }
 
   file { "${root}/config/production.json":
@@ -81,7 +49,7 @@ class hdo::webhooks {
     docroot_group => hdo,
     options       => '-MultiViews -Indexes',
     notify        => Service['httpd'],
-    require       => [Exec['git-clone-hdo-webhook-deployer'], User['hdo']],
+    require       => [User['hdo']],
   }
 
 }
