@@ -48,7 +48,7 @@ class nagios::monitor {
   nagios_command { 'check_over_ssh':
     ensure       => present,
     target       => '/etc/nagios-plugins/config/check_over_ssh.cfg',
-    command_line => "/usr/lib/nagios/plugins/check_by_ssh -p 22 -l ${nagios::base::user} -i ${private_key} -t 30 -o StrictHostKeyChecking=no -H \$HOSTADDRESS\$ -C '${nagios::base::home}/nagios.sh -w \$ARG2\$ -c \$ARG3\$'",
+    command_line => "/usr/lib/nagios/plugins/check_by_ssh -p 22 -l ${nagios::base::user} -i ${private_key} -t 30 -o StrictHostKeyChecking=no -H \$HOSTADDRESS\$ -C '${nagios::base::home}/nagios.sh'",
     require      => Package['nagios-plugins'],
   }
 

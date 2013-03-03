@@ -39,6 +39,7 @@ node 'hetzner03' {
   include postfix
 
   include munin::node
+  include nagios::target
   include nagios::target::http
 
   include elasticsearch
