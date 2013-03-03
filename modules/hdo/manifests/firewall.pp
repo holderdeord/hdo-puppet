@@ -1,4 +1,4 @@
-define hdo::firewall($name) {
+define hdo::firewall() {
   $path = "/root/${name}.iptables.sh"
 
   file { $path:
