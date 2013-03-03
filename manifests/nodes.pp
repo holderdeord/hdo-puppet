@@ -21,6 +21,7 @@ node 'hetzner02' {
 
   include munin::node
   include nagios::target
+  include nagios::target::http
 
   include hdo::database
   include hdo::webapp::beta
@@ -39,6 +40,7 @@ node 'hetzner03' {
 
   include munin::node
   include nagios::target
+  include nagios::target::http
 
   include elasticsearch
   include elasticsearch::emailmonitor

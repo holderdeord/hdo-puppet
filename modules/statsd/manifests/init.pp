@@ -17,7 +17,9 @@ class statsd(
     ensure => directory
   }
 
-  file { '/home/hdo/nagioschecks/statsd':
+  include nagios::base
+
+  file { "${nagios::base::checks_dir}/statsd" :
     ensure => present,
     mode   => '0755',
     owner  => 'hdo',

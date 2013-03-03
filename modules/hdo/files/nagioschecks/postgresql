@@ -6,9 +6,9 @@ RETCODE=$?
 
 if [ $RETCODE -gt 0 ]
 then
-  echo "Posgresql status feiler, sjekk server"
+  echo "postgres: FAILED "
   exit 2
 else
-  echo "Postgresql status rapporterer ok"
+  echo "postgres: OK "
   exit 0
 fi

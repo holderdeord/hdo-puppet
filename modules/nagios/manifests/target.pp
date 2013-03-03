@@ -1,21 +1,6 @@
 # This class exports nagios host and service check resources
 class nagios::target {
-
-  package { 'nagios-plugins':
-    ensure => installed
-  }
-
-  file {'/home/hdo/nagioschecks':
-    ensure => directory,
-  }
-
-  file {'/home/hdo/nagios.sh':
-    ensure => present,
-    source => 'puppet:///modules/nagios/nagios.sh',
-    owner  => 'hdo',
-    group  => 'hdo',
-    mode   => '0700'
-  }
+  include nagios::base
 
   @@nagios_host { $::fqdn:
     ensure  => present,
@@ -32,21 +17,21 @@ class nagios::target {
     service_description => "${::hostname}_check_ping",
   }
 
-  @@nagios_service { "check_http_${::hostname}":
-    check_command       => "check_http!${::ipaddress}",
-    use                 => 'generic-service',
-    host_name           => $::fqdn,
-    notification_period => '24x7',
-    service_description => "${::hostname}_check_http",
-  }
-
-  @@nagios_service { "check_over_ssh${::hostname}":
+  @@nagios_service { "check_over_ssh_${::hostname}":
     check_command       => 'check_over_ssh',
     use                 => 'generic-service',
     host_name           => $::fqdn,
     notification_period => '24x7',
     service_description => "${::hostname}_check_over_ssh",
   }
+
+  #
+  # TODO: Extract to a function or class? e.g.
+  #
+  #   nagios::target::disk(...)
+  #
+  # Need ability to specify thresholds per host.
+  #
 
   @@nagios_service { "remote_disk_${::hostname}":
     check_command       => 'remote_disk!22!20%!10%!/',
@@ -55,6 +40,14 @@ class nagios::target {
     notification_period => '24x7',
     service_description => "${::hostname}_remote_disk",
   }
+
+  #
+  # TODO: Extract to a function or class? e.g.
+  #
+  #   nagios::target::load(...)
+  #
+  # Need ability to specify thresholds per host.
+  #
 
   @@nagios_service { "remote_load_${::hostname}":
     check_command       => 'remote_load!22!3.0,2.0,1.0!4.0,2.0,1.0',

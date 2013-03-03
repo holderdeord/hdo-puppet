@@ -17,10 +17,12 @@ class passenger::nginx($port = 80) inherits passenger {
     timeout   => 600
   }
 
-  file {'/home/hdo/nagioschecks/nginx':
+  include nagios::base
+
+  file { "${nagios::base::checks_dir}/nginx":
     ensure => present,
-    owner  => 'hdo',
-    group  => 'hdo',
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user,
     mode   => '0700',
     source => 'puppet:///modules/passenger/nagioschecks/nginx'
   }

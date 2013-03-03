@@ -1,12 +1,13 @@
 class passenger {
   include ruby
   include passenger::params
+  include nagios::base
 
-  file { '/home/hdo/nagioschecks/passenger':
+  file { "${nagios::base::checks_dir}/passenger" :
     ensure => present,
     source => 'puppet:///modules/passenger/nagioschecks/passenger',
-    owner  => 'hdo',
-    group  => 'hdo',
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user,
     mode   => '0755',
   }
 
