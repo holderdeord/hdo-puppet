@@ -1,4 +1,4 @@
-define hdo::firewall($name)
+define hdo::firewall($name) {
   $path = "/root/${name}.iptables.sh"
 
   file { $path:
@@ -9,4 +9,4 @@ define hdo::firewall($name)
   }
 
   exec { "firewall '${name}' @ ${::fqdn}": command => $path }
-)
+}
