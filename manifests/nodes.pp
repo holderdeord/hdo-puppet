@@ -10,6 +10,8 @@ node 'ops1' {
   include statsd
 
   include hdo::webhooks
+
+  hdo::firewall { "ops1": }
 }
 
 #
@@ -84,6 +86,8 @@ node 'es1' {
   include nagios::target
 
   include elasticsearch
+
+  hdo::firewall { "es": }
   class { 'elasticsearch::emailmonitor': ensure => absent }
 }
 
