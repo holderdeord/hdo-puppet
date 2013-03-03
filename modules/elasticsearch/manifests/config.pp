@@ -23,11 +23,13 @@ class elasticsearch::config inherits elasticsearch::params {
     content => template('elasticsearch/logging.yml.erb')
   }
 
-  file { '/home/hdo/nagioschecks/elasticsearch':
+  include nagios::base
+
+  file { "${nagios::base::checks_dir}/elasticsearch":
     ensure => present,
     mode   => '0700',
-    owner  => 'hdo',
-    group  => 'hdo',
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user,
     source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch'
   }
 }

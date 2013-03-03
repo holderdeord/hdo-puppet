@@ -21,12 +21,14 @@ class hdo::database {
     password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
   }
 
-  file { '/home/hdo/nagioschecks/postgresql':
+  include nagios::base
+
+  file { "${nagios::base::checks_dir}/postgresql" :
     ensure => present,
     source => 'puppet:///modules/hdo/nagioschecks/postgresql',
     mode   => '0755',
-    owner  => 'hdo',
-    group  => 'hdo'
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user
   }
 
   #

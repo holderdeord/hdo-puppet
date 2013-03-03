@@ -6,9 +6,9 @@ retcode=$?
 
 if [ $retcode -gt 0 ]
 then
-  echo "Ingen nginx prosess funnet"
+  echo "nginx: FAILED "
   exit 2
 else
-  echo "nginx process funnet"
+  echo "nginx: OK "
   exit 0
 fi
