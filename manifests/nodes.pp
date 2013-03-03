@@ -63,6 +63,7 @@ node 'hetzner03' {
 
 node 'cache1' {
   include munin::node
+  include nagios::target
 }
 
 #
@@ -71,6 +72,7 @@ node 'cache1' {
 
 node 'app1', 'app2' {
   include munin::node
+  include nagios::target
 }
 
 #
@@ -79,8 +81,10 @@ node 'app1', 'app2' {
 
 node 'es1' {
   include munin::node
+  include nagios::target
+  
   include elasticsearch
-  include elasticsearch::emailmonitor
+  class { 'elasticsearch::emailmonitor': ensure => absent }
 }
 
 #
@@ -89,6 +93,7 @@ node 'es1' {
 
 node 'db1' {
   include munin::node
-  include hdo::database
   include nagios::target
+  
+  include hdo::database
 }
