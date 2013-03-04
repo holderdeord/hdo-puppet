@@ -24,7 +24,7 @@ class hdo::webhooks {
     refreshonly => true,
   }
 
-  file { [$root, $shareddir]:
+  file { [$root, $shareddir, $configdir, $logdir]:
     ensure => directory,
     owner  => hdo
   }
