@@ -5,10 +5,11 @@ class hdo::webhooks {
   $appdir  = '/opt/hdo-site'
   $root    = '/webapps/hdo-webhook-deployer'
 
-  $current = "${root}/current"
-  $tmpdir  = "${current}/tmp"
-  $shared  = "${root}/shared"
-  $logdir  = "${shared}/log"
+  $current   = "${root}/current"
+  $tmpdir    = "${current}/tmp"
+  $shareddir = "${root}/shared"
+  $configdir = "${shareddir}/config"
+  $logdir    = "${shareddir}/log"
 
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
 
@@ -23,11 +24,12 @@ class hdo::webhooks {
     refreshonly => true,
   }
 
-  file { [$root, $shared]:
-    ensure => file,
+  file { [$root, $shareddir]:
+    ensure => directory,
+    owner  => hdo
   }
 
-  file { "${shared}/config/production.json":
+  file { "${configdir}/production.json":
     ensure  => file,
     owner   => hdo,
     mode    => '0644',
