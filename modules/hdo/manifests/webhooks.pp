@@ -2,22 +2,16 @@ class hdo::webhooks {
   include hdo::common
   include passenger::apache
 
-  $appdir = '/opt/hdo-site'
-  $root   = '/webapps/hdo-webhook-deployer'
+  $appdir  = '/opt/hdo-site'
+  $root    = '/webapps/hdo-webhook-deployer'
   $current = "${root}/current"
-  $logdir = "${current}/log"
-  $tmpdir = "${current}/tmp"
+  $tmpdir  = "${current}/tmp"
 
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
 
   file { $appdir:
     ensure => directory,
     owner  => hdo,
-  }
-
-  file { [$logdir, $tmpdir]:
-    ensure  => directory,
-    owner   => hdo
   }
 
   exec { 'restart-hdo-webhook-deployer':
