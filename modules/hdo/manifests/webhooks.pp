@@ -8,6 +8,7 @@ class hdo::webhooks {
   $current = "${root}/current"
   $tmpdir  = "${current}/tmp"
   $shared  = "${root}/shared"
+  $logdir  = "${shared}/log"
 
   $token  = hiera('hdo_travis_token', 'default-invalid-token')
 
@@ -35,7 +36,7 @@ class hdo::webhooks {
   }
 
   logrotate::rule { 'hdo-webhook-deployer':
-    path         => "${root}/shared/log/*",
+    path         => "${logdir}/*",
     compress     => true,
     copytruncate => true,
     dateext      => true,
