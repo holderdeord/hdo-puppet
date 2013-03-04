@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ps auxww | grep varnishd > /dev/null 2>&1
+
+retcode=$?
+
+if [ $retcode -gt 0 ]
+then
+  echo -n "varnishd: FAILED "
+  exit 2
+else
+  echo -n "varnishd: OK "
+  exit 0
+fi

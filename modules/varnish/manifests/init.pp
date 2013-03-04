@@ -78,6 +78,19 @@ class varnish(
     notify  => Service['varnish'],
   }
 
+
+  include nagios::base
+
+  # this check is very naive
+  # TODO: look at https://www.varnish-cache.org/utilities
+
+  file { "${nagios::base::checks_dir}/varnish":
+    ensure => file,
+    owner  => $nagios::base::user,
+    mode   => '0700',
+    source => 'puppet:///modules/varnish/nagioschecks/varnish'
+  }
+
   munin::plugin { [
     'varnish_backend_traffic',
     'varnish_expunge',
