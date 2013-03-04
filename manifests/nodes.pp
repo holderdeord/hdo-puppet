@@ -66,6 +66,14 @@ node 'hetzner03' {
 node 'cache1' {
   include munin::node
   include nagios::target
+
+  class { 'varnish':
+    listen_port => 80,
+    backends    => [
+      { host => '46.4.88.195', port => 80 }, # app1
+      { host => '46.4.88.196', port => 80 }, # app2
+    ]
+  }
 }
 
 #

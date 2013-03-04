@@ -14,7 +14,7 @@ class varnish(
 ) {
 
   if size($backends) < 1 {
-    fail("must specify at least one backend")
+    fail('must specify at least one backend')
   }
 
   package { 'varnish':
