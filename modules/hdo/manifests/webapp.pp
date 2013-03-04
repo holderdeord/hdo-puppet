@@ -2,7 +2,7 @@ class hdo::webapp {
   include hdo::common
   include hdo::params
 
-  $requirements = [
+  package { [
     'htop',
     'dpkg',
     'libxml2',
@@ -10,9 +10,7 @@ class hdo::webapp {
     'libxslt1-dev',
     'imagemagick',
     'libpq-dev',
-  ]
-
-  package { $requirements:
+  ]:
     ensure => 'installed'
   }
 

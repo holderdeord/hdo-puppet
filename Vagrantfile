@@ -52,7 +52,7 @@ Vagrant::Config.run do |config|
     puppet.module_path    = %w[modules third-party]
     puppet.manifest_file  = "vagrant.pp"
 
-    puppet.options = '--storeconfigs --show_diff'
+    puppet.options = '--show_diff'
     puppet.options << ' --verbose --debug' if ENV['DEBUG']
     puppet.options << ' --noop' if ENV['NOOP']
   end

@@ -1,5 +1,5 @@
 class varnish(
-  $vcl_conf       = 'default.vcl',
+  $backends       = [{host => '127.0.0.1', port => 8080}],
   $listen_address = '',
   $listen_port    = 6081,
   $thread_min     = 400,
@@ -12,6 +12,10 @@ class varnish(
   $sess_workspace = 131072,
   $sess_timeout   = 3
 ) {
+
+  if size($backends) < 1 {
+    fail("must specify at least one backend")
+  }
 
   package { 'varnish':
     ensure => installed,
@@ -43,7 +47,7 @@ class varnish(
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => 'puppet:///modules/varnish/default.vcl',
+    content => template('varnish/default.vcl.erb'),
     require => Package['varnish'],
     notify  => Service['varnish'],
   }

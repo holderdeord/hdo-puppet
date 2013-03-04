@@ -1,6 +1,8 @@
+<% backends = scope.lookupvar('backends') %>
+<% if backends.size == 1 %>
 backend default {
-    .host = "127.0.0.1";
-    .port = "8080";
+    .host = "<%= backends.first['host'] %>";
+    .port = "<%= backends.first['port'] %>";
 
     # https://www.varnish-cache.org/trac/wiki/BackendPolling
     .probe = {
@@ -11,6 +13,31 @@ backend default {
       .threshold = 8;
     }
 }
+<% else %>
+  <% backends.each_with_index do |backend, idx| %>
+  backend app<%= idx + 1 %> {
+    .host = "<%= backend['host'] %>";
+    .port = "<%= backend['port'] %>";
+
+    # https://www.varnish-cache.org/trac/wiki/BackendPolling
+    .probe = {
+      .url       = "/healthz";
+      .timeout   = 2s;
+      .interval  = 1s;
+      .window    = 10;
+      .threshold = 8;
+    }
+  }
+  <% end %>
+
+  director default round-robin {
+    <% backends.each_with_index do |_, idx| %>
+    {
+      .backend = app<%= idx + 1 %>;
+    }
+    <% end %>
+  }
+<% end %>
 
 # NOTE: vcl_recv is called at the beginning of a request, after the complete
 # request has been received and parsed. Its purpose is to decide whether or not

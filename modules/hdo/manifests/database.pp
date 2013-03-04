@@ -1,5 +1,4 @@
 class hdo::database {
-
   include hdo::common
 
   class { 'postgresql::server':
