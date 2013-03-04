@@ -5,6 +5,8 @@ set -e
 
 
 ROOT="$(dirname $0)/.."
+
+# Make sure we have bundler
 gem spec bundler -v '~> 1.0' > /dev/null 2>&1
 
 if [[ "$?" != "0" ]]; then
@@ -13,6 +15,18 @@ if [[ "$?" != "0" ]]; then
   else
     sudo gem install --no-rdoc --no-ri bundler
   fi
+fi
+
+# Add pre-commit lint
+hook="${ROOT}/.git/hooks/pre-commit"
+
+if [[ ! -x $hook ]]; then
+  cat > $hook <<END
+#!/bin/sh
+$(pwd)/script/lint
+END
+
+  chmod +x $hook
 fi
 
 # We don't want old config hanging around.
