@@ -33,7 +33,7 @@ $IPT -A INPUT -p ICMP --icmp-type 8 -s 0.0.0.0/0 -j ACCEPT
 #
 # statsd
 #    ...from next.holderdeord.no
-$IPT -A INPUT -s 5.9.145.15/ -p udp -m multiport --ports 8125 -j ACCEPT
+$IPT -A INPUT -s 5.9.145.15 -p udp -m multiport --ports 8125 -j ACCEPT
 #    ...from beta.holderdeord.no
 $IPT -A INPUT -s 188.40.124.142 -p udp -m multiport --ports 8125 -j ACCEPT
 #    ...from app1.holderdeord.no
