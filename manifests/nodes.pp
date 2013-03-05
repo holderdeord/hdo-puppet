@@ -54,7 +54,7 @@ node 'hetzner03' {
 
   class { 'hdo::webapp':
     server_name => 'next.holderdeord.no',
-    listen      => 8080 # varnish in front
+    listen      => 8080 # varnish listening on 80
   }
 
   class { 'hdo::webapp::apiupdater':
@@ -91,7 +91,10 @@ node 'app1', 'app2' {
   include munin::node
   include nagios::target
 
-  class { 'hdo::webapp': }
+  class { 'hdo::webapp':
+    db_host           => '46.4.88.199',
+    elasticsearch_url => 'http://46.4.88.197:9200'
+  }
 }
 
 #

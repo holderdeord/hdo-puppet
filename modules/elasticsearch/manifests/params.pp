@@ -9,8 +9,11 @@ class elasticsearch::params {
 
   if $::virtual == 'virtualbox' {
     $es_heap_size = '128m'
-    $host = '0.0.0.0'
+  }
+
+  if $::hostname in ['beta', 'hetzner02', 'hetzner03'] {
+    $host = '127.0.0.1'
   } else {
-    $host = '127.0.0.1' # default: 0.0.0.0
+    $host = '0.0.0.0'
   }
 }
