@@ -64,7 +64,7 @@ Configure manifests/vagrant.pp with the necessary dependencies, then bring up th
 Set up password-less logins as `hdo` user, which is needed for Capistrano deployment.
 The password for these commands is 'vagrant':
 
-    $ cat ~/.ssh/id_dsa.pub | ssh -p 2222 vagrant@localhost "cat > ./key; sudo mkdir -p /home/hdo/.ssh; sudo mv ./key /home/hdo/.ssh/authorized_keys; sudo chown -R hdo:hdo /home/hdo/.ssh"
+    $ cat ~/.ssh/id_dsa.pub | ssh vagrant@192.168.1.12 "cat > ./key; sudo mkdir -p /home/hdo/.ssh; sudo mv ./key /home/hdo/.ssh/authorized_keys; sudo chown -R hdo:hdo /home/hdo/.ssh"
 
 Deploy hdo-site:
 

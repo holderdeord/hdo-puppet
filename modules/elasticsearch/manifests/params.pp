@@ -9,6 +9,8 @@ class elasticsearch::params {
 
   if $::virtual == 'virtualbox' {
     $es_heap_size = '128m'
+  } else {
+    $es_heap_size = '2g'
   }
 
   if $::hostname in ['beta', 'hetzner02', 'hetzner03'] {
