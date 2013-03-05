@@ -4,12 +4,8 @@ class hdo::params {
   $admin_email           = 'ops@holderdeord.no'
 
   $webapp_root           = '/webapps'
-  $files_root            = "${webapp_root}/files"
   $deploy_root           = "${webapp_root}/hdo-site"
-  $shared_root           = "${deploy_root}/shared"
-  $config_root           = "${deploy_root}/shared/config"
   $app_root              = "${deploy_root}/current"
-  $public_dir            = "${app_root}/public"
 
   $environment           = hiera('hdo_environment',        'staging')
   $db_server_password    = hiera('hdo_db_server_password', 'dont-use-this')

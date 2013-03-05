@@ -21,7 +21,10 @@ node 'hdo-cache-vm' {
 # 192.168.1.12
 node 'hdo-app-vm' {
   include nagios::target
-  include hdo::webapp::app
+
+  class { 'hdo::webapp':
+    name => 'staging'
+  }
 }
 
 # 192.168.1.13

@@ -5,7 +5,7 @@
 server {
     listen      <%= listen %>;
     server_name <%= server_name %>;
-    root        <%= scope.lookupvar('hdo::params::public_dir') %>;
+    root        <%= scope.lookupvar('public_dir') %>;
 
     location ~ .(php)$ {
       deny all;
