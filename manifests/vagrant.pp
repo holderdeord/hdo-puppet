@@ -23,7 +23,9 @@ node 'hdo-app-vm' {
   include nagios::target
 
   class { 'hdo::webapp':
-    name => 'staging'
+    server_name       => 'hdo-app-vm.holderdeord.no',
+    db_host           => '192.168.1.13',
+    elasticsearch_url => 'http://192.168.1.14:9200'
   }
 }
 
@@ -37,4 +39,5 @@ node 'hdo-db-vm' {
 # 192.168.1.14
 node 'hdo-es-vm' {
   include nagios::target
+  include elasticsearch
 }

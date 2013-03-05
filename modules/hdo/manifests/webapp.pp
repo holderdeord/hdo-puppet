@@ -1,5 +1,9 @@
 class hdo::webapp(
-
+  $listen            = '80',
+  $server_name       = $::fqdn,
+  $db_host           = undef,
+  $db_port           = undef,
+  $elasticsearch_url = undef
 ) {
   include hdo::common
   include hdo::params
@@ -37,43 +41,18 @@ class hdo::webapp(
     ensure => 'installed'
   }
 
-  if $name == 'staging' {
-    if $hdo::params::environment != 'staging' {
-      warning("including hdo::webapp::staging, but hdo::params::environment == ${hdo::params::environment}")
-    }
+  class { 'passenger::nginx': port => $listen }
 
-    $listen      = '8080' # varnish in front
-    $server_name = 'staging.holderdeord.no'
+  file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('hdo/nginx-app-vhost.conf.erb'),
+    notify  => Service['nginx']
+  }
 
-    class { 'passenger::nginx': port => $listen }
-
-    file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
-      ensure  => file,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      content => template('hdo/nginx-app-vhost.conf.erb'),
-      notify  => Service['nginx']
-    }
-  } elsif $name == 'beta' {
-    if $hdo::params::environment != 'production' {
-      warning("including hdo::webapp::beta, but hdo::params::environment == ${hdo::params::environment}")
-    }
-
-    $listen      = '80'
-    $server_name = 'beta.holderdeord.no'
-
-    class { 'passenger::nginx': port => $listen }
-
-    file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
-      ensure  => file,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      content => template('hdo/nginx-app-vhost.conf.erb'),
-      notify  => Service['nginx']
-    }
-
+  if $server_name == 'beta.holderdeord.no' {
     file { "${passenger::nginx::sites_dir}/20-holderdeord.no.conf":
       ensure  => file,
       owner   => root,
@@ -91,8 +70,6 @@ class hdo::webapp(
       content => template('hdo/nginx-files-vhost.conf.erb'),
       notify  => Service['nginx']
     }
-  } else {
-    fail("unknown webapp name ${name}")
   }
 
   file { '/etc/profile.d/hdo-webapp.sh':

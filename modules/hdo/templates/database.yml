@@ -9,3 +9,9 @@
   pool: 5
   username: <%= scope.lookupvar('hdo::params::db_username') %>
   password: <%= scope.lookupvar('hdo::params::db_password') %>
+  <%- if @db_host -%>
+  host: <%= scope.lookupvar('db_host') %>
+  <%- end -%>
+  <%- if @db_port -%>
+  port: <%= scope.lookupvar('db_port') %>
+  <%- end -%>

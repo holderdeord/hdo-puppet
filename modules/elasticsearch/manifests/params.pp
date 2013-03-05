@@ -5,15 +5,12 @@ class elasticsearch::params {
     'java7-runtime'
   ]
 
-  $host         = '127.0.0.1' # default: 0.0.0.0
   $root_logger  = 'DEBUG, console, file' # default INFO
 
-  case $::hostname {
-    'hdo-devel': {
-      $es_heap_size = '512m'
-    }
-    default: {
-      $es_heap_size = '2g'
-    }
+  if $::virtual == 'virtualbox' {
+    $es_heap_size = '128m'
+    $host = '0.0.0.0'
+  } else {
+    $host = '127.0.0.1' # default: 0.0.0.0
   }
 }

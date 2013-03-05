@@ -26,8 +26,11 @@ node 'hetzner02' {
   include nagios::target::http
 
   include hdo::database
-  include hdo::webapp::beta
   include hdo::webapp::apiupdater
+
+  class { 'hdo::webapp':
+    server_name => 'beta.holderdeord.no'
+  }
 
   include elasticsearch
   include elasticsearch::emailmonitor
@@ -48,7 +51,11 @@ node 'hetzner03' {
   include elasticsearch::emailmonitor
 
   include hdo::database
-  include hdo::webapp::staging
+
+  class { 'hdo::webapp':
+    server_name => 'next.holderdeord.no',
+    listen      => 8080 # varnish in front
+  }
 
   class { 'hdo::webapp::apiupdater':
     ensure => absent
@@ -83,6 +90,8 @@ node 'cache1' {
 node 'app1', 'app2' {
   include munin::node
   include nagios::target
+
+  class { 'hdo::webapp': }
 }
 
 #
