@@ -33,6 +33,9 @@ $IPT -A INPUT -p ICMP --icmp-type 8 -s 0.0.0.0/0 -j ACCEPT
 # accept HTTP from anywhere
 $IPT -A INPUT -p tcp --dport 80 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
+# accept inbound to the puppet master
+$IPT -A INPUT -p tcp --dport 8140 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
+
 #
 # statsd
 #    ...from next.holderdeord.no
