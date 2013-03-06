@@ -8,6 +8,11 @@ class hdo::common {
     ensure => installed,
   }
 
+  file { "${home}/.emacs":
+    ensure  => file,
+    content => '(setq make-backup-files nil)'
+  }
+
   ruby::gem { 'bundler':
     name    => 'bundler',
     version => '>= 1.2.0'
