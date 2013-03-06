@@ -7,9 +7,9 @@ retcode=$?
 
 if [ $retcode -gt 0 ]
 then
-  echo -n "statsd: FAILED "
+  echo "statsd: FAILED "
   exit 2
 else
-  echo -n "statsd: OK "
+  echo "statsd: OK "
   exit 0
 fi
