@@ -65,6 +65,11 @@ sub vcl_recv {
     }
   }
 
+  # Normalize the Host: header
+  if (req.http.host ~ "(?i)^((www|cache\d+)\.)?holderdeord\.no$") {
+    set req.http.host = "www.holderdeord.no";
+  }
+
   # This rule is to insert the client's ip address into the request header
   if (req.restarts == 0) {
     if (req.http.x-forwarded-for) {
@@ -75,8 +80,8 @@ sub vcl_recv {
   }
 
   # Force lookup if the request is a no-cache request from the client
-  # IE - shift-reload causes cache refresh - We may not want this in
-  # production but useful during initial deployment and testing
+  # i.e. shift-reload causes cache refresh
+  # We may not want this in production but useful during initial deployment and testing
   if (req.http.Cache-Control ~ "no-cache") {
     ban_url(req.url);
   }
