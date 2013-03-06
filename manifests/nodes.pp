@@ -1,5 +1,5 @@
 #
-# {ops1,munin,puppet,hooks,graphite,nagios}.holderdeord.no
+# {ops1,munin,puppet,deploy,graphite,nagios}.holderdeord.no
 #
 
 node 'ops1' {
@@ -9,7 +9,7 @@ node 'ops1' {
   include graphite
   include statsd
 
-  include hdo::webhooks
+  include hdo::deployer
 
   hdo::firewall { "ops1": }
 }

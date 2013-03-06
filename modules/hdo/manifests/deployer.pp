@@ -1,4 +1,4 @@
-class hdo::webhooks {
+class hdo::deployer {
   include hdo::common
   include passenger::apache
 
@@ -35,7 +35,7 @@ class hdo::webhooks {
     ensure  => file,
     owner   => hdo,
     mode    => '0644',
-    content => template('hdo/webhooks.json'),
+    content => template('hdo/deployer.json'),
     notify  => Exec['restart-hdo-webhook-deployer'],
   }
 
@@ -48,13 +48,13 @@ class hdo::webhooks {
     missingok    => true
   }
 
-  apache::vhost { 'hooks.holderdeord.no':
+  apache::vhost { 'deploy.holderdeord.no':
     vhost_name    => '*',
     port          => 80,
     priority      => '10',
-    servername    => 'hooks.holderdeord.no',
+    servername    => 'deploy.holderdeord.no',
     serveradmin   => $hdo::params::admin_email,
-    template      => 'hdo/apache-webhooks-vhost.conf.erb',
+    template      => 'hdo/apache-deployer-vhost.conf.erb',
     docroot       => "${current}/public",
     docroot_owner => hdo,
     docroot_group => hdo,
