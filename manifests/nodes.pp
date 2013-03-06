@@ -78,7 +78,6 @@ node 'cache1' {
   class { 'varnish':
     listen_port => 80,
     backends    => [
-      # TODO: should be using IPs here, but need to figure out nginx config
       { host => 'app1.holderdeord.no', port => 80 },
       { host => 'app2.holderdeord.no', port => 80 },
     ]
