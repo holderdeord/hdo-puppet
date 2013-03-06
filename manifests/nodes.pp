@@ -73,6 +73,7 @@ node 'hetzner03' {
 node 'cache1' {
   include munin::node
   include nagios::target
+  include nagios::target::http
 
   class { 'varnish':
     listen_port => 80,
@@ -90,6 +91,7 @@ node 'cache1' {
 node 'app1', 'app2' {
   include munin::node
   include nagios::target
+  include nagios::target::http
 
   class { 'hdo::webapp':
     db_host           => '46.4.88.199',
