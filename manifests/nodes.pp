@@ -110,7 +110,6 @@ node 'es1' {
   include elasticsearch
 
   hdo::firewall { "es1": }
-  class { 'elasticsearch::emailmonitor': ensure => absent }
 }
 
 #
