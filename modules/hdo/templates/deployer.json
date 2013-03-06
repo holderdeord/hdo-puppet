@@ -6,9 +6,17 @@
   "projects": {
     "holderdeord/hdo-site#master": {
       "directory": "<%= appdir %>",
-      "command": ["cap", "staging", "deploy:web:disable", "deploy:migrations", "cache:precompute", "deploy:web:enable"],
       "token": "<%= token %>",
-      "timeout": 180
+      "timeout": 180,
+      "command": [
+        "cap",
+        "staging",
+        "deploy:web:disable",
+        "deploy:migrations",
+        "cache:precompute",
+        "deploy:web:enable",
+        "deploy:cleanup"
+      ]
     }
   }
 }
