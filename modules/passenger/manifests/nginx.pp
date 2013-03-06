@@ -70,7 +70,7 @@ class passenger::nginx($port = 80) inherits passenger {
     missingok    => true
   }
 
-  file { "${sites_dir}/99-status.conf":
+  file { "${sites_dir}/status.conf":
     ensure  => file,
     owner   => root,
     group   => root,

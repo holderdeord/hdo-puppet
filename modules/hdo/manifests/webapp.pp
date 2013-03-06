@@ -43,7 +43,7 @@ class hdo::webapp(
 
   class { 'passenger::nginx': port => $listen }
 
-  file { "${passenger::nginx::sites_dir}/10-${server_name}.conf":
+  file { "${passenger::nginx::sites_dir}/${server_name}.conf":
     ensure  => file,
     owner   => root,
     group   => root,
@@ -53,7 +53,7 @@ class hdo::webapp(
   }
 
   if $server_name == 'beta.holderdeord.no' {
-    file { "${passenger::nginx::sites_dir}/20-holderdeord.no.conf":
+    file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
       ensure  => file,
       owner   => root,
       group   => root,
@@ -62,7 +62,7 @@ class hdo::webapp(
       notify  => Service['nginx']
     }
 
-    file { "${passenger::nginx::sites_dir}/30-files.holderdeord.no.conf":
+    file { "${passenger::nginx::sites_dir}/files.holderdeord.no.conf":
       ensure  => file,
       owner   => root,
       group   => root,
