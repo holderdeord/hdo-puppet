@@ -1,5 +1,7 @@
 {
   "logdir": "<%= logdir %>",
+  "github_client_id": "<%= github_client_id %>",
+  "github_client_secret": "<%= github_client_secret %>",
   "statsd": "ops1.holderdeord.no:8125",
   "projects": {
     "holderdeord/hdo-site#master": {

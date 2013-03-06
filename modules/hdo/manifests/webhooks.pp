@@ -11,7 +11,9 @@ class hdo::webhooks {
   $configdir = "${shareddir}/config"
   $logdir    = "${shareddir}/log"
 
-  $token  = hiera('hdo_travis_token', 'default-invalid-token')
+  $token                = hiera('hdo_travis_token', 'default-invalid-token')
+  $github_client_id     = hiera('github_client_id', 'default-invalid-id')
+  $github_client_secret = hiera('github_client_secret', 'default-invalid-secret')
 
   file { $appdir:
     ensure => directory,
