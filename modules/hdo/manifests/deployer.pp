@@ -16,6 +16,8 @@ class hdo::deployer {
   $github_client_secret = hiera('github_client_secret', 'default-invalid-secret')
   $hipchat_api_token    = hiera('hipchat_api_token', '')
 
+  ruby::gem { 'hipchat': }
+
   file { $appdir:
     ensure => directory,
     owner  => hdo,
