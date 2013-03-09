@@ -8,6 +8,9 @@
       "directory": "<%= appdir %>",
       "token": "<%= token %>",
       "timeout": 180,
+      "environment": {
+        "HIPCHAT_API_TOKEN": "<%= hipchat_api_token %>"
+      },
       "command": [
         "cap",
         "staging",
