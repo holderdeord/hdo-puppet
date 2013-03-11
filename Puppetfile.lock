@@ -43,9 +43,15 @@ GIT
   specs:
     logrotate (1.0.2)
 
+GITHUBTARBALL
+  remote: jamtur01/puppet-hipchat
+  specs:
+    hipchat (0.0.2)
+
 DEPENDENCIES
   apache (>= 0)
   firewall (>= 0)
+  hipchat (= 0.0.2)
   logrotate (>= 0)
   postgresql (>= 0)
   stdlib (>= 0)

@@ -6,3 +6,4 @@
 /bin/
 /.bundle
 /.librarian
+/vendor/puppet/cache

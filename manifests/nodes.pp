@@ -10,6 +10,7 @@ node 'ops1' {
   include statsd
 
   include hdo::deployer
+  include hdo::puppethipchat
 
   hdo::firewall { "ops1": }
 }

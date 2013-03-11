@@ -19,3 +19,5 @@ mod "postgresql",
 mod "stdlib",
   :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git",
   :ref => "6961179007dce76d7fb9bd1fc361273acb4129a7"
+
+mod "hipchat", "0.0.2", :github_tarball => "jamtur01/puppet-hipchat"
