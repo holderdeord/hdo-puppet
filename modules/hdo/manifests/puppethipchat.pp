@@ -3,6 +3,6 @@ class hdo::puppethipchat {
     ensure   => file,
     owner    => 'root',
     mode     => '0600',
-    template => 'hdo/puppet-hipchat.yaml'
+    content  => template('hdo/puppet-hipchat.yaml')
   }
 }
