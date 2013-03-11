@@ -2,7 +2,8 @@ class hdo::puppethipchat {
   file { '/etc/puppet/hipchat.yaml':
     ensure   => file,
     owner    => 'root',
-    mode     => '0600',
+    group    => 'puppet',
+    mode     => '0640',
     content  => template('hdo/puppet-hipchat.yaml')
   }
 }
