@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# iptables script generated 2013-03-11
 # http://www.mista.nu/iptables
 
 IPT="/sbin/iptables"
@@ -22,19 +23,8 @@ $IPT -A INPUT -p tcp ! --syn -m state --state NEW -s 0.0.0.0/0 -j DROP
 
 # Accept inbound TCP packets
 $IPT -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-# accpet SSH from anywhere
 $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
+$IPT -A INPUT -p tcp --dport 80 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
-# accept ICMP from anywhere
+# Accept inbound ICMP messages
 $IPT -A INPUT -p ICMP --icmp-type 8 -s 0.0.0.0/0 -j ACCEPT
-
-#
-# elasticsearch (port 9200)
-#
-#    ...from app1.holderdeord.no
-$IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 46.4.88.195 -j ACCEPT
-#    ...from app2.holderdeord.no
-$IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 46.4.88.196 -j ACCEPT
-
-$IPT-save > /etc/iptables.rules

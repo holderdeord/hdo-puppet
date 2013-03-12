@@ -35,6 +35,8 @@ node 'hetzner02' {
 
   include elasticsearch
   include elasticsearch::emailmonitor
+
+  hdo::firewall { "beta": }
 }
 
 #
