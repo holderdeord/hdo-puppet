@@ -23,6 +23,19 @@ class elasticsearch::config inherits elasticsearch::params {
     content => template('elasticsearch/logging.yml.erb')
   }
 
+  file { '/etc/elasticsearch/hdo.words.nb.txt':
+    ensure => file,
+    mode   => '0644',
+    source => 'puppet:///modules/elasticsearch/config/hdo.words.nb.txt'
+  }
+
+  file { '/etc/elasticsearch/hdo.synonyms.nb.txt':
+    ensure => file,
+    mode   => '0644',
+    source => 'puppet:///modules/elasticsearch/config/hdo.synonyms.nb.txt'
+  }
+
+
   include nagios::base
 
   file { "${nagios::base::checks_dir}/elasticsearch":
