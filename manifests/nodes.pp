@@ -91,15 +91,22 @@ node 'cache1' {
 # app servers
 #
 
-node 'app1', 'app2' {
+node 'app1' {
+  include munin::node
+  include nagios::target
+  include nagios::target::http
+  include hdo::webapp::default
+
+  # API import only happens on the 'primary' app server
+  include hdo::webapp::apiupdater
+}
+
+node 'app2' {
   include munin::node
   include nagios::target
   include nagios::target::http
 
-  class { 'hdo::webapp':
-    db_host           => '46.4.88.199',
-    elasticsearch_url => 'http://46.4.88.197:9200'
-  }
+  include hdo::webapp::default
 }
 
 #
