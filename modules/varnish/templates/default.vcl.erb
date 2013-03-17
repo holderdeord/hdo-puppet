@@ -66,7 +66,7 @@ sub vcl_recv {
   }
 
   # Normalize the Host: header
-  if (req.http.host ~ "(?i)^((www|cache\d+)\.)?holderdeord\.no$") {
+  if (req.http.host ~ "(?i)holderdeord\.no$") {
     set req.http.host = "www.holderdeord.no";
   }
 
