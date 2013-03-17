@@ -98,6 +98,7 @@ node 'app1' {
   include hdo::webapp::default
 
   # API import only happens on the 'primary' app server
+  include postfix
   include hdo::webapp::apiupdater
 }
 
