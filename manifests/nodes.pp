@@ -27,7 +27,10 @@ node 'hetzner02' {
   include nagios::target::http
 
   include hdo::database
-  include hdo::webapp::apiupdater
+
+  class { 'hdo::webapp::apiupdater':
+    ensure => absent
+  }
 
   class { 'hdo::webapp':
     server_name => 'beta.holderdeord.no'
