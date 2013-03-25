@@ -4,7 +4,7 @@
 
 server {
   listen      <%= listen %>;
-  server_name <%= server_name %> www.holderdeord.no;
+  server_name <%= server_name %> beta.holderdeord.no www.holderdeord.no;
   root        <%= scope.lookupvar('public_dir') %>;
 
   location ~ .(php)$ {
