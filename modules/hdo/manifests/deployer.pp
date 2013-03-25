@@ -15,6 +15,7 @@ class hdo::deployer {
   $github_client_id     = hiera('github_client_id', 'default-invalid-id')
   $github_client_secret = hiera('github_client_secret', 'default-invalid-secret')
   $hipchat_api_token    = hiera('hipchat_api_token', '')
+  $basic_auth           = hiera('basic_auth')
 
   ruby::gem { 'hipchat': }
 

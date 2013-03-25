@@ -3,6 +3,7 @@
   "github_client_id": "<%= github_client_id %>",
   "github_client_secret": "<%= github_client_secret %>",
   "statsd": "ops1.holderdeord.no:8125",
+  "basic_auth": "<%= basic_auth %>",
   "projects": {
     "holderdeord/hdo-site#master": {
       "directory": "<%= appdir %>",
