@@ -70,6 +70,8 @@ node 'hetzner03' {
   class { 'varnish':
     listen_port => 80
   }
+
+  hdo::firewall { "next": }
 }
 
 #
@@ -103,6 +105,8 @@ node 'app1' {
   # API import only happens on the 'primary' app server
   include postfix
   include hdo::webapp::apiupdater
+
+  hdo::firewall { "app": }
 }
 
 node 'app2' {
@@ -111,6 +115,8 @@ node 'app2' {
   include nagios::target::http
 
   include hdo::webapp::default
+
+  hdo::firewall { "app": }
 }
 
 #
