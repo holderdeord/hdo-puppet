@@ -10,15 +10,20 @@ class varnish(
   $ttl            = 60,
   $thread_pools   = $::processorcount,
   $sess_workspace = 131072,
-  $sess_timeout   = 3
+  $sess_timeout   = 3,
+  $ensure         = 'present'
 ) {
+
+  if !($ensure in ['present', 'absent']) {
+    fail("invalid ensure, expected present or absent: ${ensure}")
+  }
 
   if size($backends) < 1 {
     fail('must specify at least one backend')
   }
 
   package { 'varnish':
-    ensure => installed,
+    ensure => $ensure,
   }
 
   # Make sure suggested TCP/IP perf tuning parameters are there
@@ -34,7 +39,7 @@ class varnish(
   }
 
   file { '/usr/share/varnish/purge-cache':
-    ensure  => present,
+    ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
@@ -43,7 +48,7 @@ class varnish(
   }
 
   file { '/etc/varnish/default.vcl':
-    ensure  => present,
+    ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -58,8 +63,13 @@ class varnish(
     refreshonly => true,
   }
 
+  $service_ensure = $ensure ? {
+    'present' => running,
+    'absent'  => stopped
+  }
+
   service { 'varnish':
-    ensure    => running,
+    ensure    => $service_ensure,
     subscribe => Package['varnish'],
     require   => [
       Package['varnish'],
@@ -69,7 +79,7 @@ class varnish(
   }
 
   file { '/etc/default/varnish':
-    ensure  => 'present',
+    ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -77,7 +87,6 @@ class varnish(
     require => Package['varnish'],
     notify  => Service['varnish'],
   }
-
 
   include nagios::base
 
