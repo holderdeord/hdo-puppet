@@ -60,7 +60,7 @@ node 'hetzner03' {
 
   class { 'hdo::webapp':
     server_name => 'next.holderdeord.no',
-    listen      => 8080 # varnish listening on 80
+    listen      => 80 # varnish listening on 80
   }
 
   class { 'hdo::webapp::apiupdater':
@@ -68,7 +68,8 @@ node 'hetzner03' {
   }
 
   class { 'varnish':
-    listen_port => 80
+    ensure      => absent,
+    listen_port => 80,
   }
 
   hdo::firewall { "next": }
