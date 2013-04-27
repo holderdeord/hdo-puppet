@@ -28,6 +28,8 @@ To update a dependency, edit the [Puppetfile](Puppetfile), then run:
 
   $ script/bootstrap
 
+Note: After pulling down changes to the server running the puppetmaster, always run `script/bootstrap` and restart the puppetmaster (e.g. `service puppetmaster restart`).
+
 
 ### Testing with Vagrant
 
