@@ -26,22 +26,8 @@ class nagios::monitor {
     subscribe => [ Package['nagios3'], Package['nagios-plugins'] ],
   }
 
-  #
-  # always remove and re-add the check to avoid duplicate entries and nagios not starting
-  #
-  # (perhaps not worth using the nagios_command type at all since it's such a hassle)
-  # see https://github.com/holderdeord/hdo-site/issues/420 for details
-  #
-  exec { 'remove_check_over_ssh':
-    command => 'rm -f /etc/nagios-plugins/config/check_over_ssh.cfg',
-  }
-
-  exec { 'remove_nagios_host':
-    command => 'rm -f /etc/nagios3/conf.d/nagios_host.cfg',
-  }
-
   # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host    <<||>> { notify => Service['nagios'], require => Exec['remove_nagios_host'] }
+  Nagios_host    <<||>> { notify => Service['nagios'] }
   Nagios_service <<||>> { notify => Service['nagios'] }
 
   $htpasswd_path = '/etc/nagios3/htpasswd.users'
@@ -54,11 +40,16 @@ class nagios::monitor {
     logoutput => on_failure
   }
 
+  #
+  # TODO(jari): fix permissions on the generated files
+  # perhaps not worth using the nagios_command type at all since it's such a hassle
+  #
+
   nagios_command { 'check_over_ssh':
     ensure       => present,
     target       => '/etc/nagios-plugins/config/check_over_ssh.cfg',
     command_line => "/usr/lib/nagios/plugins/check_by_ssh -p 22 -l ${nagios::base::user} -i ${private_key} -t 30 -o StrictHostKeyChecking=no -H \$HOSTADDRESS\$ -C '${nagios::base::home}/nagios.sh'",
-    require      => [Package['nagios-plugins'], Exec['remove_check_over_ssh']],
+    require      => Package['nagios-plugins'],
   }
 
   nagios_command { 'remote_load':
