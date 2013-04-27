@@ -1,4 +1,5 @@
 ---
 :hipchat_api: <%= scope.lookupvar('hdo::params::hipchat_api_token') %>
-:hipchat_room: 'Teknisk'
-:hipchat_notify: 'true'
+:hipchat_room: Teknisk
+:hipchat_notify: true
+:hipchat_statuses: all

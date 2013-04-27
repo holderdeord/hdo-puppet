@@ -20,4 +20,4 @@ mod "stdlib",
   :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git",
   :ref => "4.0.2"
 
-mod "hipchat", "0.0.2", :github_tarball => "jamtur01/puppet-hipchat"
+mod "hipchat", :git => "git://github.com/jarib/puppet-hipchat", :ref => "status-config"

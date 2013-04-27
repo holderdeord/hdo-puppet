@@ -5,6 +5,13 @@ FORGE
     puppetlabs/stdlib (3.2.0)
 
 GIT
+  remote: git://github.com/jarib/puppet-hipchat
+  ref: status-config
+  sha: d9f68ef542497ed5baee446ce920deada5af13ac
+  specs:
+    hipchat (0.0.2)
+
+GIT
   remote: git://github.com/puppetlabs/puppet-postgresql.git
   ref: release-0.3.0
   sha: 12eef2eaa882660704cf8ab3897eb295c4c4f10e
@@ -43,15 +50,10 @@ GIT
   specs:
     logrotate (1.0.2)
 
-GITHUBTARBALL
-  remote: jamtur01/puppet-hipchat
-  specs:
-    hipchat (0.0.2)
-
 DEPENDENCIES
   apache (>= 0)
   firewall (>= 0)
-  hipchat (= 0.0.2)
+  hipchat (>= 0)
   logrotate (>= 0)
   postgresql (>= 0)
   stdlib (>= 0)
