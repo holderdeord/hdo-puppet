@@ -6,8 +6,8 @@ FORGE
 
 GIT
   remote: git://github.com/puppetlabs/puppet-postgresql.git
-  ref: 847a5919dde8b25766408b2a37034a9a00be55d3
-  sha: 847a5919dde8b25766408b2a37034a9a00be55d3
+  ref: release-0.3.0
+  sha: 12eef2eaa882660704cf8ab3897eb295c4c4f10e
   specs:
     postgresql (0.3.0)
       puppetlabs/firewall (>= 0.0.4)
@@ -15,30 +15,30 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-apache.git
-  ref: 66d5ce9aef8ef6c589a36323bba2879dd0d66fd1
-  sha: 66d5ce9aef8ef6c589a36323bba2879dd0d66fd1
+  ref: 0.6.0
+  sha: b18fad908fe7cb8fbc6604fde1962c85540095f4
   specs:
-    apache (0.4.0)
+    apache (0.6.0)
       puppetlabs/firewall (>= 0.0.4)
       puppetlabs/stdlib (>= 2.2.1)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-firewall.git
-  ref: 63fd4339faf10721020bf49439cd4462c725151a
-  sha: 63fd4339faf10721020bf49439cd4462c725151a
+  ref: 0.3.0
+  sha: edd273a2d0f2fa147a88be1ae8732853ae7a4086
   specs:
-    firewall (0.0.4)
+    firewall (0.3.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
-  ref: 6961179007dce76d7fb9bd1fc361273acb4129a7
-  sha: 6961179007dce76d7fb9bd1fc361273acb4129a7
+  ref: 4.0.2
+  sha: bebecd33783b483f6af059e311b9631d3a3336cc
   specs:
-    stdlib (3.0.1)
+    stdlib (4.0.2)
 
 GIT
   remote: git://github.com/rodjek/puppet-logrotate.git
-  ref: 1a8431fda63809794e0732a6b0ae4bd6f968b16e
+  ref: v1.0.2
   sha: 1a8431fda63809794e0732a6b0ae4bd6f968b16e
   specs:
     logrotate (1.0.2)
