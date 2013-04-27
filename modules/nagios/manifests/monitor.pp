@@ -26,8 +26,16 @@ class nagios::monitor {
     subscribe => [ Package['nagios3'], Package['nagios-plugins'] ],
   }
 
+  # we clear the hosts file to avoid nagios_host bugs (duplicate definitions)
+  # see https://github.com/holderdeord/hdo-site/issues/420 and http://projects.puppetlabs.com/issues/11921
+  file { 'clear_nagios_hosts':
+    path    => '/etc/nagios3/nagios_host.cfg',
+    content => '',
+    mode    => '0644'
+  }
+
   # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host    <<||>> { notify => Service['nagios'] }
+  Nagios_host    <<||>> { notify => Service['nagios'], require => File['clear_nagios_hosts'] }
   Nagios_service <<||>> { notify => Service['nagios'] }
 
   $htpasswd_path = '/etc/nagios3/htpasswd.users'
@@ -40,30 +48,14 @@ class nagios::monitor {
     logoutput => on_failure
   }
 
-  #
-  # TODO(jari): fix permissions on the generated files
-  # perhaps not worth using the nagios_command type at all since it's such a hassle
-  #
+  # puppet's nagios_command type is very buggy (duplicate definitions, wrong permissions), so we set up commands with a template
+  # see https://github.com/holderdeord/hdo-site/issues/420
 
-  nagios_command { 'check_over_ssh':
-    ensure       => present,
-    target       => '/etc/nagios-plugins/config/check_over_ssh.cfg',
-    command_line => "/usr/lib/nagios/plugins/check_by_ssh -p 22 -l ${nagios::base::user} -i ${private_key} -t 30 -o StrictHostKeyChecking=no -H \$HOSTADDRESS\$ -C '${nagios::base::home}/nagios.sh'",
-    require      => Package['nagios-plugins'],
-  }
-
-  nagios_command { 'remote_load':
-    ensure       => present,
-    target       => '/etc/nagios-plugins/config/remote_load.cfg',
-    command_line => "/usr/lib/nagios/plugins/check_by_ssh -p 22 -l ${nagios::base::user} -i ${private_key} -t 30 -o StrictHostKeyChecking=no -H \$HOSTADDRESS\$ -C '/usr/lib/nagios/plugins/check_load -w \$ARG2\$ -c \$ARG3\$'",
-    require      => Package['nagios-plugins'],
-  }
-
-  nagios_command { 'remote_disk':
-    ensure       => present,
-    target       => '/etc/nagios-plugins/config/remote_disk.cfg',
-    command_line => "/usr/lib/nagios/plugins/check_by_ssh -p 22 -l ${nagios::base::user} -i ${private_key} -t 30 -o StrictHostKeyChecking=no -H \$HOSTADDRESS\$ -C '/usr/lib/nagios/plugins/check_disk -w \$ARG2\$ -c \$ARG3\$ -p \$ARG4\$'",
-    require      => Package['nagios-plugins'],
+  file { '/etc/nagios-plugins/config/hdo_commands.cfg':
+    ensure  => file,
+    mode    => '0644',
+    content => template('nagios/commands.cfg.erb'),
+    require => Package['nagios-plugins']
   }
 
   #
