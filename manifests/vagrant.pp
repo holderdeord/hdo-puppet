@@ -32,7 +32,6 @@ node 'hdo-app-vm' {
 # 192.168.1.13
 node 'hdo-db-vm' {
   include nagios::target
-
   include hdo::database
 }
 

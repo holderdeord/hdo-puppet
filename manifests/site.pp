@@ -26,4 +26,6 @@ Exec {
 
 Exec['apt-update'] -> Package <| |>
 
+include hdo::users
+
 import 'nodes.pp'
