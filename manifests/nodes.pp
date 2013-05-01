@@ -3,6 +3,8 @@
 #
 
 node 'ops1' {
+  include hdo::users::admins
+
   include munin::master
   include nagios::monitor
 
@@ -47,6 +49,7 @@ node 'hetzner02' {
 #
 
 node 'hetzner03' {
+  include hdo::users::admins
   include postfix
 
   include munin::node
@@ -80,6 +83,8 @@ node 'hetzner03' {
 #
 
 node 'cache1' {
+  include hdo::users::admins
+
   include munin::node
   include nagios::target
   include nagios::target::http
@@ -98,6 +103,8 @@ node 'cache1' {
 #
 
 node 'app1' {
+  include hdo::users::admins
+
   include munin::node
   include nagios::target
   include nagios::target::http
@@ -111,6 +118,8 @@ node 'app1' {
 }
 
 node 'app2' {
+  include hdo::users::admins
+
   include munin::node
   include nagios::target
   include nagios::target::http
@@ -125,6 +134,8 @@ node 'app2' {
 #
 
 node 'es1' {
+  include hdo::users::admins
+
   include munin::node
   include nagios::target
 
@@ -138,6 +149,8 @@ node 'es1' {
 #
 
 node 'db1' {
+  include hdo::users::admins
+
   include munin::node
   include nagios::target
 
