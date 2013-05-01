@@ -4,7 +4,7 @@ define hdo::users::admin_account($config) {
     home       => "/home/${name}",
     managehome => true,
     shell      => '/bin/bash',
-    groups     => 'adm',
+    groups     => 'sudo',
     tag        => 'hdo-admin',
   }
 
