@@ -18,33 +18,6 @@ node 'ops1' {
 }
 
 #
-# beta.holderdeord.no
-#
-
-node 'hetzner02' {
-  include postfix
-
-  include munin::node
-  include nagios::target
-  include nagios::target::http
-
-  include hdo::database
-
-  class { 'hdo::webapp::apiupdater':
-    ensure => absent
-  }
-
-  class { 'hdo::webapp':
-    server_name => 'beta.holderdeord.no'
-  }
-
-  include elasticsearch
-  include elasticsearch::emailmonitor
-
-  hdo::firewall { "beta": }
-}
-
-#
 # next.holderdeord.no
 #
 
