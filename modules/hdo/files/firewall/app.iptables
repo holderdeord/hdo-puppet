@@ -30,8 +30,9 @@ $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 # Accept inbound ICMP messages
 $IPT -A INPUT -p ICMP --icmp-type 8 -s 0.0.0.0/0 -j ACCEPT
 
-# accept HTTP
+# accept HTTP + HTTPS
 $IPT -A INPUT -p tcp --dport 80 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
+$IPT -A INPUT -p tcp --dport 443 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
 # accept munin from ops1
 $IPT -A INPUT -p tcp --dport 4949 -m state --state NEW -s 5.9.122.47 -j ACCEPT
