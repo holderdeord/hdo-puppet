@@ -36,7 +36,8 @@ node 'hetzner03' {
 
   class { 'hdo::webapp':
     server_name => 'next.holderdeord.no',
-    listen      => 80 # varnish listening on 80
+    listen      => 80,
+    ssl         => true,
   }
 
   class { 'hdo::webapp::apiupdater':
