@@ -13,12 +13,10 @@ group { 'puppet': ensure => present }
 # 192.168.1.14 hdo-es-vm.holderdeord.no
 #
 
-# 192.168.1.10
 node 'hdo-ops-vm' {
   include nagios::monitor
 }
 
-# 192.168.1.11
 node 'hdo-cache-vm' {
   include nagios::target
 
@@ -28,7 +26,6 @@ node 'hdo-cache-vm' {
   }
 }
 
-# 192.168.1.12
 node 'hdo-app-vm' {
   include nagios::target
 
@@ -40,13 +37,11 @@ node 'hdo-app-vm' {
   }
 }
 
-# 192.168.1.13
 node 'hdo-db-vm' {
   include nagios::target
   include hdo::database
 }
 
-# 192.168.1.14
 node 'hdo-es-vm' {
   include nagios::target
   include elasticsearch
