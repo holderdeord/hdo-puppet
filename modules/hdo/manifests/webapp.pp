@@ -3,7 +3,8 @@ class hdo::webapp(
   $server_name       = $::fqdn,
   $db_host           = undef,
   $db_port           = undef,
-  $elasticsearch_url = undef
+  $elasticsearch_url = undef,
+  $ssl               = false,
 ) {
   include hdo::common
   include hdo::params
@@ -16,6 +17,7 @@ class hdo::webapp(
   $shared_root = "${deploy_root}/shared"
   $config_root = "${deploy_root}/shared/config"
   $public_dir  = "${app_root}/public"
+  $ssl_path    = "${config_root}/secure.holderdeord.no"
 
   file {
     [
@@ -99,6 +101,16 @@ class hdo::webapp(
     dateext      => true,
     ifempty      => false,
     missingok    => true
+  }
+
+  if $ssl == true {
+    # we ensure correct permissions here, but the content must be set up manually
+    file { ["${ssl_path}.crt", "${ssl_path}.key"]:
+      ensure => file,
+      owner  => root,
+      group  => root,
+      mode   => '0400'
+    }
   }
 }
 

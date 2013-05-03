@@ -36,6 +36,7 @@ node 'hdo-app-vm' {
     server_name       => 'hdo-app-vm.holderdeord.no',
     db_host           => '192.168.1.13',
     elasticsearch_url => 'http://192.168.1.14:9200',
+    ssl               => false,
   }
 }
 

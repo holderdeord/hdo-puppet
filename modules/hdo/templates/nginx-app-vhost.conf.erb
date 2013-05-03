@@ -4,8 +4,25 @@
 
 server {
   listen      <%= listen %>;
-  server_name <%= server_name %> beta.holderdeord.no www.holderdeord.no;
   root        <%= scope.lookupvar('public_dir') %>;
+
+  <% if ssl == true %>
+    listen 443 default ssl;
+
+    ssl_protocols              SSLv3 TLSv1;
+    ssl_ciphers                HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    ssl_certificate            <%= ssl_path %>.crt;
+    ssl_certificate_key        <%= ssl_path %>.key;
+
+    ssl_session_cache          shared:SSL:10m;
+    ssl_session_timeout        5m;
+
+    server_name <%= server_name %> "~^(beta|www|secure)\.holderdeord\.no$";
+  <% else %>
+    server_name <%= server_name %> "~^(beta|www)\.holderdeord\.no$";
+  <% end %>
 
   location ~ .(php)$ {
     deny all;
@@ -16,6 +33,8 @@ server {
   location @passenger {
     passenger_enabled       on;
     passenger_min_instances <%= scope.lookupvar('passenger::params::min_instances') %>;
+    passenger_set_cgi_param HTTP_X_FORWARDED_PROTO $scheme;
+
     rails_env <%= scope.lookupvar('hdo::params::environment') %>;
   }
 
