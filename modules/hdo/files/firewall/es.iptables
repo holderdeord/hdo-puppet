@@ -34,10 +34,16 @@ $IPT -A INPUT -p tcp --dport 4949 -m state --state NEW -s 5.9.122.47 -j ACCEPT
 
 #
 # elasticsearch (port 9200)
-#
 #    ...from app1.holderdeord.no
 $IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 46.4.88.195 -j ACCEPT
 #    ...from app2.holderdeord.no
 $IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 46.4.88.196 -j ACCEPT
+
+#
+# elasticsearch node-to-node (port 9300)
+#    ...from es1.holderdeord.no
+$IPT -A INPUT -p tcp --dport 9300 -m state --state NEW -s 46.4.88.197 -j ACCEPT
+#    ...from es2.holderdeord.no
+$IPT -A INPUT -p tcp --dport 9300 -m state --state NEW -s 88.198.15.103 -j ACCEPT
 
 $IPT-save > /etc/iptables.rules

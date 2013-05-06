@@ -107,7 +107,7 @@ node 'app2' {
 # elasticsearch servers
 #
 
-node 'es1' {
+node 'es1', 'es2' {
   include hdo::users::admins
 
   include munin::node
@@ -115,7 +115,7 @@ node 'es1' {
 
   include elasticsearch
 
-  hdo::firewall { "es1": }
+  hdo::firewall { "es": }
 }
 
 #
