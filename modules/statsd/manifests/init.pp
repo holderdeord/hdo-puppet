@@ -42,7 +42,7 @@ class statsd(
   }
 
   logrotate::rule { 'statsd':
-    path         => '/var/log/statsd/*',
+    path         => '/var/log/statsd/*.log',
     compress     => true,
     copytruncate => true,
     dateext      => true,

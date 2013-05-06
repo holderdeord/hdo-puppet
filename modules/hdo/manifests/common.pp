@@ -4,7 +4,14 @@ class hdo::common {
 
   $home = "/home/${hdo::params::user}"
 
-  package { ['etckeeper', 'vim', 'build-essential', 'git-core', 'emacs23-nox']:
+  package { [
+      'etckeeper',
+      'vim',
+      'build-essential',
+      'git-core',
+      'emacs23-nox',
+      'sysstat'
+    ]:
     ensure => installed,
   }
 
