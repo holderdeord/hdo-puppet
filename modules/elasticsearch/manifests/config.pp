@@ -45,4 +45,12 @@ class elasticsearch::config inherits elasticsearch::params {
     group  => $nagios::base::user,
     source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch'
   }
+
+  file { "${nagios::base::checks_dir}/elasticsearch-cluster-state":
+    ensure => present,
+    mode   => '0700',
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user,
+    source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch-cluster-state'
+  }
 }

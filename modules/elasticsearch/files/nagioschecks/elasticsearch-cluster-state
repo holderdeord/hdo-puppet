@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'net/http'
+
+data = JSON.parse(Net::HTTP.get(URI.parse("http://localhost:9200/_cluster/health")))
+
+if data['status'] == 'green'
+  puts "cluster status is green"
+else
+  puts "cluster status is #{data['status']} (#{data.inspect})"
+  exit 1
+end
