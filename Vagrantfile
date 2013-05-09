@@ -38,6 +38,15 @@ Vagrant::Config.run do |config|
     db.vm.network :hostonly, "192.168.1.13"
   end
 
+  config.vm.define :db2 do |db|
+    db.vm.host_name = "hdo-db2-vm"
+
+    db.vm.box       = default_box
+    db.vm.box_url   = default_box_url
+
+    db.vm.network :hostonly, "192.168.1.132"
+  end
+
   config.vm.define :es do |es|
     es.vm.host_name = "hdo-es-vm"
 

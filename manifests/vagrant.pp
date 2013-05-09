@@ -39,7 +39,17 @@ node 'hdo-app-vm' {
 
 node 'hdo-db-vm' {
   include nagios::target
-  include hdo::database
+  class { 'hdo::database::master':
+    slave_db_host => '192.168.1.132',
+  }
+}
+
+node 'hdo-db2-vm' {
+  include nagios::target
+  class { 'hdo::database::slave':
+    master_db_host => '192.168.1.13',
+  }
+
 }
 
 node 'hdo-es-vm' {

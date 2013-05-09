@@ -14,7 +14,7 @@ mod "logrotate",
 
 mod "postgresql",
   :git => "git://github.com/puppetlabs/puppet-postgresql.git",
-  :ref => "release-0.3.0"
+  :ref => "e5c1dbcd91776f826a8bee7b935a41478c4a8385"
 
 mod "stdlib",
   :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git",

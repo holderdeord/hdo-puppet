@@ -1,6 +1,4 @@
-class hdo::database(
-  $slave_db_mask = undef
-){
+class hdo::database::common{
   include hdo::common
 
   class { 'postgresql::server':
@@ -36,14 +34,6 @@ class hdo::database(
     ensure  => file,
     owner   => 'postgres',
     source  => 'puppet:///modules/hdo/db/postgresql_puppet_extras.conf',
-  }
-
-  postgresql::pg_hba_rule { 'allow slave to connect for streaming replication':
-    type        => 'host',
-    database    => 'replication',
-    user        => 'postgres',
-    address     => $slave_db_mask,
-    auth_method => 'trust',
   }
 
   #
