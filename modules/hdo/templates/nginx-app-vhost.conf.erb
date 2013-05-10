@@ -3,8 +3,16 @@
 #
 
 server {
+  listen 80;
+  server_name "holderdeord.no";
+
+  return 301 $scheme://www.holderdeord.no$request_uri;
+}
+
+server {
   listen      <%= listen %>;
   root        <%= scope.lookupvar('public_dir') %>;
+  server_name <%= server_name %> "~^(beta|www)\.holderdeord\.no$";
 
   <% if ssl == true %>
     listen 443 default ssl;
@@ -18,10 +26,6 @@ server {
 
     ssl_session_cache          shared:SSL:10m;
     ssl_session_timeout        5m;
-
-    server_name <%= server_name %> "~^(beta|www|secure)\.holderdeord\.no$";
-  <% else %>
-    server_name <%= server_name %> "~^(beta|www)\.holderdeord\.no$";
   <% end %>
 
   location ~ .(php)$ {
