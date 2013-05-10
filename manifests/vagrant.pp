@@ -9,8 +9,9 @@ group { 'puppet': ensure => present }
 # 192.168.1.10 hdo-ops-vm.holderdeord.no
 # 192.168.1.11 hdo-cache-vm.holderdeord.no
 # 192.168.1.12 hdo-app-vm.holderdeord.no
-# 192.168.1.13 hdo-db-vm.holderdeord.no
-# 192.168.1.14 hdo-es-vm.holderdeord.no
+# 192.168.1.13 hdo-db1-vm.holderdeord.no
+# 192.168.1.14 hdo-db2-vm.holderdeord.no
+# 192.168.1.15 hdo-es-vm.holderdeord.no
 #
 
 node 'hdo-ops-vm' {
@@ -32,24 +33,25 @@ node 'hdo-app-vm' {
   class { 'hdo::webapp':
     server_name       => 'hdo-app-vm.holderdeord.no',
     db_host           => '192.168.1.13',
-    elasticsearch_url => 'http://192.168.1.14:9200',
+    elasticsearch_url => 'http://192.168.1.15:9200',
     ssl               => false,
   }
 }
 
-node 'hdo-db-vm' {
+node 'hdo-db1-vm' {
   include nagios::target
-  class { 'hdo::database::master':
-    slave_db_host => '192.168.1.132',
+
+  class { 'hdo::database':
+    slave_host => '192.168.1.14',
   }
 }
 
 node 'hdo-db2-vm' {
   include nagios::target
-  class { 'hdo::database::slave':
-    master_db_host => '192.168.1.13',
-  }
 
+  class { 'hdo::database':
+    master_host => '192.168.1.13',
+  }
 }
 
 node 'hdo-es-vm' {

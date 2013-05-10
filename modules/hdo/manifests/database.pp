@@ -1,6 +1,8 @@
 class hdo::database(
-  $slave_db_mask = undef
+  $master_host = undef,
+  $slave_host = undef
 ){
+
   include hdo::common
 
   class { 'postgresql::server':
@@ -38,12 +40,28 @@ class hdo::database(
     source  => 'puppet:///modules/hdo/db/postgresql_puppet_extras.conf',
   }
 
-  postgresql::pg_hba_rule { 'allow slave to connect for streaming replication':
-    type        => 'host',
-    database    => 'replication',
-    user        => 'postgres',
-    address     => $slave_db_mask,
-    auth_method => 'trust',
+  if $master_host != undef and $slave_host != undef {
+    fail('hdo::database can not act as both master and slave')
+  }
+
+  if $slave_host != undef {
+    # this is the master - let's create the DB
+
+    postgresql::pg_hba_rule { 'allow slave to connect for streaming replication':
+      type        => 'host',
+      database    => 'replication',
+      user        => 'postgres',
+      address     => "${slave_host}/32",
+      auth_method => 'trust',
+    }
+  }
+
+  if $master_host != undef {
+    file { '/var/lib/postgresql/9.1/main/recovery.conf':
+      ensure  => file,
+      owner   => 'postgres',
+      content => template('hdo/postgresql-recovery.conf.erb')
+    }
   }
 
   #

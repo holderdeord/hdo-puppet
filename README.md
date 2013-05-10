@@ -127,3 +127,10 @@ Configure the node to talk to the puppetmaster by adding the following to /etc/p
     pluginsync = true
 
 Then do the sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
+
+#### PostgreSQL replication
+
+When setting up the secondary DB, initiate base backup with:
+
+    $ sudo su - postgres
+    $ pg_basebackup -D /var/lib/postgresql/9.1/main/ -x -h $MASTER_IP -U postgres
