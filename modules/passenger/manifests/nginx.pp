@@ -5,6 +5,7 @@ class passenger::nginx($port = 80) inherits passenger {
   $log_dir     = "${root}/logs"
   $sites_dir   = "${config_dir}/sites-enabled"
   $config      = "${config_dir}/nginx.conf"
+  $mime_types  = "${config_dir}/mime.types"
   $daemon      = "${root}/sbin/nginx"
   $listen      = $port
 
@@ -42,6 +43,16 @@ class passenger::nginx($port = 80) inherits passenger {
     group   => root,
     mode    => '0644',
     content => template('passenger/nginx.conf.erb'),
+    require => Exec['install-passenger-nginx'],
+    notify  => Service['nginx']
+  }
+
+  file { $mime_types:
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    source  => 'puppet:///modules/passenger/nginx/mime.types',
     require => Exec['install-passenger-nginx'],
     notify  => Service['nginx']
   }
