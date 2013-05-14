@@ -37,7 +37,7 @@ class hdo::database(
   file { '/etc/postgresql/9.1/main/postgresql_puppet_extras.conf':
     ensure  => file,
     owner   => 'postgres',
-    source  => 'puppet:///modules/hdo/db/postgresql_puppet_extras.conf',
+    content => template('hdo/postgresql_puppet_extras.conf.erb')
   }
 
   if $master_host != undef and $slave_host != undef {

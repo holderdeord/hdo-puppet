@@ -133,4 +133,6 @@ Then do the sign the SSL certificate as described [here](http://docs.puppetlabs.
 When setting up the secondary DB, initiate base backup with:
 
     $ sudo su - postgres
-    $ pg_basebackup -D /var/lib/postgresql/9.1/main/ -x -h $MASTER_IP -U postgres
+    $ service postgres stop
+    $ cp /var/lib/postgresql/9.1/main/{recovery.conf,server.{crt,key}} /tmp && rm -rf /var/lib/postgresql/9.1/main && /usr/lib/postgresql/9.1/bin/pg_basebackup -D /var/lib/postgresql/9.1/main -x -h $MASTER_IP -U postgres && cp /tmp/{recovery.conf,server.{crt,key}} /var/lib/postgresql/9.1/main
+    $ service postgres start
