@@ -9,6 +9,14 @@ class hdo::database(
 
   include hdo::common
 
+  if $primary_host == undef {
+    # this is the primary (or standalone) - let's create the DB
+    postgresql::db { "hdo_${hdo::params::environment}":
+      user     => $hdo::params::db_username,
+      password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
+    }
+  }
+
   class { 'postgresql::server':
     # no idea why this is necessary - either the module isn't properly tested on ubuntu,
     # or something is non-standard about our VM image.
@@ -17,9 +25,9 @@ class hdo::database(
     service_provider => init,         # defaults to upstart
 
     config_hash      => {
-        'postgres_password'        => $hdo::params::db_server_password,
-        'listen_addresses'         => '*',
-        'ip_mask_allow_all_users'  => '0.0.0.0/0',
+      'postgres_password'        => $hdo::params::db_server_password,
+      'listen_addresses'         => '*',
+      'ip_mask_allow_all_users'  => '0.0.0.0/0',
     }
   }
 
@@ -37,17 +45,10 @@ class hdo::database(
     ensure  => file,
     owner   => 'postgres',
     content => template('hdo/postgresql_puppet_extras.conf.erb'),
-    notify  => Service['postgresqld'],
-    require => Class['postgresql::server']
+    notify  => Service['postgresqld']
   }
 
   if $standby_host != undef {
-    # this is the master - let's create the DB
-    postgresql::db { "hdo_${hdo::params::environment}":
-      user     => $hdo::params::db_username,
-      password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
-    }
-
     postgresql::pg_hba_rule { 'allow slave to connect for streaming replication':
       type        => 'host',
       database    => 'replication',
@@ -58,8 +59,6 @@ class hdo::database(
   }
 
   if $primary_host != undef {
-    # TODO: basebackup?
-
     file { "${postgresql::params::datadir}/recovery.conf" :
       ensure  => file,
       owner   => 'postgres',
