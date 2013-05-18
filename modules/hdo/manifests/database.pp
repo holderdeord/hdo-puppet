@@ -36,7 +36,9 @@ class hdo::database(
   file { "${postgresql::params::confdir}/postgresql_puppet_extras.conf":
     ensure  => file,
     owner   => 'postgres',
-    content => template('hdo/postgresql_puppet_extras.conf.erb')
+    content => template('hdo/postgresql_puppet_extras.conf.erb'),
+    notify  => Service['postgresqld'],
+    require => Class['postgresql::server']
   }
 
   if $slave_host != undef {
@@ -56,10 +58,13 @@ class hdo::database(
   }
 
   if $master_host != undef {
+    # TODO: basebackup?
+
     file { "${postgresql::params::datadir}/recovery.conf" :
       ensure  => file,
       owner   => 'postgres',
-      content => template('hdo/postgresql-recovery.conf.erb')
+      content => template('hdo/postgresql-recovery.conf.erb'),
+      require => [Class['postgresql::server']]
     }
   }
 
