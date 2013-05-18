@@ -34,7 +34,7 @@ class hdo::database(
     group  => $nagios::base::user
   }
 
-  file { '/etc/postgresql/9.1/main/postgresql_puppet_extras.conf':
+  file { "${postgresql::params::confdir}/postgresql_puppet_extras.conf":
     ensure  => file,
     owner   => 'postgres',
     content => template('hdo/postgresql_puppet_extras.conf.erb')
@@ -57,7 +57,7 @@ class hdo::database(
   }
 
   if $master_host != undef {
-    file { '/var/lib/postgresql/9.1/main/recovery.conf':
+    file { "${postgresql::params::datadir}/recovery.conf" :
       ensure  => file,
       owner   => 'postgres',
       content => template('hdo/postgresql-recovery.conf.erb')
