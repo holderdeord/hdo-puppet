@@ -23,11 +23,6 @@ class hdo::database(
     }
   }
 
-  postgresql::db { "hdo_${hdo::params::environment}":
-    user     => $hdo::params::db_username,
-    password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
-  }
-
   include nagios::base
 
   file { "${nagios::base::checks_dir}/postgresql" :
@@ -46,6 +41,10 @@ class hdo::database(
 
   if $slave_host != undef {
     # this is the master - let's create the DB
+    postgresql::db { "hdo_${hdo::params::environment}":
+      user     => $hdo::params::db_username,
+      password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
+    }
 
     postgresql::pg_hba_rule { 'allow slave to connect for streaming replication':
       type        => 'host',
