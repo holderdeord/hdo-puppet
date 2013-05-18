@@ -3,6 +3,10 @@ class hdo::database(
   $slave_host = undef
 ){
 
+  if $master_host != undef and $slave_host != undef {
+    fail('hdo::database can not act as both master and slave')
+  }
+
   include hdo::common
 
   class { 'postgresql::server':
@@ -38,10 +42,6 @@ class hdo::database(
     ensure  => file,
     owner   => 'postgres',
     content => template('hdo/postgresql_puppet_extras.conf.erb')
-  }
-
-  if $master_host != undef and $slave_host != undef {
-    fail('hdo::database can not act as both master and slave')
   }
 
   if $slave_host != undef {
