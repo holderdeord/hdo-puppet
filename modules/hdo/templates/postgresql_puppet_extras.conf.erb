@@ -2,6 +2,6 @@ wal_level = hot_standby
 max_wal_senders = 5
 wal_keep_segments = 32
 log_destination = 'syslog'
-<% if scope.lookupvar('master_host') != 'undef' %>
+<% if scope.lookupvar('primary_host') != 'undef' %>
 hot_standby = on
 <% end %>

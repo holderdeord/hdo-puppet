@@ -1,9 +1,9 @@
 class hdo::database(
-  $master_host = undef,
-  $slave_host = undef
+  $primary_host = undef,
+  $standby_host = undef
 ){
 
-  if $master_host != undef and $slave_host != undef {
+  if $primary_host != undef and $standby_host != undef {
     fail('hdo::database can not act as both master and slave')
   }
 
@@ -41,7 +41,7 @@ class hdo::database(
     require => Class['postgresql::server']
   }
 
-  if $slave_host != undef {
+  if $standby_host != undef {
     # this is the master - let's create the DB
     postgresql::db { "hdo_${hdo::params::environment}":
       user     => $hdo::params::db_username,
@@ -52,12 +52,12 @@ class hdo::database(
       type        => 'host',
       database    => 'replication',
       user        => 'postgres',
-      address     => "${slave_host}/32",
+      address     => "${standby_host}/32",
       auth_method => 'trust',
     }
   }
 
-  if $master_host != undef {
+  if $primary_host != undef {
     # TODO: basebackup?
 
     file { "${postgresql::params::datadir}/recovery.conf" :
