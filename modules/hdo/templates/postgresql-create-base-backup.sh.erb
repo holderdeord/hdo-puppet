@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+set -x
+
+DATADIR="<%= scope.lookupvar 'postgresql::params::datadir' %>"
+PRIMARY="<%= scope.lookupvar 'primary_host' %>"
+
+mv $DATADIR/recovery.conf /tmp
+service postgresql stop
+rm -rf $DATADIR
+
+pg_basebackup -D $DATADIR -x -h $PRIMARY -U postgres
+
+mv /tmp/recovery.conf $DATADIR/recovery.conf
+ln -s /etc/ssl/certs/ssl-cert-snakeoil.pem $DATADIR/server.crt
+ln -s /etc/ssl/private/ssl-cert-snakeoil.key $DATADIR/server.key
+
+service postgresql start
