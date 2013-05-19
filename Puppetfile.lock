@@ -1,8 +1,11 @@
 FORGE
   remote: http://forge.puppetlabs.com
   specs:
+    puppetlabs/apt (1.1.0)
+      puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/firewall (0.1.1)
     puppetlabs/stdlib (3.2.0)
+    ripienaar/concat (0.2.0)
 
 GIT
   remote: git://github.com/jarib/puppet-hipchat
@@ -13,12 +16,14 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppet-postgresql.git
-  ref: release-0.3.0
-  sha: 12eef2eaa882660704cf8ab3897eb295c4c4f10e
+  ref: e5c1dbcd91776f826a8bee7b935a41478c4a8385
+  sha: e5c1dbcd91776f826a8bee7b935a41478c4a8385
   specs:
-    postgresql (0.3.0)
+    postgresql (2.2.1)
+      puppetlabs/apt (< 2.0.0, >= 1.1.0)
       puppetlabs/firewall (>= 0.0.4)
-      puppetlabs/stdlib (>= 2.4.0)
+      puppetlabs/stdlib (< 5.0.0, >= 3.2.0)
+      ripienaar/concat (>= 0.2.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-apache.git

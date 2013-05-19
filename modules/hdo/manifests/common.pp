@@ -10,7 +10,8 @@ class hdo::common {
       'build-essential',
       'git-core',
       'emacs23-nox',
-      'sysstat'
+      'sysstat',
+      'curl'
     ]:
     ensure => installed,
   }

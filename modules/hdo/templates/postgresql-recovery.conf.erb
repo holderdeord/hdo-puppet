@@ -1,0 +1,3 @@
+standby_mode = 'on'
+primary_conninfo = 'host=<%= scope.lookupvar('primary_host') %> user=postgres'
+recovery_target_timeline = 'latest'
