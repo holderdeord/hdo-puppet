@@ -128,5 +128,14 @@ node 'db1' {
   include munin::node
   include nagios::target
 
-  include hdo::database
+  class { 'hdo::database': standby_host => 'db2.holderdeord.no' }
+}
+
+node 'db2' {
+  include hdo::users::admins
+
+  include munin::node
+  include nagios::target
+
+  class { 'hdo::database': primary_host => 'db1.holderdeord.no' }
 }
