@@ -42,7 +42,7 @@ node 'hdo-db1-vm' {
   include nagios::target
 
   class { 'hdo::database':
-    standby_host => '192.168.1.14',
+    standby_ip => '192.168.1.14',
   }
 }
 
@@ -50,7 +50,7 @@ node 'hdo-db2-vm' {
   include nagios::target
 
   class { 'hdo::database':
-    primary_host => '192.168.1.13',
+    primary_ip => '192.168.1.13',
   }
 }
 

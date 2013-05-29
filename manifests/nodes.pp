@@ -128,7 +128,9 @@ node 'db1' {
   include munin::node
   include nagios::target
 
-  class { 'hdo::database': standby_host => 'db2.holderdeord.no' }
+  class { 'hdo::database':
+    standby_ip => '88.198.14.8' # db2
+  }
 }
 
 node 'db2' {
@@ -137,5 +139,7 @@ node 'db2' {
   include munin::node
   include nagios::target
 
-  class { 'hdo::database': primary_host => 'db1.holderdeord.no' }
+  class { 'hdo::database':
+    primary_ip => '46.4.88.199' # db1
+  }
 }

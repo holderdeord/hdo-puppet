@@ -1,15 +1,15 @@
 class hdo::database(
-  $primary_host = undef,
-  $standby_host = undef
+  $primary_ip = undef,
+  $standby_ip = undef
 ){
 
-  if $primary_host != undef and $standby_host != undef {
+  if $primary_ip != undef and $standby_ip != undef {
     fail('hdo::database can not act as both master and slave')
   }
 
   include hdo::common
 
-  if $primary_host == undef {
+  if $primary_ip == undef {
     # this is the primary (or a standalone)
     # let's create the DB
     postgresql::db { "hdo_${hdo::params::environment}":
@@ -53,17 +53,17 @@ class hdo::database(
     notify  => Service['postgresqld']
   }
 
-  if $standby_host != undef {
+  if $standby_ip != undef {
     postgresql::pg_hba_rule { 'allow slave to connect for streaming replication':
       type        => 'host',
       database    => 'replication',
       user        => 'postgres',
-      address     => "${standby_host}/32",
+      address     => "${standby_ip}/32",
       auth_method => 'trust',
     }
   }
 
-  if $primary_host != undef {
+  if $primary_ip != undef {
     $backup_script = '/var/lib/postgresql/create-base-backup.sh'
     $recovery_conf = "${postgresql::params::datadir}/recovery.conf"
 
