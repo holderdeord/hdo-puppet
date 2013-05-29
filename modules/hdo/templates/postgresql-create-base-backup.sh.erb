@@ -4,7 +4,7 @@ set -e
 set -x
 
 DATADIR="<%= scope.lookupvar 'postgresql::params::datadir' %>"
-PRIMARY="<%= scope.lookupvar 'primary_host' %>"
+PRIMARY="<%= scope.lookupvar 'primary_ip' %>"
 
 mv $DATADIR/recovery.conf /tmp
 service postgresql stop
