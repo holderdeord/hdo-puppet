@@ -4,6 +4,7 @@
 
 node 'ops1' {
   include hdo::users::admins
+  include postfix
 
   include munin::master
   include nagios::monitor
