@@ -16,4 +16,5 @@ class hdo::params {
   $hipchat_api_token     = hiera('hipchat_api_token', '')
   $new_relic_license_key = hiera('new_relic_license_key', '')
   $fastly_api_key        = hiera('fastly_api_key', '')
+  $hdo_basic_auth        = hiera('hdo_basic_auth', '')
 }
