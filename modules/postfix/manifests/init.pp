@@ -1,7 +1,9 @@
 class postfix(
   $smtp_listen = '127.0.0.1',
   $hostname = $::fqdn,
-  $domain = $::domain) {
+  $domain = $::domain,
+  $network_table_extras = [],
+  ) {
 
   $packages = ['postfix', 'heirloom-mailx']
 
@@ -39,6 +41,14 @@ class postfix(
     content => template('postfix/main.cf.erb'),
     notify  => Service['postfix'],
     require => Package['postfix'],
+  }
+
+  file { '/etc/postfix/network_table':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('postfix/network_table.erb'),
   }
 
   exec { 'create-aliases-db':
