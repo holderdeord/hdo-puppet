@@ -80,13 +80,19 @@ node 'cache1' {
 node 'app1' {
   include hdo::users::admins
 
+
+  class { 'postfix':
+    smtp_listen          => 'all',
+    # if you modify network_table_extras, remember to add the ip to the app iptables rules
+    network_table_extras => ["46.4.88.196"]
+  }
+
   include munin::node
   include nagios::target
   include nagios::target::http
   include hdo::webapp::default
 
   # API import only happens on the 'primary' app server
-  class { 'postfix': smtp_listen => 'all' }
   include hdo::webapp::apiupdater
 
   hdo::firewall { "app": }
