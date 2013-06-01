@@ -86,7 +86,7 @@ node 'app1' {
   include hdo::webapp::default
 
   # API import only happens on the 'primary' app server
-  include postfix
+  class { 'postfix': smtp_listen => 'all' }
   include hdo::webapp::apiupdater
 
   hdo::firewall { "app": }

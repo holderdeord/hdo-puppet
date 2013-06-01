@@ -1,7 +1,7 @@
 class postfix(
   $smtp_listen = '127.0.0.1',
   $hostname = $::fqdn,
-  $domain = $::fqdn) {
+  $domain = $::domain) {
 
   $packages = ['postfix', 'heirloom-mailx']
 
