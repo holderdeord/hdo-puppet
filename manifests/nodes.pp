@@ -80,11 +80,10 @@ node 'cache1' {
 node 'app1' {
   include hdo::users::admins
 
-
   class { 'postfix':
     smtp_listen          => 'all',
     # if you modify network_table_extras, remember to add the ip to the app iptables rules
-    network_table_extras => ["46.4.88.196"]
+    network_table_extras => ["46.4.88.195", "46.4.88.196"]
   }
 
   include munin::node
