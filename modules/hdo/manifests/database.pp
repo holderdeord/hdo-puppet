@@ -93,7 +93,7 @@ class hdo::database(
   #
   # http://blog.gomiso.com/2011/07/28/adventures-in-scaling-part-2-postgresql/
   #
-  package { 'pgtune':
+  package { ['ptop', 'pgtune']:
     ensure => installed
   }
 

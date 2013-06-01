@@ -7,10 +7,10 @@ DB_STANDBY="88.198.14.8"   # db2, but avoid DNS lookup from app
 ES_STANDBY="88.198.15.103" # es2, but avoid DNS lookup from app
 
 function failover_db () {
-  echo "Failing over DB to standby @ ${DB_STANDBY}... (http://wiki.postgresql.org/wiki/Binary_Replication_Tutorial#DB_STANDBY)"
+  echo "Failing over DB to standby @ ${DB_STANDBY}... http://wiki.postgresql.org/wiki/Binary_Replication_Tutorial#Failing_Over_To_The_Standby"
 
   echo "...touching trigger file on ${DB_STANDBY}"
-  ssh "${DB_STANDBY}" "sudo su - postgres -c 'touch /var/lib/postgresql/failover'"
+  ssh -t "${DB_STANDBY}" "sudo su - postgres -c 'touch /var/lib/postgresql/failover'"
 
   for appserver in "${APPSERVERS[@]}"
   do
@@ -27,7 +27,6 @@ function failover_es () {
     echo "...manually changing config on ${appserver} (next deploy will overwrite this change!)"
     ssh "hdo@${appserver}" "sed -i.bak -r -e 's/ELASTICSEARCH_URL: .+/ELASTICSEARCH_URL: http:\/\/${ES_STANDBY}:9200/g' /webapps/hdo-site/current/config/env.yml && touch /webapps/hdo-site/current/restart.txt"
   done
-
 }
 
 case "$1" in
