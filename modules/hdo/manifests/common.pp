@@ -5,7 +5,6 @@ class hdo::common {
   $home = "/home/${hdo::params::user}"
 
   package { [
-      'etckeeper',
       'vim',
       'build-essential',
       'git-core',
@@ -53,12 +52,5 @@ class hdo::common {
     owner   => $hdo::params::user,
     mode    => '0644',
     content => 'gem: --no-rdoc --no-ri\n'
-  }
-
-  file { '/etc/etckeeper/etckeeper.conf':
-    ensure  => file,
-    mode    => '0644',
-    content => template('hdo/etckeeper.conf'),
-    require => Package['etckeeper']
   }
 }

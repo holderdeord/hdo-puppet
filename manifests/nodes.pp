@@ -31,7 +31,7 @@ node 'hetzner03' {
   include nagios::target::http
 
   include elasticsearch
-  include elasticsearch::emailmonitor
+  class { 'elasticsearch::emailmonitor': ensure => absent }
 
   include hdo::database
 
@@ -54,23 +54,17 @@ node 'hetzner03' {
 }
 
 #
-# cache servers
+# file server + holderdeord.no A record
 #
 
-node 'cache1' {
+node 'files' {
   include hdo::users::admins
 
   include munin::node
   include nagios::target
   include nagios::target::http
 
-  class { 'varnish':
-    listen_port => 80,
-    backends    => [
-      { host => 'app1.holderdeord.no', port => 80 },
-      { host => 'app2.holderdeord.no', port => 80 },
-    ]
-  }
+  include hdo::files
 }
 
 #

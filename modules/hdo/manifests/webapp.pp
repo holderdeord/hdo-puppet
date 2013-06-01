@@ -13,7 +13,6 @@ class hdo::webapp(
   $deploy_root = $hdo::params::deploy_root
   $app_root    = $hdo::params::app_root
 
-  $files_root  = "${webapp_root}/files"
   $shared_root = "${deploy_root}/shared"
   $config_root = "${deploy_root}/shared/config"
   $public_dir  = "${app_root}/public"
@@ -22,7 +21,6 @@ class hdo::webapp(
   file {
     [
       $deploy_root,
-      $files_root,
       $shared_root,
       $config_root
     ]:
@@ -52,26 +50,6 @@ class hdo::webapp(
     mode    => '0644',
     content => template('hdo/nginx-app-vhost.conf.erb'),
     notify  => Service['nginx']
-  }
-
-  if $server_name == 'beta.holderdeord.no' {
-    file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
-      ensure  => file,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      content => template('hdo/nginx-www-vhost.conf.erb'),
-      notify  => Service['nginx']
-    }
-
-    file { "${passenger::nginx::sites_dir}/files.holderdeord.no.conf":
-      ensure  => file,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      content => template('hdo/nginx-files-vhost.conf.erb'),
-      notify  => Service['nginx']
-    }
   }
 
   file { '/etc/profile.d/hdo-webapp.sh':

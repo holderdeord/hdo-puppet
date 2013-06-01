@@ -11,13 +11,13 @@ Vagrant::Config.run do |config|
     ops.vm.network :hostonly, "192.168.1.10"
   end
 
-  config.vm.define :cache do |cache|
-    cache.vm.host_name = "hdo-cache-vm"
+  config.vm.define :files do |files|
+    files.vm.host_name = "hdo-files-vm"
 
-    cache.vm.box       = default_box
-    cache.vm.box_url   = default_box_url
+    files.vm.box       = default_box
+    files.vm.box_url   = default_box_url
 
-    cache.vm.network :hostonly, "192.168.1.11"
+    files.vm.network :hostonly, "192.168.1.11"
   end
 
   config.vm.define :app do |app|
