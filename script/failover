@@ -15,7 +15,7 @@ function failover_db () {
   for appserver in "${APPSERVERS[@]}"
   do
     echo "...manually changing config on ${appserver} (next deploy will overwrite this change!)"
-    ssh "hdo@${appserver}" "sed -i.bak -r -e 's/host: .+/host: ${DB_STANDBY}/g' /webapps/hdo-site/current/config/database.yml && touch /webapps/hdo-site/current/restart.txt"
+    ssh "hdo@${appserver}" "sed -i.bak -r -e 's/host: .+/host: ${DB_STANDBY}/g' /webapps/hdo-site/current/config/database.yml && touch /webapps/hdo-site/current/tmp/restart.txt"
   done
 }
 
@@ -25,7 +25,7 @@ function failover_es () {
   for appserver in "${APPSERVERS[@]}"
   do
     echo "...manually changing config on ${appserver} (next deploy will overwrite this change!)"
-    ssh "hdo@${appserver}" "sed -i.bak -r -e 's/ELASTICSEARCH_URL: .+/ELASTICSEARCH_URL: http:\/\/${ES_STANDBY}:9200/g' /webapps/hdo-site/current/config/env.yml && touch /webapps/hdo-site/current/restart.txt"
+    ssh "hdo@${appserver}" "sed -i.bak -r -e 's/ELASTICSEARCH_URL: .+/ELASTICSEARCH_URL: http:\/\/${ES_STANDBY}:9200/g' /webapps/hdo-site/current/config/env.yml && touch /webapps/hdo-site/current/tmp/restart.txt"
   done
 }
 
