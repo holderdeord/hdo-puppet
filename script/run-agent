@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[ "$#" -eq 0 || "$#" > 2 ]]; then
+  echo "USAGE: $0 [server] [puppet args]"
+  exit 65
+fi
+
+SERVER=$1
+shift
+COMMAND="sudo puppet agent --test $*"
+
+echo "Running puppet @ ${SERVER}: ${COMMAND}"
+ssh -t $SERVER.holderdeord.no $COMMAND
+
