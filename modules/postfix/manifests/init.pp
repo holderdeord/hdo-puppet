@@ -56,4 +56,8 @@ class postfix(
     creates => '/etc/aliases.db',
     require => Package['postfix']
   }
+
+  munin::plugin { 'postfix_mailqueue': }
+  munin::plugin { 'postfix_mailstats': }
+  munin::plugin { 'postfix_mailvolume': }
 }
