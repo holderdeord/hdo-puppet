@@ -54,7 +54,7 @@ node 'hetzner03' {
 }
 
 #
-# file server + holderdeord.no A record
+# file server + holderdeord.no A record (301 -> www)
 #
 
 node 'files' {
@@ -65,6 +65,8 @@ node 'files' {
   include nagios::target::http
 
   include hdo::files
+
+  hdo::networkinterfaces { "files": }
 }
 
 #
@@ -89,6 +91,7 @@ node 'app1' {
   include hdo::webapp::apiupdater
 
   hdo::firewall { "app": }
+  hdo::networkinterfaces { "app1": }
 }
 
 node 'app2' {
@@ -101,6 +104,7 @@ node 'app2' {
   include hdo::webapp::default
 
   hdo::firewall { "app": }
+  hdo::networkinterfaces { "app2": }
 }
 
 #
