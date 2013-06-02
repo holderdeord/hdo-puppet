@@ -20,7 +20,6 @@ iface eth0:1 inet static
   address   46.4.70.210
   broadcast 46.4.88.223
   netmask   255.255.255.224
-  gateway   46.4.88.193
 
 iface eth0 inet6 static
   address 2a01:4f8:140:71c3::2

@@ -9,7 +9,7 @@ define hdo::networkinterfaces() {
   }
 
   exec { 'restart-networking':
-    command     => 'service networking restart',
+    command     => '/etc/init.d/networking stop && /etc/init.d/networking start',
     refreshonly => true,
   }
 
