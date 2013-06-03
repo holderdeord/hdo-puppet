@@ -1,7 +1,8 @@
 class hdo::database(
-  $primary_ip = undef,
-  $standby_ip = undef,
-  $munin      = false
+  $primary_ip   = undef,
+  $standby_ip   = undef,
+  $munin        = false,
+  $local_backup = 'absent',
 ){
 
   if $primary_ip != undef and $standby_ip != undef {
@@ -10,10 +11,13 @@ class hdo::database(
 
   include hdo::common
 
+  $db_name     = "hdo_${hdo::params::environment}"
+  $backup_root = '/home/hdo/pg-backups'
+
   if $primary_ip == undef {
     # this is the primary (or a standalone)
     # let's create the DB
-    postgresql::db { "hdo_${hdo::params::environment}":
+    postgresql::db { $db_name:
       user     => $hdo::params::db_username,
       password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
     }
@@ -105,6 +109,22 @@ class hdo::database(
     munin::plugin { 'postgres_tuples_ALL':       plugin_name => 'postgres_tuples_'       }
     munin::plugin { 'postgres_users':                                                    }
     munin::plugin { 'postgres_xlog':                                                     }
+  }
+
+  $local_backup_script = '/var/lib/postgresql/postgresql-local-backup.sh'
+
+  file { $local_backup_script:
+    ensure  => file,
+    content => template('hdo/postgresql-local-backup.sh.erb'),
+    mode    => '0755',
+  }
+
+  cron { 'postgresql-local-backup':
+    ensure      => $local_backup,
+    command     => $local_backup_script,
+    user        => 'hdo',
+    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
+    minute      => '45'
   }
 
   #

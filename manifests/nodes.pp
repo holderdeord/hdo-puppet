@@ -133,7 +133,8 @@ node 'db1' {
   include nagios::target
 
   class { 'hdo::database':
-    standby_ip => '88.198.14.8' # db2
+    standby_ip   => '88.198.14.8', # db2
+    local_backup => present
   }
 }
 
@@ -144,6 +145,7 @@ node 'db2' {
   include nagios::target
 
   class { 'hdo::database':
-    primary_ip => '46.4.88.199' # db1
+    primary_ip   => '46.4.88.199', # db1
+    local_backup => present
   }
 }
