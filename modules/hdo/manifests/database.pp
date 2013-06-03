@@ -1,6 +1,7 @@
 class hdo::database(
   $primary_ip = undef,
-  $standby_ip = undef
+  $standby_ip = undef,
+  $munin      = false
 ){
 
   if $primary_ip != undef and $standby_ip != undef {
@@ -88,6 +89,22 @@ class hdo::database(
       user    => 'postgres',
       require => [File[$backup_script], File[$recovery_conf]],
     }
+  }
+
+  if $munin == true {
+    munin::plugin { 'postgres_bgwriter':                                                 }
+    munin::plugin { 'postgres_cache_ALL':        plugin_name => 'postgres_cache_'        }
+    munin::plugin { 'postgres_checkpoints':                                              }
+    munin::plugin { 'postgres_connections_ALL':  plugin_name => 'postgres_connections_'  }
+    munin::plugin { 'postgres_connections_db':                                           }
+    munin::plugin { 'postgres_locks_ALL':        plugin_name => 'postgres_locks_'        }
+    munin::plugin { 'postgres_querylength_ALL':  plugin_name => 'postgres_querylength_'  }
+    munin::plugin { 'postgres_scans_ALL':        plugin_name => 'postgres_scans_'        }
+    munin::plugin { 'postgres_size_ALL':         plugin_name => 'postgres_size_'         }
+    munin::plugin { 'postgres_transactions_ALL': plugin_name => 'postgres_transactions_' }
+    munin::plugin { 'postgres_tuples_ALL':       plugin_name => 'postgres_tuples_'       }
+    munin::plugin { 'postgres_users':                                                    }
+    munin::plugin { 'postgres_xlog':                                                     }
   }
 
   #
