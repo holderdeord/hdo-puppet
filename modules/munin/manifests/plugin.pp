@@ -19,6 +19,7 @@ define munin::plugin($source = false, $plugin_name = $name) {
       group   => 'root',
       mode    => '0755',
       source  => $source,
+      notify  => Service['munin-node'],
     }
   } else {
     # default plugin
@@ -26,6 +27,7 @@ define munin::plugin($source = false, $plugin_name = $name) {
       ensure  => symlink,
       replace => false,
       target  => "/usr/share/munin/plugins/${plugin_name}",
+      notify  => Service['munin-node'],
     }
   }
 }
