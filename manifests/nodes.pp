@@ -33,7 +33,10 @@ node 'hetzner03' {
   include elasticsearch
   class { 'elasticsearch::emailmonitor': ensure => absent }
 
-  include hdo::database
+  class { 'hdo::database':
+    munin        => true,
+    local_backup => absent,
+  }
 
   class { 'hdo::webapp':
     server_name => 'next.holderdeord.no',
