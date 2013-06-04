@@ -109,6 +109,8 @@ class hdo::database(
     munin::plugin { 'postgres_tuples_ALL':       plugin_name => 'postgres_tuples_'       }
     munin::plugin { 'postgres_users':                                                    }
     munin::plugin { 'postgres_xlog':                                                     }
+
+    package { 'libdbd-pg-perl': ensure => installed, }
   }
 
   $local_backup_script = '/var/lib/postgresql/postgresql-local-backup.sh'
