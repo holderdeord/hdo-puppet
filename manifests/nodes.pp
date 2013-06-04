@@ -48,11 +48,6 @@ node 'hetzner03' {
     ensure => absent
   }
 
-  class { 'varnish':
-    ensure      => absent,
-    listen_port => 80,
-  }
-
   hdo::firewall { "next": }
 }
 
