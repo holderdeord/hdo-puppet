@@ -7,6 +7,8 @@ node 'ops1' {
   include postfix
 
   include munin::master
+  include munin::node
+
   include nagios::monitor
   include nagios::monitor::front
 
