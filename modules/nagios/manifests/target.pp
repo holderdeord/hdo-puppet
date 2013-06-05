@@ -15,6 +15,7 @@ class nagios::target {
     host_name           => $::fqdn,
     notification_period => '24x7',
     service_description => "${::hostname}_check_ping",
+    check_interval      => '1',
   }
 
   @@nagios_service { "check_over_ssh_${::hostname}":

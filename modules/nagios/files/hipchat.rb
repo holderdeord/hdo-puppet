@@ -38,7 +38,7 @@ end
 case options[:type]
 when 'host'
   hostname, long_date_time, notification_type, host_address, host_state, host_output = options[:inputs].split('|')
-  msg = "hostname=#{hostname} | #{notification_type} | #{host_address} | #{host_state} | #{host_output}"
+  msg = "#{hostname} | #{notification_type} | #{host_address} | #{host_state} | #{host_output}"
 when 'service'
   service_desc, host_alias, long_date_time, notification_type, host_address, service_state, service_output = options[:inputs].split('|')
   msg = "#{notification_type}: #{service_desc} @ #{host_alias} is #{service_state}: #{service_output}"
