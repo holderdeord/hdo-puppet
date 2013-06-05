@@ -3,8 +3,8 @@ class nagios::hipchat {
 
   file { '/etc/nagios-plugins/hipchat.rb':
     ensure  => file,
-    mode    => '0744'
-    source  => "puppet:///nagios/hipchat.rb"
+    mode    => '0744',
+    source  => 'puppet:///nagios/hipchat.rb',
     require => Package['nagios-plugins']
   }
 
