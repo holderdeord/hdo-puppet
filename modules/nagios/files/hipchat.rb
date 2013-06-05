@@ -11,6 +11,18 @@ options = {
   :inputs => nil
 }
 
+colors = {
+  'PROBLEM'           =>'red',
+  'RECOVERY'          =>'green',
+  'ACKNOWLEDGEMENT'   =>'green',
+  'FLAPPINGSTART'     =>'yellow',
+  'FLAPPINGSTOP'      =>'green',
+  'FLAPPINGDISABLED'  =>'gray',
+  'DOWNTIMESTART'     =>'red',
+  'DOWNTIMESTOP'      =>'green',
+  'DOWNTIMECANCELLED' =>'green'
+}
+
 OptionParser.new { |opts|
   opts.on('--token TOKEN') { |t| options[:token] = t }
   opts.on('--room ROOM') { |r| options[:room] = r }
@@ -35,4 +47,4 @@ else
 end
 
 client = HipChat::Client.new(options[:token])
-client[options[:room]].send('Nagios', msg)
+client[options[:room]].send('Nagios', msg, color: colors[notification_type])
