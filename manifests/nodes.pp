@@ -132,7 +132,8 @@ node 'db1' {
 
   class { 'hdo::database':
     standby_ip   => '88.198.14.8', # db2
-    local_backup => present
+    local_backup => present,
+    munin        => true,
   }
 }
 
@@ -144,6 +145,7 @@ node 'db2' {
 
   class { 'hdo::database':
     primary_ip   => '46.4.88.199', # db1
-    local_backup => present
+    local_backup => present,
+    munin        => true,
   }
 }
