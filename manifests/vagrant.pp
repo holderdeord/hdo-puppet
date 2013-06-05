@@ -16,6 +16,7 @@ group { 'puppet': ensure => present }
 
 node 'hdo-ops-vm' {
   include nagios::monitor
+  include nagios::monitor::front
 }
 
 node 'hdo-files-vm' {

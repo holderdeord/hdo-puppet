@@ -8,6 +8,7 @@ node 'ops1' {
 
   include munin::master
   include nagios::monitor
+  include nagios::monitor::front
 
   include graphite
   include statsd

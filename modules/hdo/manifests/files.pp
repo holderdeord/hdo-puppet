@@ -29,4 +29,5 @@ class hdo::files {
     content => template('hdo/nginx-files-vhost.conf.erb'),
     notify  => Service['nginx']
   }
+
 }
