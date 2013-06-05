@@ -11,6 +11,7 @@ node 'ops1' {
 
   include nagios::monitor
   include nagios::monitor::front
+  include nagios::hipchat
 
   include graphite
   include statsd

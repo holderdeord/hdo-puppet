@@ -1,0 +1,9 @@
+define command {
+    command_name    notify-host-by-hipchat
+    command_line    /etc/nagios-plugins/hipchat.rb --token=<%= scope.lookupvar 'hdo::params::hipchat_api_token' %> --room=Teknisk --type=host --inputs="$HOSTNAME$|$LONGDATETIME$|$NOTIFICATIONTYPE$|$HOSTADDRESS$|$HOSTSTATE$|$HOSTOUTPUT$"
+}
+
+define command {
+    command_name    notify-service-by-hipchat
+    command_line    /etc/nagios-plugins/hipchat.rb --token=<%= scope.lookupvar 'hdo::params::hipchat_api_token' %> --room=Teknisk --type=service --inputs="$SERVICEDESC$|$HOSTALIAS$|$LONGDATETIME$|$NOTIFICATIONTYPE$|$HOSTADDRESS$|$SERVICESTATE$|$SERVICEOUTPUT$"
+}
