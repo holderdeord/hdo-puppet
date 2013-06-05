@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'hipchat'
+require 'hipchat' # gem install hipchat
 require 'optparse'
 require 'erb'
 
@@ -26,13 +26,13 @@ end
 case options[:type]
 when 'host'
   hostname, long_date_time, notification_type, host_address, host_state, host_output = options[:inputs].split('|')
+  msg = "hostname=#{hostname} | #{notification_type} | #{host_address} | #{host_state} | #{host_output}"
 when 'service'
   service_desc, host_alias, long_date_time, notification_type, host_address, service_state, service_output = options[:inputs].split('|')
+  msg = "#{notification_type}: #{service_desc} @ #{host_alias} is #{service_state}: #{service_output}"
 else
   exit 1
 end
 
-
-
 client = HipChat::Client.new(options[:token])
-client[options[:room]].send('Nagios', "Test: #{options[:inputs].inspect} | Type: #{options[:type]}")
+client[options[:room]].send('Nagios', msg)
