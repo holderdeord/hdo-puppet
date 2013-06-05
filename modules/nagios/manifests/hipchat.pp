@@ -10,8 +10,8 @@ class nagios::hipchat {
 
 
   file { '/etc/nagios-plugins/config/hipchat.cfg':
-    content => template('nagios/hipchat-config.erb'),
     ensure  => file,
+    content => template('nagios/hipchat-config.erb'),
     mode    => '0644',
     require => Package['nagios-plugins']
   }
