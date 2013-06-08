@@ -37,9 +37,10 @@ server {
   try_files $uri /system/maintenance.html @passenger;
 
   location @passenger {
-    passenger_enabled       on;
-    passenger_min_instances <%= scope.lookupvar('passenger::params::min_instances') %>;
-    passenger_set_cgi_param HTTP_X_FORWARDED_PROTO $scheme;
+    passenger_enabled                on;
+    passenger_min_instances          <%= scope.lookupvar('passenger::params::min_instances') %>;
+    passenger_set_cgi_param          HTTP_X_FORWARDED_PROTO $scheme;
+    passenger_show_version_in_header off;
 
     rails_env <%= scope.lookupvar('hdo::params::environment') %>;
   }
