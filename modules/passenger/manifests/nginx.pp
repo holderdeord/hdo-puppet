@@ -10,11 +10,9 @@ class passenger::nginx($port = 80) inherits passenger {
   $listen      = $port
 
   exec { 'install-passenger-nginx':
-    path      => ['/bin', '/usr/bin', '/usr/local/bin'],
     command   => "passenger-install-nginx-module --extra-configure-flags='--with-http_stub_status_module' --auto --auto-download --prefix ${root}",
     creates   => $root,
     require   => [Ruby::Gem['passenger'], Package['libcurl4-openssl-dev']],
-    logoutput => on_failure,
     timeout   => 600
   }
 
