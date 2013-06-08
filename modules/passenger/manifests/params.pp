@@ -1,5 +1,5 @@
 class passenger::params {
-  $version               = '3.0.17'
+  $version               = '4.0.5'
   $root                  = "/var/lib/gems/1.9.1/gems/passenger-${version}"
   $ruby                  = '/usr/bin/ruby1.9.1'
   $min_instances         = 3

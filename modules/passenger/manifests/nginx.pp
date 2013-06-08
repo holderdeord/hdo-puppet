@@ -1,5 +1,5 @@
 class passenger::nginx($port = 80) inherits passenger {
-  $root        = '/opt/nginx'
+  $root        = "/opt/nginx-passenger-${passenger::params::version}"
   $init_script = '/etc/init.d/nginx'
   $config_dir  = "${root}/conf"
   $log_dir     = "${root}/logs"
