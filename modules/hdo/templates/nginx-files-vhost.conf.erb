@@ -6,4 +6,9 @@ server {
   listen      80;
   server_name files.holderdeord.no;
   root        <%= files_root %>;
+  autoindex   off;
+
+  location /pdf/alternative-statsbudsjett {
+    autoindex on;
+  }
 }
