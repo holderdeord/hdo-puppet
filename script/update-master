@@ -1,4 +1,7 @@
 #!/bin/bash
 
 echo "Updating master..."
-ssh -t ops1.holderdeord.no "sudo su - -c 'cd /opt/hdo-puppet && git pull'"
+
+user="${HDO_USER:=$USER}"
+
+ssh -t "${user}@ops1.holderdeord.no" "sudo su - -c 'cd /opt/hdo-puppet && git pull'"
