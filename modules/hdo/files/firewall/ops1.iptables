@@ -24,7 +24,7 @@ $IPT -A INPUT -p tcp ! --syn -m state --state NEW -s 0.0.0.0/0 -j DROP
 # Accept inbound TCP packets
 $IPT -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# accpet SSH from anywhere
+# accept SSH from anywhere
 $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
 # accept ICMP from anywhere
@@ -49,5 +49,14 @@ $IPT -A INPUT -s 46.4.88.196 -p udp -m multiport --ports 8125 -j ACCEPT
 #
 #    ...from localhost
 $IPT -A INPUT -i lo -p udp -m multiport --ports 8125 -j ACCEPT
+
+#
+# graphite from app servers
+#
+#    ...from app1.holderdeord.no
+$IPT -A INPUT -p tcp --dport 2003 -m state --state NEW -s 46.4.88.195 -j ACCEPT
+#    ...from app2.holderdeord.no
+$IPT -A INPUT -p tcp --dport 2003 -m state --state NEW -s 46.4.88.196 -j ACCEPT
+
 
 $IPT-save > /etc/iptables.rules
