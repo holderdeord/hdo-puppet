@@ -18,7 +18,7 @@ class graphite::params {
   $owner            = 'www-data'
   $auth             = hiera('basic_auth', 'hdo hdo')
   $htpasswd_path    = '/etc/apache2/graphite.htpasswd'
-  $interface        = '127.0.0.1'
+  $interface        = '0.0.0.0'
 
   $graphite_version = 'graphite-web-0.9.10'
   $carbon_version   = 'carbon-0.9.10'
