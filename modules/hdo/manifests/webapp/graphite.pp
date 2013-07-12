@@ -32,7 +32,7 @@ class hdo::webapp::graphite(
 
   cron { 'hdo-graphite':
     ensure      => $ensure,
-    command     => "cd ${hdo::params::app_root} && bundle exec rake facebook:graphite >> ${logfile}",
+    command     => "cd ${hdo::params::app_root} && bundle exec rake graphite:submit >> ${logfile}",
     user        => hdo,
     environment => ["RAILS_ENV=${hdo::params::environment}", 'PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Class['hdo::webapp'], File[$logfile]],
