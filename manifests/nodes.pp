@@ -91,6 +91,7 @@ node 'app1' {
 
   # API import only happens on the 'primary' app server
   include hdo::webapp::apiupdater
+  include hdo::webapp::graphite
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app1": }
