@@ -51,7 +51,7 @@ class graphite::config inherits graphite::params {
   file { "${graphite::params::root}/conf/storage-schemas.conf":
     ensure  => file,
     mode    => '0644',
-    source  => "${graphite::params::root}/conf/storage-schemas.conf.example",
+    content => template('graphite/storage-schemas.conf.erb'),
     require => Class['graphite::install'],
     notify  => Service['carbon-cache'],
   }

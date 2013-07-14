@@ -1,0 +1,23 @@
+# This file is managed by Puppet, edits will be lost.
+
+#
+# Schema definitions for Whisper files. Entries are scanned in order,
+# and first match wins. This file is scanned for changes every 60 seconds.
+#
+#  [name]
+#  pattern = regex
+#  retentions = timePerPoint:timeToStore, timePerPoint:timeToStore, ...
+
+# Carbon's internal metrics. This entry should match what is specified in
+# CARBON_METRIC_PREFIX and CARBON_METRIC_INTERVAL settings
+[carbon]
+pattern = ^carbon\.
+retentions = 60:90d
+
+[10m_for_5y]
+pattern = ^(facebook|hdo|stortinget)\.
+retentions = 10m:5y
+
+[default_1min_for_60days]
+pattern = .*
+retentions = 60s:30d
