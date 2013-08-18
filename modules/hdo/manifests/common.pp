@@ -10,7 +10,8 @@ class hdo::common {
       'git-core',
       'emacs23-nox',
       'sysstat',
-      'curl'
+      'curl',
+      'unzip'
     ]:
     ensure => installed,
   }
