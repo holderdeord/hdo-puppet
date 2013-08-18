@@ -4,7 +4,7 @@ class hdo::files {
 
   $files_root  = '/webapps/files'
 
-  file { $files_root:
+  file { [$files_root, '/webapps/valgvake']:
     ensure  => 'directory',
     mode    => '0775',
     owner   => 'hdo'
@@ -30,4 +30,12 @@ class hdo::files {
     notify  => Service['nginx']
   }
 
+  file { "${passenger::nginx::sites_dir}/valgvake.holderdeord.no.conf":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('hdo/nginx-valgvake-vhost.conf.erb'),
+    notify  => Service['nginx']
+  }
 }
