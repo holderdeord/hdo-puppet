@@ -15,7 +15,7 @@
       "command": [
         "cap",
         "-S",
-        "revision=%{sha}"
+        "revision=%{sha}",
         "staging",
         "deploy:web:disable",
         "deploy:migrations",
