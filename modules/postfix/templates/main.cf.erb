@@ -12,6 +12,9 @@
 # For best results, change no more than 2-3 parameters at a time,
 # and test if Postfix still works after every change.
 
+# TODO: set up reverse DNS for IPv6, then remove this (or set it to 'all')
+inet_protocols = ipv4
+
 # SOFT BOUNCE
 #
 # The soft_bounce parameter provides a limited safety net for
