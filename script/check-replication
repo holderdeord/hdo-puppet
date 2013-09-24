@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+master = 'db1.holderdeord.no'
+slave  = 'db2.holderdeord.no'
+
+master_output = `ssh hdo@#{master} "psql hdo_production -P format=unaligned -c 'SELECT pg_current_xlog_location();'"`.strip
+slave_output = `ssh hdo@#{slave} "psql hdo_production -P format=unaligned -c 'SELECT pg_last_xlog_receive_location(), pg_last_xlog_replay_location();'"`.strip
+
+master_location = master_output.split("\n")[1].strip
+slave_locations = slave_output.split("\n")[1].strip.split("|")
+
+puts "#{master_location.inspect} => #{slave_locations.inspect}"
+
+if slave_locations.all? { |e| e == master_location }
+  puts "OK"
+else
+  puts "NOT OK"
+  exit 1
+end
