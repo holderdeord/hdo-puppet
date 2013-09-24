@@ -25,5 +25,3 @@ iface eth0 inet6 static
   address 2a01:4f8:140:71c3::2
   netmask 64
   gateway fe80::1
-  # force full-duplex for ports without auto-neg
-  post-up mii-tool -F 100baseTx-FD eth0
