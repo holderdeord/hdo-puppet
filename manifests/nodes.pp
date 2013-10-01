@@ -48,9 +48,7 @@ node 'hetzner03' {
     ssl         => true,
   }
 
-  class { 'hdo::webapp::apiupdater':
-    ensure => absent
-  }
+  class { 'hdo::webapp::apiupdater': }
 
   hdo::firewall { "next": }
 }
@@ -88,10 +86,13 @@ node 'app1' {
   include nagios::target
   include nagios::target::http
   include hdo::webapp::default
+  include hdo::webapp::graphite
 
   # API import only happens on the 'primary' app server
-  include hdo::webapp::apiupdater
-  include hdo::webapp::graphite
+  # disabled until we've added multiple period support
+  class { 'hdo::webapp::apiupdater':
+    ensure => absent
+  }
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app1": }
