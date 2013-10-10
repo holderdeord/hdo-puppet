@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [[ $# -lt 1 ]]; then
+  echo "USAGE: $0 [SQL FILE]"
+  exit 1
+fi
+
+scp $1 hetzner03.holderdeord.no:/tmp/dbdump.sql
+
+read -r -d '' REMOTE_SCRIPT <<-'EOS'
+sudo -p 'password for %p@%H: ' -v
+sudo service nginx stop &&
+  sleep 3 &&
+  sudo su - postgres -c 'dropdb hdo_staging && createdb hdo_staging && psql hdo_staging < /tmp/dbdump.sql' &&
+  sudo su - hdo -c 'cd /webapps/hdo-site/current && RAILS_ENV=staging bundle exec rake tmp:clear cache:precompute search:reindex' &&
+  sudo service nginx start
+rm /tmp/dbdump.sql
+EOS
+
+ssh -t hetzner03.holderdeord.no "$REMOTE_SCRIPT"
