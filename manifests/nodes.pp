@@ -48,7 +48,8 @@ node 'hetzner03' {
     ssl         => true,
   }
 
-  class { 'hdo::webapp::apiupdater': }
+  # run api updates some hours before prod
+  class { 'hdo::webapp::apiupdater': hour => 18 }
 
   hdo::firewall { "next": }
 }
@@ -89,10 +90,7 @@ node 'app1' {
   include hdo::webapp::graphite
 
   # API import only happens on the 'primary' app server
-  # disabled until we've added multiple period support
-  class { 'hdo::webapp::apiupdater':
-    ensure => absent
-  }
+  class { 'hdo::webapp::apiupdater': }
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app1": }
