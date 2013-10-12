@@ -11,4 +11,4 @@ echo "Backing up..."
 pg_dump "$DB_NAME" | gzip -c > "${BACKUP_ROOT}/${DB_NAME}-$(date '+%F-%H%M%S').dump.gz"
 
 echo "Removing outdated backups"
-find "$BACKUP_ROOT" -mtime +30 -type f -exec rm {} +
+find "$BACKUP_ROOT" -mtime +60 -type f -exec rm {} +
