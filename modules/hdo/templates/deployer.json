@@ -8,7 +8,7 @@
     "holderdeord/hdo-site#master": {
       "directory": "<%= appdir %>",
       "token": "<%= token %>",
-      "timeout": 180,
+      "timeout": 240,
       "environment": {
         "HIPCHAT_API_TOKEN": "<%= hipchat_api_token %>"
       },
