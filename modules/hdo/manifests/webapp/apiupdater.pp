@@ -38,7 +38,7 @@ class hdo::webapp::apiupdater(
 
   cron { 'api-update':
     ensure      => $ensure,
-    command     => "cd ${hdo::params::app_root} && bundle exec script/import daily >> ${logfile}",
+    command     => "bash -l -c 'cd ${hdo::params::app_root} && bundle exec script/import daily >> ${logfile}'",
     user        => hdo,
     environment => ["RAILS_ENV=${hdo::params::environment}", 'PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Class['hdo::webapp'], File[$logfile]],
