@@ -1,7 +1,8 @@
 class ruby {
   package { [
     'rbenv',
-    'libreadline-dev'
+    'libreadline-dev',
+    'libssl-dev'
     ]:
     ensure => installed
   }
