@@ -1,5 +1,11 @@
 class ruby {
-  package { 'rbenv': ensure => installed }
+  package { [
+    'rbenv',
+    'libreadline-dev'
+    ]:
+    ensure => installed
+  }
+
   include ruby::build
 
   $rbenv_root = '/usr/lib/rbenv'
