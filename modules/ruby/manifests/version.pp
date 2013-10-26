@@ -6,6 +6,6 @@ define ruby::version() {
     command     => "bash -l -c 'rbenv install ${version}'",
     creates     => "${ruby::rbenv_root}/versions/${version}",
     environment => ["RBENV_ROOT=${ruby::rbenv_root}", 'CONFIGURE_OPTS=--with-readline-dir=/usr/include/readline'],
-    require     => Class['ruby::build']
+    require     => [Class['ruby::build'], Package['libreadline-dev']]
   }
 }
