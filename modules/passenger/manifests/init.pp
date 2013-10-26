@@ -11,18 +11,14 @@ class passenger {
     mode   => '0755',
   }
 
-  package { 'libcurl4-openssl-dev':
-    ensure => installed,
-  }
+  package { 'libcurl4-openssl-dev': ensure => installed }
 
   if ! defined(Package['build-essential']) {
-    package { 'build-essential':
-      ensure => installed,
-    }
+    package { 'build-essential': ensure => installed }
   }
 
   ruby::gem { 'passenger':
     version => $passenger::params::version,
-    require => Package['build-essential']
+    require => [Package['build-essential'], Class['ruby']],
   }
 }

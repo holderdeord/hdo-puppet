@@ -1,5 +1,4 @@
 class hdo::common {
-  include ruby
   include hdo::params
 
   $home = "/home/${hdo::params::user}"
@@ -16,14 +15,12 @@ class hdo::common {
     ensure => installed,
   }
 
+  include ruby
+  ruby::gem { 'bundler': }
+
   file { "${home}/.emacs":
     ensure  => file,
     content => '(setq make-backup-files nil)'
-  }
-
-  ruby::gem { 'bundler':
-    name    => 'bundler',
-    version => '>= 1.2.0'
   }
 
   user { $hdo::params::user:

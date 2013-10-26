@@ -1,16 +1,21 @@
-define ruby::gem($version = false) {
-  if $version {
-    $install_cmd = "gem1.9.1 install ${name} --version '${version}'"
-    $search_cmd  = "gem1.9.1 search -i ${name} --version '${version}' | grep false"
+define ruby::gem($version = 'latest') {
+  if $version != 'latest' {
+    $install_cmd = "bash -l -c 'gem install ${name} --version \'${version}\' --no-rdoc --no-ri'"
+    $search_cmd  = "bash -l -c 'gem search -i ${name} --version \'${version}\' | grep false'"
   } else {
-    $install_cmd = "gem1.9.1 install ${name}"
-    $search_cmd  = "gem1.9.1 search -i ${name} | grep false"
+    $install_cmd = "bash -l -c 'gem install ${name} --no-rdoc --no-ri'"
+    $search_cmd  = "bash -l -c 'gem search -i ${name} | grep false'"
   }
 
-  exec { "${name}-gem":
+  exec { "rbenv-rehash-for-${name}-${version}":
+    command     => 'bash -l -c "rbenv rehash"',
+    refreshonly => true,
+  }
+
+  exec { "${name}-gem-${version}":
     command   => $install_cmd,
     onlyif    => $search_cmd,
-    require   => Package['ruby1.9.1'],
-    logoutput => on_failure
+    notify    => Exec["rbenv-rehash-for-${name}-${version}"],
+    require   => Class['ruby']
   }
 }
