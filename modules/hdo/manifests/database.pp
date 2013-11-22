@@ -119,6 +119,7 @@ class hdo::database(
     ensure  => file,
     content => template('hdo/postgresql-local-backup.sh.erb'),
     mode    => '0755',
+    require => Class['postgresql::server']
   }
 
   cron { 'postgresql-local-backup':
