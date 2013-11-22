@@ -5,7 +5,9 @@ if [[ $# -lt 1 ]]; then
   exit 1
 fi
 
-scp $1 hetzner03.holderdeord.no:/tmp/dbdump.sql
+user="${HDO_USER:=$USER}"
+
+# scp $1 "${user}@hetzner03.holderdeord.no:/tmp/dbdump.sql"
 
 read -r -d '' REMOTE_SCRIPT <<-'EOS'
 sudo -p 'password for %p@%H: ' -v
@@ -17,4 +19,4 @@ sudo service nginx stop &&
 rm /tmp/dbdump.sql
 EOS
 
-ssh -t hetzner03.holderdeord.no "$REMOTE_SCRIPT"
+ssh -t "${user}@hetzner03.holderdeord.no" "$REMOTE_SCRIPT"
