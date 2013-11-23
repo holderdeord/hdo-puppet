@@ -10,7 +10,7 @@ class ruby {
   include ruby::build
 
   $rbenv_root = '/usr/lib/rbenv'
-  $version    = '2.0.0-p247'
+  $version    = '2.0.0-p353'
   $binary     = "${rbenv_root}/shims/ruby"
   $gems       = "${rbenv_root}/versions/${version}/lib/ruby/gems/2.0.0/gems"
 
