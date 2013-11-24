@@ -23,7 +23,9 @@ http {
   include                         <%= config_dir %>/mime.types;
   default_type                    application/octet-stream;
 
-  access_log                      <%= log_dir %>/access.log;
+  log_format                      custom '$remote_addr/$http_x_forwarded_for - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+
+  access_log                      <%= log_dir %>/access.log custom;
   error_log                       <%= log_dir %>/error.log;
 
   gzip                            on;
