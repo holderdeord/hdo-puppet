@@ -7,7 +7,7 @@ fi
 
 user="${HDO_USER:=$USER}"
 
-# scp $1 "${user}@hetzner03.holderdeord.no:/tmp/dbdump.sql"
+scp $1 "${user}@hetzner03.holderdeord.no:/tmp/dbdump.sql"
 
 read -r -d '' REMOTE_SCRIPT <<-'EOS'
 sudo -p 'password for %p@%H: ' -v
