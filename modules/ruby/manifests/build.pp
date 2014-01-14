@@ -7,6 +7,7 @@ class ruby::build {
     require => Package['git-core'],
   }
 
+  # this sha is known to work with rbenv from apt
   exec { 'update-ruby-build':
     command => 'git reset --hard origin/master && git pull && git reset --hard 458d3331675f9f35517cfb095489496eff785aa3 && ./install.sh',
     cwd     => $dir,
