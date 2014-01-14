@@ -24,4 +24,9 @@ mod "hipchat",
   :git => "git://github.com/jarib/puppet-hipchat",
   :ref => "status-config"
 
+mod "puppetdb",
+  :git => "git://github.com/puppetlabs/puppetlabs-puppetdb",
+  :ref => "3.0.0"
+
 mod 'fsalum/puppetmaster', '0.0.4'
+

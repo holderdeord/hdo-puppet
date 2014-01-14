@@ -5,8 +5,15 @@ FORGE
       puppetlabs/inifile (>= 1.0.0)
     puppetlabs/apt (1.1.0)
       puppetlabs/stdlib (>= 2.2.1)
+    puppetlabs/concat (1.1.0-rc1)
+      puppetlabs/stdlib (>= 3.0.0)
     puppetlabs/firewall (0.1.1)
     puppetlabs/inifile (1.0.0)
+    puppetlabs/postgresql (3.2.0)
+      puppetlabs/apt (< 2.0.0, >= 1.1.0)
+      puppetlabs/concat (< 2.0.0, >= 1.0.0)
+      puppetlabs/firewall (>= 0.0.4)
+      puppetlabs/stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs/stdlib (3.2.0)
     ripienaar/concat (0.2.0)
 
@@ -45,6 +52,17 @@ GIT
     firewall (0.3.0)
 
 GIT
+  remote: git://github.com/puppetlabs/puppetlabs-puppetdb
+  ref: 3.0.0
+  sha: c0f33d804179087f8b4251af90959e1bf7dc093e
+  specs:
+    puppetdb (3.0.0)
+      puppetlabs/firewall (>= 0.0.4)
+      puppetlabs/inifile (~> 1)
+      puppetlabs/postgresql (< 4.0.0, >= 3.1.0)
+      puppetlabs/stdlib (>= 2.2.0)
+
+GIT
   remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
   ref: 4.0.2
   sha: bebecd33783b483f6af059e311b9631d3a3336cc
@@ -65,5 +83,6 @@ DEPENDENCIES
   hipchat (>= 0)
   logrotate (>= 0)
   postgresql (>= 0)
+  puppetdb (>= 0)
   stdlib (>= 0)
 
