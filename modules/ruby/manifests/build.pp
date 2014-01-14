@@ -8,7 +8,7 @@ class ruby::build {
   }
 
   exec { 'update-ruby-build':
-    command => 'git reset --hard origin/master && git pull && ./install.sh',
+    command => 'git reset --hard origin/master && git pull && git reset --hard 458d3331675f9f35517cfb095489496eff785aa3 && ./install.sh',
     cwd     => $dir,
     require => Exec['clone-ruby-build']
   }
