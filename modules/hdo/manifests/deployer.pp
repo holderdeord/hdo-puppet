@@ -19,10 +19,16 @@ class hdo::deployer {
 
   ruby::gem { 'hipchat': }
 
+  file { $appdir:
+    ensure => directory,
+    owner  => hdo,
+  }
+
   exec { 'clone-hdo-site':
     command => "git clone git://github.com/holderdeord/hdo-site ${appdir}",
     user    => hdo,
-    creates => $appdir
+    creates => "${appdir}/config",
+    require => File[$appdir]
   }
 
   exec { 'restart-hdo-webhook-deployer':
