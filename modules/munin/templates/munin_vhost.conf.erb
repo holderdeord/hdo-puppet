@@ -1,18 +1,18 @@
 #
 # This file is managed by Puppet. Local edits will be lost.
 #
-NameVirtualHost <%= vhost_name %>:<%= port %>
-<VirtualHost <%= vhost_name %>:<%= port %>>
+NameVirtualHost <%= @vhost_name %>:<%= port %>
+<VirtualHost <%= @vhost_name %>:<%= port %>>
   SetEnv LC_ALL en_US.UTF-8
 
-  ServerName <%= srvname %>
-  DocumentRoot <%= docroot %>
+  ServerName <%= @srvname %>
+  DocumentRoot <%= @docroot %>
 
   <Location />
-    Options <%= options %>
+    Options <%= @options %>
 
     AuthType Basic
-    AuthName "<%= srvname %>"
+    AuthName "<%= @srvname %>"
     AuthUserFile /etc/apache2/munin.htpasswd
     Require valid-user
 
@@ -25,9 +25,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     </IfModule>
   </Location>
 
-  ErrorLog <%= logroot %>/<%= name %>_error.log
+  ErrorLog <%= @logroot %>/<%= name %>_error.log
   LogLevel warn
-  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  CustomLog <%= @logroot %>/<%= name %>_access.log combined
   ServerSignature Off
 
 </VirtualHost>

@@ -2,12 +2,12 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 <VirtualHost *:80>
-  ServerName <%= srvname %>
+  ServerName <%= @srvname %>
   ServerSignature Off
 
-  ErrorLog <%= logroot %>/<%= name %>_error.log
+  ErrorLog <%= @logroot %>/<%= name %>_error.log
   LogLevel warn
-  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  CustomLog <%= @logroot %>/<%= name %>_access.log combined
 
   # https://github.com/obfuscurity/tasseo#graphite-server-configuration
   Header set Access-Control-Allow-Origin "*"
@@ -16,13 +16,13 @@
 
   <Location />
     SetHandler python-program
-    PythonPath "['<%= docroot %>'] + sys.path"
+    PythonPath "['<%= @docroot %>'] + sys.path"
     PythonHandler django.core.handlers.modpython
     SetEnv DJANGO_SETTINGS_MODULE graphite.settings
     PythonDebug Off
     PythonAutoReload Off
 
-    AuthName "<%= srvname %>"
+    AuthName "<%= @srvname %>"
     AuthType Basic
     AuthUserFile /etc/apache2/graphite.htpasswd
     <LimitExcept OPTIONS>
@@ -30,7 +30,7 @@
     </LimitExcept>
   </Location>
 
-  Alias /content/ <%= docroot %>/content/
+  Alias /content/ <%= @docroot %>/content/
   <Location "/content/">
     SetHandler None
   </Location>

@@ -2,23 +2,23 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
-NameVirtualHost <%= vhost_name %>:<%= port %>
-<VirtualHost <%= vhost_name %>:<%= port %>>
+NameVirtualHost <%= @vhost_name %>:<%= @port %>
+<VirtualHost <%= @vhost_name %>:<%= @port %>>
   SetEnv PATH /usr/bin:/bin:/usr/local/bin
   SetEnv LC_ALL en_US.UTF-8
 
-  ServerName <%= srvname %>
-  DocumentRoot <%= docroot %>
-  <Directory <%= docroot %>>
-    Options <%= options %>
+  ServerName <%= @srvname %>
+  DocumentRoot <%= @docroot %>
+  <Directory <%= @docroot %>>
+    Options <%= @options %>
     AllowOverride None
     Order allow,deny
     allow from all
   </Directory>
 
-  ErrorLog <%= logroot %>/<%= name %>_error.log
+  ErrorLog <%= @logroot %>/<%= name %>_error.log
   LogLevel warn
-  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  CustomLog <%= @logroot %>/<%= name %>_access.log combined
   ServerSignature Off
 
   PassengerMinInstances <%= scope.lookupvar('passenger::params::min_instances') %>

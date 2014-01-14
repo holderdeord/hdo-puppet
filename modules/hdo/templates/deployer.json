@@ -1,16 +1,16 @@
 {
-  "logdir": "<%= logdir %>",
-  "github_client_id": "<%= github_client_id %>",
-  "github_client_secret": "<%= github_client_secret %>",
+  "logdir": "<%= @logdir %>",
+  "github_client_id": "<%= @github_client_id %>",
+  "github_client_secret": "<%= @github_client_secret %>",
   "statsd": "ops1.holderdeord.no:8125",
-  "basic_auth": "<%= basic_auth %>",
+  "basic_auth": "<%= @basic_auth %>",
   "projects": {
     "holderdeord/hdo-site#master": {
-      "directory": "<%= appdir %>",
-      "token": "<%= token %>",
+      "directory": "<%= @appdir %>",
+      "token": "<%= @token %>",
       "timeout": 240,
       "environment": {
-        "HIPCHAT_API_TOKEN": "<%= hipchat_api_token %>"
+        "HIPCHAT_API_TOKEN": "<%= @hipchat_api_token %>"
       },
       "command": [
         "cap",
