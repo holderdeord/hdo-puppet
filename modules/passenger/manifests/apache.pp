@@ -14,7 +14,7 @@ class passenger::apache inherits passenger {
 
   exec { 'install-passenger-apache':
     path      => ['/bin', '/usr/bin', '/usr/local/bin'],
-    command   => 'passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled',
+    command   => 'bash -l -c "passenger-install-apache2-module --auto && cd /etc/apache2/mods-enabled"',
     creates   => $passenger_module,
     require   => [
       Ruby::Gem['passenger'],
