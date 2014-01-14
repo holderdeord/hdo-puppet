@@ -5,10 +5,6 @@ class hdo::puppetmasterd {
     $puppet_server = 'puppet.holderdeord.no'
   }
 
-  package { ['puppetmaster-passenger']:
-    ensure => installed
-  }
-
   class { 'puppetmaster':
     puppetmaster_service_ensure => 'running',
     puppetmaster_service_enable => true,
