@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 [ -n "$DEBUG" ] && set -x
 
 
@@ -16,6 +15,8 @@ if [[ "$?" != "0" ]]; then
     sudo gem install --no-rdoc --no-ri bundler
   fi
 fi
+
+set -e
 
 # Add pre-commit lint
 hook="${ROOT}/.git/hooks/pre-commit"

@@ -20,6 +20,11 @@ class hdo::puppetmasterd {
     puppetmaster_modulepath     => '/opt/hdo-puppet/modules:/opt/hdo-puppet/third-party',
   }
 
+  file { '/etc/puppet/manifests':
+    ensure => symlink,
+    target => '/opt/hdo-puppet/manifests',
+  }
+
   file { '/etc/puppet/hipchat.yaml':
     ensure   => file,
     owner    => 'root',
@@ -35,13 +40,13 @@ class hdo::puppetmasterd {
 
   class { 'puppetdb':
     database           => 'embedded',
-    listen_address     => $::hostname,
-    ssl_listen_address => $::hostname,
+    listen_address     => $puppet_server,
+    ssl_listen_address => $puppet_server,
     require            => Class['puppetmaster']
   }
 
   class { 'puppetdb::master::config':
-    puppetdb_server => $::hostname
+    puppetdb_server => $puppet_server
   }
 }
 
