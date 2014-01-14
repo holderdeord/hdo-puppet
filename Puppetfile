@@ -23,3 +23,5 @@ mod "stdlib",
 mod "hipchat",
   :git => "git://github.com/jarib/puppet-hipchat",
   :ref => "status-config"
+
+mod 'fsalum/puppetmaster', '0.0.4'

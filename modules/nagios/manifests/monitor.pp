@@ -1,5 +1,6 @@
 class nagios::monitor {
   include nagios::base
+  include apache
 
   file { "${nagios::base::home}/.ssh":
     ensure  => directory,
@@ -18,7 +19,16 @@ class nagios::monitor {
     require => User[$nagios::base::user]
   }
 
-  package { [ 'nagios3' ]: ensure => installed }
+  package { 'nagios3':
+    ensure => installed
+  }
+
+  # apparently this symlink is needed
+  file { '/etc/nagios':
+    ensure  => symlink,
+    target  => '/etc/nagios3',
+    require => Package['nagios3']
+  }
 
   service { 'nagios3':
     ensure    => running,

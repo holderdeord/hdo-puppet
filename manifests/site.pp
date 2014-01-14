@@ -2,17 +2,40 @@
 # Hetzner's default Ubuntu image points at their outdated mirrors, so we add our own sources.list here.
 #
 
-file { "/etc/apt/sources.list":
-  ensure => file,
-  source => "puppet:///modules/hdo/apt/sources.list",
-  owner  => root,
-  group  => root,
-  mode   => '0644',
+class { 'apt':
+  purge_sources_list   => true,
+  purge_sources_list_d => true,
 }
 
-exec { 'apt-update':
-  command => '/usr/bin/apt-get update',
-  require => File['/etc/apt/sources.list']
+apt::source { 'puppetlabs':
+  location   => 'http://apt.puppetlabs.com',
+  repos      => 'main dependencies',
+  key        => '4BD6EC30',
+  key_server => 'pgp.mit.edu',
+}
+
+apt::source { 'de-archive':
+  location   => 'http://de.archive.ubuntu.com/ubuntu/',
+  release    => 'precise',
+  repos      => 'main restricted universe multiverse',
+}
+
+apt::source { 'de-archive-updates':
+  location   => 'http://de.archive.ubuntu.com/ubuntu/',
+  release    => 'precise-updates',
+  repos      => 'main restricted universe multiverse',
+}
+
+apt::source { 'de-archive-backports':
+  location   => 'http://de.archive.ubuntu.com/ubuntu/',
+  release    => 'precise-backports',
+  repos      => 'main restricted universe multiverse',
+}
+
+apt::source { 'security':
+  location   => 'http://security.ubuntu.com/ubuntu',
+  release    => 'precise-security',
+  repos      => 'main restricted universe multiverse',
 }
 
 Exec {
@@ -24,7 +47,7 @@ Exec {
   ]
 }
 
-Exec['apt-update'] -> Package <| |>
+Class['apt::update'] -> Package <| |>
 
 include hdo::users
 

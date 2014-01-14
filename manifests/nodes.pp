@@ -17,7 +17,7 @@ node 'ops1' {
   include statsd
 
   include hdo::deployer
-  include hdo::puppethipchat
+  include hdo::puppetmasterd
 
   hdo::firewall { "ops1": }
 }

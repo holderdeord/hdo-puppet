@@ -1,9 +1,12 @@
 FORGE
   remote: http://forge.puppetlabs.com
   specs:
+    fsalum/puppetmaster (0.0.4)
+      puppetlabs/inifile (>= 1.0.0)
     puppetlabs/apt (1.1.0)
       puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/firewall (0.1.1)
+    puppetlabs/inifile (1.0.0)
     puppetlabs/stdlib (3.2.0)
     ripienaar/concat (0.2.0)
 
@@ -58,6 +61,7 @@ GIT
 DEPENDENCIES
   apache (>= 0)
   firewall (>= 0)
+  fsalum/puppetmaster (= 0.0.4)
   hipchat (>= 0)
   logrotate (>= 0)
   postgresql (>= 0)
