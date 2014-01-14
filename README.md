@@ -126,4 +126,4 @@ Configure the node to talk to the puppetmaster by adding the following to /etc/p
     server = puppet.holderdeord.no
     pluginsync = true
 
-Then do the sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
+Then do sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
