@@ -20,8 +20,7 @@ class nagios::monitor {
 
   package { [ 'nagios3' ]: ensure => installed }
 
-  # in the VMs, the name appears to be "nagios3"?!
-  service { 'nagios':
+  service { 'nagios3':
     ensure    => running,
     subscribe => [ Package['nagios3'], Package['nagios-plugins'] ],
   }
@@ -35,8 +34,8 @@ class nagios::monitor {
   }
 
   # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host    <<||>> { notify => Service['nagios'], require => File['clear_nagios_hosts'] }
-  Nagios_service <<||>> { notify => Service['nagios'] }
+  Nagios_host    <<||>> { notify => Service['nagios3'], require => File['clear_nagios_hosts'] }
+  Nagios_service <<||>> { notify => Service['nagios3'] }
 
   $htpasswd_path = '/etc/nagios3/htpasswd.users'
   $auth          = hiera('nagios_password', 'hdo123')
