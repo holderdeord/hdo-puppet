@@ -5,9 +5,9 @@
   ServerName <%= @srvname %>
   ServerSignature Off
 
-  ErrorLog <%= @logroot %>/<%= name %>_error.log
+  ErrorLog <%= @logroot %>/<%= @name %>_error.log
   LogLevel warn
-  CustomLog <%= @logroot %>/<%= name %>_access.log combined
+  CustomLog <%= @logroot %>/<%= @name %>_access.log combined
 
   # https://github.com/obfuscurity/tasseo#graphite-server-configuration
   Header set Access-Control-Allow-Origin "*"
