@@ -27,7 +27,7 @@ class nagios::monitor {
   file { '/etc/nagios':
     ensure  => symlink,
     target  => '/etc/nagios3',
-    require => Package['nagios3']
+    require => Package['nagios3'],
   }
 
   service { 'nagios3':
@@ -37,14 +37,14 @@ class nagios::monitor {
 
   # we clear the hosts file to avoid nagios_host bugs (duplicate definitions)
   # see https://github.com/holderdeord/hdo-site/issues/420 and http://projects.puppetlabs.com/issues/11921
-  file { 'clear_nagios_hosts':
-    path    => '/etc/nagios3/nagios_host.cfg',
-    content => '',
-    mode    => '0644'
-  }
+  # file { 'clear_nagios_hosts':
+  #   path    => '/etc/nagios3/nagios_host.cfg',
+  #   content => '',
+  #   mode    => '0644'
+  # }
 
   # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host    <<||>> { notify => Service['nagios3'], require => File['clear_nagios_hosts'] }
+  Nagios_host    <<||>> { notify => Service['nagios3'] } #, require => File['clear_nagios_hosts'] }
   Nagios_service <<||>> { notify => Service['nagios3'] }
 
   $htpasswd_path = '/etc/nagios3/htpasswd.users'
@@ -56,6 +56,21 @@ class nagios::monitor {
     require   => Package['nagios3'],
     logoutput => on_failure
   }
+
+  file { '/etc/nagios3/conf.d/nagios_host.cfg':
+    ensure  => symlink,
+    target  => '/etc/nagios3/nagios_host.cfg',
+    owner   => nagios,
+    require => Package['nagios3'],
+  }
+
+  file { '/etc/nagios3/conf.d/nagios_service.cfg':
+    ensure  => symlink,
+    target  => '/etc/nagios3/nagios_service.cfg',
+    owner   => nagios,
+    require => Package['nagios3'],
+  }
+
 
   # puppet's nagios_command type is very buggy (duplicate definitions, wrong permissions), so we set up commands with a template
   # see https://github.com/holderdeord/hdo-site/issues/420
