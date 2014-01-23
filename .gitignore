@@ -7,3 +7,4 @@
 /.bundle
 /.librarian
 /vendor/puppet/cache
+.ruby-version
