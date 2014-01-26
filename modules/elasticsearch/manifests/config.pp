@@ -2,37 +2,43 @@ class elasticsearch::config inherits elasticsearch::params {
   file { '/etc/default/elasticsearch':
     ensure  => present,
     mode    => '0644',
-    content => template('elasticsearch/default.erb')
+    content => template('elasticsearch/default.erb'),
+    require => Class['elasticsearch::install'],
   }
 
   file {'/etc/init.d/elasticsearch':
     ensure  => present,
     mode    => '0750',
-    content => template('elasticsearch/init.d/elasticsearch.erb')
+    content => template('elasticsearch/init.d/elasticsearch.erb'),
+    require => Class['elasticsearch::install'],
   }
 
   file { '/etc/elasticsearch/elasticsearch.yml':
     ensure  => file,
     mode    => '0644',
-    content => template('elasticsearch/elasticsearch.yml.erb')
+    content => template('elasticsearch/elasticsearch.yml.erb'),
+    require => Class['elasticsearch::install'],
   }
 
   file { '/etc/elasticsearch/logging.yml':
     ensure  => file,
     mode    => '0644',
-    content => template('elasticsearch/logging.yml.erb')
+    content => template('elasticsearch/logging.yml.erb'),
+    require => Class['elasticsearch::install'],
   }
 
   file { '/etc/elasticsearch/hdo.words.nb.txt':
-    ensure => file,
-    mode   => '0644',
-    source => 'puppet:///modules/elasticsearch/config/hdo.words.nb.txt'
+    ensure  => file,
+    mode    => '0644',
+    source  => 'puppet:///modules/elasticsearch/config/hdo.words.nb.txt',
+    require => Class['elasticsearch::install'],
   }
 
   file { '/etc/elasticsearch/hdo.synonyms.nb.txt':
-    ensure => file,
-    mode   => '0644',
-    source => 'puppet:///modules/elasticsearch/config/hdo.synonyms.nb.txt'
+    ensure  => file,
+    mode    => '0644',
+    source  => 'puppet:///modules/elasticsearch/config/hdo.synonyms.nb.txt',
+    require => Class['elasticsearch::install'],
   }
 
 
