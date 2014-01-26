@@ -38,6 +38,8 @@ $IPT -A INPUT -p tcp --dport 4949 -m state --state NEW -s 5.9.122.47 -j ACCEPT
 $IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 46.4.88.195 -j ACCEPT
 #    ...from app2.holderdeord.no
 $IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 46.4.88.196 -j ACCEPT
+#    ...from ops1.holderdeord.no (kibana)
+$IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 5.9.122.47 -j ACCEPT
 
 #
 # elasticsearch node-to-node (port 9300)

@@ -7,6 +7,7 @@ group { 'puppet': ensure => present }
 # For testing, you can add these entries to /etc/hosts:
 #
 # 192.168.1.10 hdo-ops-vm.holderdeord.no
+# 192.168.1.10 hdo-kibana-vm.holderdeord.no
 # 192.168.1.11 hdo-files-vm.holderdeord.no
 # 192.168.1.12 hdo-app-vm.holderdeord.no
 # 192.168.1.13 hdo-db1-vm.holderdeord.no
@@ -15,10 +16,12 @@ group { 'puppet': ensure => present }
 #
 
 node 'hdo-ops-vm' {
-  include nagios::monitor
-  include nagios::monitor::front
-
-  include hdo::puppetmasterd
+  # include nagios::monitor
+  # include nagios::monitor::front
+  #
+  # include hdo::puppetmasterd
+  include hdo::common
+  include kibana
 }
 
 node 'hdo-files-vm' {

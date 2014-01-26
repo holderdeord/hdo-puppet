@@ -15,6 +15,7 @@ node 'ops1' {
 
   include graphite
   include statsd
+  include kibana
 
   include hdo::deployer
   include hdo::puppetmasterd

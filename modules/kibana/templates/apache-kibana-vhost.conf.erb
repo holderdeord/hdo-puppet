@@ -1,0 +1,28 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+<VirtualHost *:80>
+  ServerName <%= @srvname %>
+  ServerAlias hdo-kibana-vm.holderdeord.no
+  ServerSignature Off
+
+  ErrorLog <%= @logroot %>/<%= @name %>_error.log
+  LogLevel warn
+  CustomLog <%= @logroot %>/<%= @name %>_access.log combined
+
+  DocumentRoot <%= @docroot %>
+
+  ProxyRequests     Off
+  ProxyPass        /elasticsearch/ http://es2.holderdeord.no:9200/
+  ProxyPassReverse /elasticsearch/ http://es2.holderdeord.no:9200/
+
+  <Location />
+    AuthName "<%= @srvname %>"
+    AuthType Basic
+    AuthUserFile /opt/kibana/kibana.htpasswd
+    <LimitExcept OPTIONS>
+      Require valid-user
+    </LimitExcept>
+  </Location>
+
+</VirtualHost>
