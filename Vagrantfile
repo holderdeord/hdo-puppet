@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :es1 do |es|
-    es.vm.host_name = "hdo-es1-vm"
+    es.vm.host_name = "hdo-es-vm"
 
     es.vm.box       = default_box
     es.vm.box_url   = default_box_url
@@ -56,16 +56,7 @@ Vagrant.configure("2") do |config|
     es.vm.network 'private_network', ip: '192.168.1.15'
   end
 
-  config.vm.define :es2 do |es|
-    es.vm.host_name = "hdo-es2-vm"
-
-    es.vm.box       = default_box
-    es.vm.box_url   = default_box_url
-
-    es.vm.network 'private_network', ip: '192.168.1.16'
-  end
-
-  config.vm.provision :puppet do |puppet|
+http://karmi.github.io/elasticsearch-paramedic/  config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.module_path    = %w[modules third-party]
     puppet.manifest_file  = "vagrant.pp"
