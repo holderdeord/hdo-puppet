@@ -94,33 +94,12 @@ node 'files' {
 
 node 'app1' {
   include hdo::users::admins
-
-  class { 'postfix':
-    smtp_listen          => 'all',
-    # if you modify network_table_extras, remember to add the ip to the app iptables rules
-    network_table_extras => ["46.4.88.195", "46.4.88.196"]
-  }
-
-  include munin::node
-
-  class { 'nagios::target': ensure => absent }
-  include hdo::webapp::default
-
-  # API import only happens on the 'primary' app server
-  class { 'hdo::webapp::apiupdater': }
-
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app1": }
 }
 
 node 'app2' {
   include hdo::users::admins
-
-  include munin::node
-  class { 'nagios::target': ensure => absent }
-
-  include hdo::webapp::default
-
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app2": }
 }
@@ -131,12 +110,6 @@ node 'app2' {
 
 node 'es1', 'es2' {
   include hdo::users::admins
-
-  include munin::node
-  class { 'nagios::target': ensure => absent }
-
-  include elasticsearch
-
   hdo::firewall { "es": }
 }
 
@@ -144,28 +117,7 @@ node 'es1', 'es2' {
 # db servers
 #
 
-node 'db1' {
+node 'db1', 'db2' {
   include hdo::users::admins
-
-  include munin::node
-  class { 'nagios::target': ensure => absent }
-
-  class { 'hdo::database':
-    standby_ip   => '88.198.14.8', # db2
-    local_backup => absent,
-    munin        => true,
-  }
-}
-
-node 'db2' {
   include hdo::users::admins
-
-  include munin::node
-  class { 'nagios::target': ensure => absent }
-
-  class { 'hdo::database':
-    primary_ip   => '46.4.88.199', # db1
-    local_backup => absent,
-    munin        => true,
-  }
 }
