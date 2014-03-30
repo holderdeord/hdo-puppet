@@ -82,6 +82,26 @@ class nagios::monitor {
     require => Package['nagios-plugins']
   }
 
+  $contacts_path = '/etc/nagios3/conf.d/contacts_nagios2.cfg'
+
+  nagios_contact { 'hdo-ops':
+    ensure                        => present,
+    target                        => $contacts_path,
+    service_notification_period   => '24x7',
+    service_notification_options  => 'w,u,c,r',
+    host_notification_period      => '24x7',
+    host_notification_options     => 'd,r',
+    service_notification_commands => 'notify-service-by-email',
+    host_notification_commands    => 'notify-host-by-email',
+    email                         => 'ops@holderdeord.no',
+  }
+
+  nagios_contactgroup { 'admins':
+    ensure  => present,
+    target  => $contacts_path,
+    members => 'hdo-ops',
+  }
+
   #
   # use our custom apache config
   #
