@@ -36,7 +36,6 @@ node 'hetzner03' {
   include nagios::target::http
 
   include elasticsearch
-  class { 'elasticsearch::emailmonitor': ensure => absent }
 
   class { 'hdo::database':
     munin        => true,
@@ -61,13 +60,29 @@ node 'hetzner03' {
 
 node 'files' {
   include hdo::users::admins
+  include postfix
 
   include munin::node
   include nagios::target
   include nagios::target::http
 
+  include elasticsearch
+
+  class { 'hdo::webapp':
+    db_host           => 'localhost',
+    elasticsearch_url => 'http://localhost:9200'
+  }
+
+  class { 'hdo::database':
+    munin        => true,
+    local_backup => present,
+  }
+
+  class { 'hdo::webapp::apiupdater': }
+
   include hdo::files
 
+  hdo::firewall { "app": }
   hdo::networkinterfaces { "files": }
 }
 

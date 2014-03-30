@@ -10,8 +10,6 @@ class hdo::files {
     owner   => 'hdo'
   }
 
-  class { 'passenger::nginx': port => 80 }
-
   file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
     ensure  => file,
     owner   => root,
@@ -28,6 +26,7 @@ class hdo::files {
     mode    => '0644',
     content => template('hdo/nginx-files-vhost.conf.erb'),
     notify  => Service['nginx']
+
   }
 
   file { "${passenger::nginx::sites_dir}/valgvake.holderdeord.no.conf":

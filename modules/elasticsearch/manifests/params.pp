@@ -5,7 +5,7 @@ class elasticsearch::params {
     'java7-runtime'
   ]
 
-  $root_logger  = 'DEBUG, console, file' # default INFO
+  $log_level = 'DEBUG' # default INFO
 
   if $::virtual == 'virtualbox' {
     $es_heap_size = '128m'

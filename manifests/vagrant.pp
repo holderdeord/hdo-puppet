@@ -26,7 +26,19 @@ node 'hdo-ops-vm' {
 
 node 'hdo-files-vm' {
   include nagios::target
+
+  class { 'hdo::webapp':
+    db_host           => 'localhost',
+    elasticsearch_url => 'http://localhost:9200'
+  }
+
+  class { 'hdo::database':
+    local_backup => present,
+  }
+
   include hdo::files
+  include elasticsearch
+
 }
 
 node 'hdo-app-vm' {
