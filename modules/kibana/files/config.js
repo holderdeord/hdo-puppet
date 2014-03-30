@@ -8,11 +8,13 @@ function (Settings) {
 
 
   /** @scratch /configuration/config.js/2
+   *
    * === Parameters
    */
   return new Settings({
 
     /** @scratch /configuration/config.js/5
+     *
      * ==== elasticsearch
      *
      * The URL to your elasticsearch server. You almost certainly don't
@@ -24,17 +26,19 @@ function (Settings) {
     elasticsearch: "http://"+window.location.hostname+"/elasticsearch",
 
     /** @scratch /configuration/config.js/5
+     *
      * ==== default_route
      *
      * This is the default landing page when you don't specify a dashboard to load. You can specify
      * files, scripts or saved dashboards here. For example, if you had saved a dashboard called
      * `WebLogs' to elasticsearch you might use:
      *
-     * +default_route: '/dashboard/elasticsearch/WebLogs',+
+     * default_route: '/dashboard/elasticsearch/WebLogs',+
      */
     default_route     : '/dashboard/file/default.json',
 
     /** @scratch /configuration/config.js/5
+     *
      * ==== kibana-int
      *
      * The default ES index to use for storing Kibana specific object
@@ -43,6 +47,7 @@ function (Settings) {
     kibana_index: "kibana-int",
 
     /** @scratch /configuration/config.js/5
+     *
      * ==== panel_name
      *
      * An array of panel modules available. Panels will only be loaded when they are defined in the
@@ -51,7 +56,7 @@ function (Settings) {
     panel_names: [
       'histogram',
       'map',
-      'pie',
+      'goal',
       'table',
       'filtering',
       'timepicker',

@@ -28,5 +28,6 @@ Vagrant.configure("2") do |config|
     puppet.options = '--show_diff'
     puppet.options << ' --verbose --debug' if ENV['DEBUG']
     puppet.options << ' --noop' if ENV['NOOP']
+    puppet.options << ' --graph' if ENV['GRAPH']
   end
 end

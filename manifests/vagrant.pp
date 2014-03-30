@@ -14,10 +14,13 @@ group { 'puppet': ensure => present }
 node 'hdo-ops-vm' {
   # include nagios::monitor
   # include nagios::monitor::front
-  #
-  # include hdo::puppetmasterd
+
+  include statsd
+  include graphite
+
   include hdo::common
   include kibana
+
 }
 
 node 'hdo-files-vm' {
@@ -29,7 +32,7 @@ node 'hdo-files-vm' {
   }
 
   class { 'hdo::database':
-    local_backup => present,
+    local_backup => absent,
   }
 
   include hdo::files

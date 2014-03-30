@@ -6,7 +6,7 @@ class statsd(
   $graphite_port = 2003,
 ) {
 
-  include nodejs
+  class { 'nodejs': manage_repo => true }
 
   package { 'statsd':
     ensure   => $version,

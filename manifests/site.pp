@@ -3,6 +3,7 @@
 #
 
 class { 'apt':
+  always_apt_update    => true,
   purge_sources_list   => true,
   purge_sources_list_d => true,
 }
@@ -46,8 +47,6 @@ Exec {
     '/usr/local/bin'
   ]
 }
-
-Class['apt::update'] -> Package <| |>
 
 include hdo::users
 

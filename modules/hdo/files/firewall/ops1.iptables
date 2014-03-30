@@ -36,7 +36,6 @@ $IPT -A INPUT -p tcp --dport 80 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 # accept inbound to the puppet master
 $IPT -A INPUT -p tcp --dport 8140 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
-#
 # statsd
 #    ...from next.holderdeord.no
 $IPT -A INPUT -s 5.9.145.15 -p udp -m multiport --ports 8125 -j ACCEPT
@@ -46,9 +45,7 @@ $IPT -A INPUT -s 46.4.88.198 -p udp -m multiport --ports 8125 -j ACCEPT
 #    ...from localhost
 $IPT -A INPUT -i lo -p udp -m multiport --ports 8125 -j ACCEPT
 
-#
 # graphite from app servers
-#
 #    ...from files.holderdeord.no
 $IPT -A INPUT -p tcp --dport 2003 -m state --state NEW -s 46.4.88.198 -j ACCEPT
 
