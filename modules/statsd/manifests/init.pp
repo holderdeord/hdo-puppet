@@ -12,6 +12,7 @@ class statsd(
     ensure   => $version,
     provider => 'npm',
     notify   => Service['statsd'],
+    require  => Package['nodejs'],
   }
 
   file { '/etc/statsd':
