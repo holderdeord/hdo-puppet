@@ -69,6 +69,7 @@ node 'files' {
   include elasticsearch
 
   class { 'hdo::webapp':
+    server_name       => 'app.holderdeord.no',
     db_host           => 'localhost',
     elasticsearch_url => 'http://localhost:9200'
   }
