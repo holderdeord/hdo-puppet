@@ -101,7 +101,9 @@ node 'app1' {
   }
 
   include munin::node
-  include nagios::target
+
+  class { 'nagios::target', ensure => absent }
+
   include nagios::target::http
   include hdo::webapp::default
   include hdo::webapp::graphite
@@ -117,7 +119,7 @@ node 'app2' {
   include hdo::users::admins
 
   include munin::node
-  include nagios::target
+  class { 'nagios::target', ensure => absent }
   include nagios::target::http
 
   include hdo::webapp::default
@@ -134,7 +136,7 @@ node 'es1', 'es2' {
   include hdo::users::admins
 
   include munin::node
-  include nagios::target
+  class { 'nagios::target', ensure => absent }
 
   include elasticsearch
 
@@ -149,7 +151,7 @@ node 'db1' {
   include hdo::users::admins
 
   include munin::node
-  include nagios::target
+  class { 'nagios::target', ensure => absent }
 
   class { 'hdo::database':
     standby_ip   => '88.198.14.8', # db2
@@ -162,7 +164,7 @@ node 'db2' {
   include hdo::users::admins
 
   include munin::node
-  include nagios::target
+  class { 'nagios::target', ensure => absent }
 
   class { 'hdo::database':
     primary_ip   => '46.4.88.199', # db1
