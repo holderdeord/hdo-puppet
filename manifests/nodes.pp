@@ -17,6 +17,7 @@ node 'ops1' {
   include statsd
   include kibana
 
+  include hdo::downtime
   include hdo::deployer
   include hdo::puppetmasterd
 
@@ -55,7 +56,7 @@ node 'hetzner03' {
 }
 
 #
-# file server + holderdeord.no A record (301 -> www)
+# main server + holderdeord.no A record (301 -> www)
 #
 
 node 'files' {

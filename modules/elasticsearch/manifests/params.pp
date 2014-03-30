@@ -13,9 +13,12 @@ class elasticsearch::params {
     $es_heap_size = '2g'
   }
 
-  if $::hostname in ['beta', 'hetzner02', 'hetzner03'] {
+  if $::hostname in ['hetzner03'] {
+    $cluster_name = 'holderdeord-staging'
     $host = '127.0.0.1'
   } else {
+    $cluster_name = 'holderdeord'
     $host = '0.0.0.0'
   }
+
 }

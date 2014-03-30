@@ -77,9 +77,10 @@ Deploy hdo-site:
 
 ### Production
 
-#### Puppetmaster
+##### Failover
 
-TODO (Bjørn?): Describe how to set up the puppetmaster.
+IP failover is available for 46.4.70.210, configurable in the Hetzner robot console.
+It can be pointed at ops1 to serve a basic downtime page.
 
 ##### Hiera
 
@@ -126,4 +127,4 @@ Configure the node to talk to the puppetmaster by adding the following to /etc/p
     server = puppet.holderdeord.no
     pluginsync = true
 
-Then do sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
+Then sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).

@@ -21,7 +21,7 @@ class hdo::deployer {
 
   file { $appdir:
     ensure => directory,
-    owner  => hdo,
+    owner  => $hdo::params::user,
   }
 
   exec { 'clone-hdo-site':

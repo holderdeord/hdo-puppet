@@ -1,4 +1,6 @@
 class elasticsearch::config inherits elasticsearch::params {
+  $cluster_name = $elasticsearch::params::cluster_name
+
   file { '/etc/default/elasticsearch':
     ensure  => present,
     mode    => '0644',
@@ -52,14 +54,11 @@ class elasticsearch::config inherits elasticsearch::params {
     source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch'
   }
 
-  # TODO: parameterize elasticsearch
-  if $::hostname != 'hetzner03' {
-    file { "${nagios::base::checks_dir}/elasticsearch-cluster-state":
-      ensure => present,
-      mode   => '0700',
-      owner  => $nagios::base::user,
-      group  => $nagios::base::user,
-      source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch-cluster-state'
-    }
+  file { "${nagios::base::checks_dir}/elasticsearch-cluster-state":
+    ensure => present,
+    mode   => '0700',
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user,
+    source => 'puppet:///modules/elasticsearch/nagioschecks/elasticsearch-cluster-state'
   }
 }
