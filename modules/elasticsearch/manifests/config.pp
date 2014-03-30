@@ -22,6 +22,7 @@ class elasticsearch::config inherits elasticsearch::params {
     mode    => '0644',
     content => template('elasticsearch/elasticsearch.yml.erb'),
     require => Class['elasticsearch::install'],
+    notify  => Service['elasticsearch'],
   }
 
   file { '/etc/elasticsearch/logging.yml':
@@ -29,6 +30,7 @@ class elasticsearch::config inherits elasticsearch::params {
     mode    => '0644',
     content => template('elasticsearch/logging.yml.erb'),
     require => Class['elasticsearch::install'],
+    notify  => Service['elasticsearch'],
   }
 
   file { '/etc/elasticsearch/hdo.words.nb.txt':
@@ -36,6 +38,7 @@ class elasticsearch::config inherits elasticsearch::params {
     mode    => '0644',
     source  => 'puppet:///modules/elasticsearch/config/hdo.words.nb.txt',
     require => Class['elasticsearch::install'],
+    notify  => Service['elasticsearch'],
   }
 
   file { '/etc/elasticsearch/hdo.synonyms.nb.txt':
@@ -43,6 +46,7 @@ class elasticsearch::config inherits elasticsearch::params {
     mode    => '0644',
     source  => 'puppet:///modules/elasticsearch/config/hdo.synonyms.nb.txt',
     require => Class['elasticsearch::install'],
+    notify  => Service['elasticsearch'],
   }
 
 
