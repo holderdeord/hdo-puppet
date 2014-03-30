@@ -82,6 +82,7 @@ node 'files' {
   class { 'hdo::webapp::apiupdater': }
 
   include hdo::files
+  include hdo::webapp::graphite
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "files": }
@@ -106,7 +107,6 @@ node 'app1' {
 
   include nagios::target::http
   include hdo::webapp::default
-  include hdo::webapp::graphite
 
   # API import only happens on the 'primary' app server
   class { 'hdo::webapp::apiupdater': }
