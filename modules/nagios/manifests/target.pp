@@ -1,9 +1,11 @@
 # This class exports nagios host and service check resources
-class nagios::target {
+class nagios::target(
+  $ensure = 'present'
+  ) {
   include nagios::base
 
   @@nagios_host { $::fqdn:
-    ensure  => present,
+    ensure  => $ensure,
     alias   => $::hostname,
     address => $::ipaddress,
     use     => 'generic-host',
@@ -58,4 +60,3 @@ class nagios::target {
     service_description => "${::hostname}_remote_load",
   }
 }
-
