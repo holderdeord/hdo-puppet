@@ -1,5 +1,5 @@
 class kibana(
-    $root = '/opt/kibana'
+    $root = '/webapps/kibana'
   ) {
 
   include hdo::common
