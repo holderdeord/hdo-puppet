@@ -2,7 +2,7 @@ class hdo::database::backup_sync(
   $ensure = 'present',
   $target = undef,
   $destination = undef,
-  $minute = 55,
+  $minute = 50,
 ) {
   include hdo::params
 

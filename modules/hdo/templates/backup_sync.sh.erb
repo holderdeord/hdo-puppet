@@ -9,4 +9,4 @@ LOG_FILE="<%= log_file %>"
 mkdir -p $DESTINATION
 
 echo "Starting backup sync @ $(date +'%F %H:%M:%S')" >> $LOG_FILE
-rsync -chavzP --stats hdo@files.holderdeord.no:pg-backups pg-backups >> $LOG_FILE
+rsync -chavzP --stats hdo@files.holderdeord.no:pg-backups $DESTINATION >> $LOG_FILE
