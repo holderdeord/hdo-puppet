@@ -3,6 +3,7 @@
 #
 <VirtualHost *:80>
   ServerName <%= @srvname %>
+  ServerAlias
   ServerSignature Off
 
   ErrorLog <%= @logroot %>/<%= @name %>_error.log
@@ -10,7 +11,7 @@
   CustomLog <%= @logroot %>/<%= @name %>_access.log combined
 
   # https://github.com/obfuscurity/tasseo#graphite-server-configuration
-  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Origin "*.holderdeord.no"
   Header set Access-Control-Allow-Methods "GET, OPTIONS"
   Header set Access-Control-Allow-Headers "origin, authorization, accept"
 

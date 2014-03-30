@@ -1,51 +1,52 @@
-class kibana(
-    $root = '/webapps/kibana'
+class grafana(
+    $root = '/webapps/grafana'
   ) {
 
   include hdo::common
   include apache
 
-  $document_root = "${root}/kibana-latest"
+  $version       = '1.5.2'
+  $document_root = "${root}/grafana-${version}"
   $credentials   = hiera('basic_auth', 'hdo hdo')
-  $htpasswd_path = "${root}/kibana.htpasswd"
+  $htpasswd_path = "${root}/grafana.htpasswd"
+
 
   file { $root:
     ensure => directory,
-    owner  => hdo,
-    group  => hdo,
+    owner  => $hdo::params::user,
+    group  => $hdo::params::user,
     mode   => '0755',
   }
 
-  exec { 'download-kibana':
-    command => "curl http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip -o ${document_root}.zip",
+  exec { 'download-grafana':
+    command => "curl --fail -L https://github.com/torkelo/grafana/releases/download/v${version}/grafana-${version}.zip -o ${document_root}.zip",
     creates => "${document_root}.zip",
-    user    => hdo,
+    user    => $hdo::params::user,
     require => [File[$root], Package['curl']],
   }
 
-  exec { 'extract-kibana':
+  exec { 'extract-grafana':
     command => "unzip ${document_root}.zip",
     creates => $document_root,
     cwd     => $root,
-    user    => hdo,
-    require => Exec['download-kibana'],
+    user    => $hdo::params::user,
+    require => Exec['download-grafana'],
   }
 
   file { "${document_root}/config.js":
     ensure  => file,
-    owner   => hdo,
-    group   => hdo,
+    owner   => $hdo::params::user,
+    group   => $hdo::params::user,
     mode    => '0644',
-    source  => 'puppet:///modules/kibana/config.js',
+    content => template('grafana/config.js.erb'),
     require => Exec['extract-kibana']
   }
 
-  exec { 'create-kibana-htpasswd':
+  exec { 'create-grafana-htpasswd':
     command   => "htpasswd -b -s -c ${htpasswd_path} ${credentials}",
     creates   => $htpasswd_path,
     require   => Class['apache'],
   }
-
 
   if !defined(A2mod['proxy']) {
     a2mod { 'proxy': ensure => present; }
@@ -55,16 +56,16 @@ class kibana(
     a2mod { 'proxy_http': ensure => present; }
   }
 
-  apache::vhost { 'kibana.holderdeord.no':
+  apache::vhost { 'grafana.holderdeord.no':
     vhost_name    => '*',
     port          => 80,
     priority      => '20',
-    servername    => 'kibana.holderdeord.no',
+    servername    => 'grafana.holderdeord.no',
     serveradmin   => $hdo::params::admin_email,
-    template      => 'kibana/apache-kibana-vhost.conf.erb',
+    template      => 'grafana/apache-grafana-vhost.conf.erb',
     docroot       => $document_root,
-    docroot_owner => hdo,
-    docroot_group => hdo,
+    docroot_owner => $hdo::params::user,
+    docroot_group => $hdo::params::user,
     options       => '-MultiViews -Indexes',
     notify        => Service['httpd'],
     require       => [User['hdo'], A2mod['proxy'], A2mod['proxy_http']],

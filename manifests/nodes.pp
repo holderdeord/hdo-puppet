@@ -14,6 +14,7 @@ node 'ops1' {
   include nagios::hipchat
 
   include graphite
+  include grafana
 
   include statsd
   include kibana

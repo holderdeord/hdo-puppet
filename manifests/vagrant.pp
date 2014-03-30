@@ -8,6 +8,8 @@ group { 'puppet': ensure => present }
 #
 # 192.168.1.10 hdo-ops-vm.holderdeord.no
 # 192.168.1.10 hdo-kibana-vm.holderdeord.no
+# 192.168.1.10 hdo-grafana-vm.holderdeord.no
+# 192.168.1.10 hdo-graphite-vm.holderdeord.no
 # 192.168.1.11 hdo-files-vm.holderdeord.no
 #
 
@@ -20,6 +22,7 @@ node 'hdo-ops-vm' {
 
   include hdo::common
   include kibana
+  include grafana
 
 }
 

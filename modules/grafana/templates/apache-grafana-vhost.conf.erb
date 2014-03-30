@@ -1,0 +1,24 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+<VirtualHost *:80>
+  ServerName <%= @srvname %>
+  ServerAlias hdo-grafana-vm.holderdeord.no
+  ServerSignature Off
+
+  ErrorLog <%= @logroot %>/<%= @name %>_error.log
+  LogLevel warn
+  CustomLog <%= @logroot %>/<%= @name %>_access.log combined
+
+  DocumentRoot <%= @docroot %>
+
+  <Location />
+    AuthName "<%= @srvname %>"
+    AuthType Basic
+    AuthUserFile /webapps/grafana/grafana.htpasswd
+    <LimitExcept OPTIONS>
+      Require valid-user
+    </LimitExcept>
+  </Location>
+
+</VirtualHost>
