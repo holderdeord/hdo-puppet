@@ -52,6 +52,15 @@ GIT
     firewall (0.3.0)
 
 GIT
+  remote: git://github.com/puppetlabs/puppetlabs-nodejs
+  ref: 0.5.0
+  sha: 341240dc027c9d1d2980b9c24bf7dd2518383723
+  specs:
+    nodejs (0.5.0)
+      puppetlabs/apt (>= 0.0.3)
+      puppetlabs/stdlib (>= 2.0.0)
+
+GIT
   remote: git://github.com/puppetlabs/puppetlabs-puppetdb
   ref: 3.0.0
   sha: c0f33d804179087f8b4251af90959e1bf7dc093e
@@ -82,6 +91,7 @@ DEPENDENCIES
   fsalum/puppetmaster (= 0.0.4)
   hipchat (>= 0)
   logrotate (>= 0)
+  nodejs (>= 0)
   postgresql (>= 0)
   puppetdb (>= 0)
   stdlib (>= 0)
