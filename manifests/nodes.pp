@@ -87,37 +87,3 @@ node 'files' {
   hdo::firewall { "app": }
   hdo::networkinterfaces { "files": }
 }
-
-#
-# app servers
-#
-
-node 'app1' {
-  include hdo::users::admins
-  hdo::firewall { "app": }
-  hdo::networkinterfaces { "app1": }
-}
-
-node 'app2' {
-  include hdo::users::admins
-  hdo::firewall { "app": }
-  hdo::networkinterfaces { "app2": }
-}
-
-#
-# elasticsearch servers
-#
-
-node 'es1', 'es2' {
-  include hdo::users::admins
-  hdo::firewall { "es": }
-}
-
-#
-# db servers
-#
-
-node 'db1', 'db2' {
-  include hdo::users::admins
-  include hdo::users::admins
-}

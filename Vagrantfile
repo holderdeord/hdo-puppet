@@ -20,42 +20,6 @@ Vagrant.configure("2") do |config|
     files.vm.network 'private_network', ip: '192.168.1.11'
   end
 
-  config.vm.define :app do |app|
-    app.vm.host_name = 'hdo-app-vm'
-
-    app.vm.box       = default_box
-    app.vm.box_url   = default_box_url
-
-    app.vm.network 'private_network', ip: '192.168.1.12'
-  end
-
-  config.vm.define :db1 do |db|
-    db.vm.host_name = "hdo-db1-vm"
-
-    db.vm.box       = default_box
-    db.vm.box_url   = default_box_url
-
-    db.vm.network 'private_network', ip: '192.168.1.13'
-  end
-
-  config.vm.define :db2 do |db|
-    db.vm.host_name = "hdo-db2-vm"
-
-    db.vm.box       = default_box
-    db.vm.box_url   = default_box_url
-
-    db.vm.network 'private_network', ip: '192.168.1.14'
-  end
-
-  config.vm.define :es do |es|
-    es.vm.host_name = "hdo-es-vm"
-
-    es.vm.box       = default_box
-    es.vm.box_url   = default_box_url
-
-    es.vm.network 'private_network', ip: '192.168.1.15'
-  end
-
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.module_path    = %w[modules third-party]

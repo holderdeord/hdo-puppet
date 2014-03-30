@@ -13,8 +13,8 @@
   DocumentRoot <%= @docroot %>
 
   ProxyRequests     Off
-  ProxyPass        /elasticsearch/ http://es2.holderdeord.no:9200/
-  ProxyPassReverse /elasticsearch/ http://es2.holderdeord.no:9200/
+  ProxyPass        /elasticsearch/ http://files.holderdeord.no:9200/
+  ProxyPassReverse /elasticsearch/ http://files.holderdeord.no:9200/
 
   <Location />
     AuthName "<%= @srvname %>"
