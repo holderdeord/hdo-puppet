@@ -14,12 +14,12 @@ class hdo::downtime {
     source => 'puppet:///modules/hdo/downtime/index.html',
   }
 
-
   apache::vhost { 'www.holderdeord.no-downtime':
     vhost_name    => '*',
     port          => 80,
     priority      => '5',
     servername    => 'www.holderdeord.no',
+    serveraliases => 'holderdeord.no beta.holderdeord.no',
     serveradmin   => $hdo::params::admin_email,
     docroot       => $docroot,
     docroot_owner => $hdo::params::user,
