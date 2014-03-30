@@ -7,8 +7,5 @@ DB_NAME="<%= db_name %>"
 
 mkdir -p $BACKUP_ROOT
 
-echo "Backing up..."
 pg_dump "$DB_NAME" | gzip -c > "${BACKUP_ROOT}/${DB_NAME}-$(date '+%F-%H%M%S').dump.gz"
-
-echo "Removing outdated backups"
 find "$BACKUP_ROOT" -mtime +60 -type f -exec rm {} +

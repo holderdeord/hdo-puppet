@@ -22,6 +22,11 @@ node 'ops1' {
   include hdo::puppetmasterd
 
   hdo::firewall { "ops1": }
+
+  class { 'hdo::database::backup_sync':
+    target      => 'hdo@files.holderdeord.no:pg-backups',
+    destination => "${hdo::params::home}/pg-backups-sync",
+  }
 }
 
 #

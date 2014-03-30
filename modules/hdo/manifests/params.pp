@@ -6,6 +6,7 @@ class hdo::params {
   $webapp_root           = '/webapps'
   $deploy_root           = "${webapp_root}/hdo-site"
   $app_root              = "${deploy_root}/current"
+  $home                  = "/home/${user}"
 
   $environment           = hiera('hdo_environment',        'staging')
   $db_server_password    = hiera('hdo_db_server_password', 'dont-use-this')
