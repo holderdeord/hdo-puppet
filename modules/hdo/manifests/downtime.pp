@@ -11,7 +11,7 @@ class hdo::downtime {
 
   file { "${docroot}/index.html":
     ensure => present,
-    source => 'puppet:///modules/hdo/downtime.html',
+    source => 'puppet:///modules/hdo/downtime/index.html',
   }
 
 
