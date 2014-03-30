@@ -1,6 +1,6 @@
 class statsd(
   $ensure        = 'running',
-  $version       = false,
+  $version       = '0.7.1',
   $port          = 8125,
   $graphite_host = 'localhost',
   $graphite_port = 2003,
@@ -8,9 +8,10 @@ class statsd(
 
   include nodejs
 
-  nodejs::npm { 'statsd':
-    version => $version,
-    notify  => Service['statsd'],
+  package { 'statsd':
+    ensure   => $version,
+    provider => 'npm',
+    notify   => Service['statsd'],
   }
 
   file { '/etc/statsd':
