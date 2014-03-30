@@ -21,4 +21,6 @@ class elasticsearch::params {
     $host = '0.0.0.0'
   }
 
+  $number_of_shards = 5
+  $number_of_replicas = 0 # currently only single-node clusters
 }

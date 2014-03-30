@@ -1,5 +1,7 @@
 class elasticsearch::config inherits elasticsearch::params {
-  $cluster_name = $elasticsearch::params::cluster_name
+  $cluster_name       = $elasticsearch::params::cluster_name
+  $number_of_shards   = $elasticsearch::params::number_of_shards
+  $number_of_replicas = $elasticsearch::params::number_of_replicas
 
   file { '/etc/default/elasticsearch':
     ensure  => present,
