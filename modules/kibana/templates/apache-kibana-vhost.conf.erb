@@ -12,6 +12,10 @@
 
   DocumentRoot <%= @docroot %>
 
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, OPTIONS"
+  Header set Access-Control-Allow-Headers "origin, authorization, accept"
+
   ProxyRequests     Off
   ProxyPass        /elasticsearch/ http://files.holderdeord.no:9200/
   ProxyPassReverse /elasticsearch/ http://files.holderdeord.no:9200/
