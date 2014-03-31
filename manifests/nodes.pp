@@ -68,13 +68,18 @@ node 'hetzner03' {
 
 node 'files' {
   include hdo::users::admins
-  include postfix
 
   include munin::node
   include nagios::target
   include nagios::target::http
 
   include elasticsearch
+
+  class { 'postfix':
+    smtp_listen => 'all',
+    # make sure to open firewall if you modify this:
+    network_table_extras => ['46.4.88.198'],
+  }
 
   class { 'hdo::webapp':
     server_name       => 'app.holderdeord.no',
