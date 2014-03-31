@@ -47,7 +47,6 @@ class graphite::config inherits graphite::params {
   # set up carbon
   #
 
-  # just copying the example config for now
   file { "${graphite::params::root}/conf/storage-schemas.conf":
     ensure  => file,
     mode    => '0644',
@@ -96,4 +95,3 @@ class graphite::config inherits graphite::params {
     ]
   }
 }
-

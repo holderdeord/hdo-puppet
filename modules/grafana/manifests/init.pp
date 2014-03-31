@@ -8,8 +8,6 @@ class grafana(
   $version       = '1.5.2'
   $document_root = "${root}/grafana-${version}"
   $credentials   = hiera('basic_auth', 'hdo hdo')
-  $htpasswd_path = "${root}/grafana.htpasswd"
-
 
   file { $root:
     ensure => directory,
@@ -42,32 +40,9 @@ class grafana(
     require => Exec['extract-kibana']
   }
 
-  exec { 'create-grafana-htpasswd':
-    command   => "htpasswd -b -s -c ${htpasswd_path} ${credentials}",
-    creates   => $htpasswd_path,
-    require   => Class['apache'],
+  file { "${root}/latest":
+    ensure  => $document_root,
+    require => Exec['extract-grafana'],
   }
 
-  if !defined(A2mod['proxy']) {
-    a2mod { 'proxy': ensure => present; }
-  }
-
-  if !defined(A2mod['proxy_http']) {
-    a2mod { 'proxy_http': ensure => present; }
-  }
-
-  apache::vhost { 'grafana.holderdeord.no':
-    vhost_name    => '*',
-    port          => 80,
-    priority      => '20',
-    servername    => 'grafana.holderdeord.no',
-    serveradmin   => $hdo::params::admin_email,
-    template      => 'grafana/apache-grafana-vhost.conf.erb',
-    docroot       => $document_root,
-    docroot_owner => $hdo::params::user,
-    docroot_group => $hdo::params::user,
-    options       => '-MultiViews -Indexes',
-    notify        => Service['httpd'],
-    require       => [User['hdo'], A2mod['proxy'], A2mod['proxy_http']],
-  }
 }

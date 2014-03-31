@@ -3,7 +3,7 @@
 #
 <VirtualHost *:80>
   ServerName <%= @srvname %>
-  ServerAlias
+  ServerAlias hdo-graphite-vm.holderdeord.no
   ServerSignature Off
 
   ErrorLog <%= @logroot %>/<%= @name %>_error.log
@@ -11,7 +11,7 @@
   CustomLog <%= @logroot %>/<%= @name %>_access.log combined
 
   # https://github.com/obfuscurity/tasseo#graphite-server-configuration
-  Header set Access-Control-Allow-Origin "*.holderdeord.no"
+  Header set Access-Control-Allow-Origin "*"
   Header set Access-Control-Allow-Methods "GET, OPTIONS"
   Header set Access-Control-Allow-Headers "origin, authorization, accept"
 
@@ -38,6 +38,11 @@
 
   Alias /media/ "@DJANGO_ROOT@/contrib/admin/media/"
   <Location "/media/">
+    SetHandler None
+  </Location>
+
+  Alias /grafana/ <%= @docroot %>/grafana/latest/
+  <Location "/grafana/">
     SetHandler None
   </Location>
 </VirtualHost>

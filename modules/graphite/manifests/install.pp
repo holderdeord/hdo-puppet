@@ -61,8 +61,8 @@ class graphite::install inherits graphite::params {
   exec { "install-${graphite::params::graphite_version}":
     command     => 'python setup.py install',
     cwd         => $webapp_build_dir,
-    creates     => $graphite::params::docroot,
-    require     => Exec["check-${graphite::params::graphite_version}-dependencies"],
+    refreshonly => true,
+    subscribe   => Exec["check-${graphite::params::graphite_version}-dependencies"],
     logoutput   => on_failure,
   }
 

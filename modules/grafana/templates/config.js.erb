@@ -13,7 +13,7 @@ function (Settings) {
      * elasticsearch url:
      * For Basic authentication use: http://username:password@domain.com:9200
      */
-    elasticsearch: "http://<%= credentials %>@kibana.holderdeord.no/elasticsearch",
+    elasticsearch: "http://kibana.holderdeord.no/elasticsearch",
 
     /**
      * graphite-web url:
@@ -22,7 +22,7 @@ function (Settings) {
      * in nginx or apache for cross origin domain sharing to work (CORS).
      * Check install documentation on github
      */
-    graphiteUrl: "http://<%= credentials %>@graphite.holderdeord.no",
+    graphiteUrl: "http://"+window.location.hostname,
 
     /**
      * Multiple graphite servers? Comment out graphiteUrl and replace with
