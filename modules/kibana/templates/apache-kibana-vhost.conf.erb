@@ -12,9 +12,10 @@
 
   DocumentRoot <%= @docroot %>
 
-  Header set Access-Control-Allow-Origin "*"
-  Header set Access-Control-Allow-Methods "GET, OPTIONS"
-  Header set Access-Control-Allow-Headers "origin, authorization, accept"
+  Header set Access-Control-Allow-Origin "http://graphite.holderdeord.no"
+  Header set Access-Control-Allow-Methods "GET, OPTIONS, PUT"
+  Header set Access-Control-Allow-Headers "origin, authorization, accept, content-type"
+  Header set Access-Control-Allow-Credentials true
 
   ProxyRequests     Off
   ProxyPass        /elasticsearch/ http://files.holderdeord.no:9200/
