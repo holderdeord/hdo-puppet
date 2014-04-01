@@ -63,10 +63,10 @@ node 'hetzner03' {
 }
 
 #
-# main server + holderdeord.no A record (301 -> www)
+# main server + holderdeord.no A record (301 -> www/fastly -> app)
 #
 
-node 'files' {
+node 'app' {
   include hdo::users::admins
 
   include munin::node
@@ -98,5 +98,5 @@ node 'files' {
   include hdo::webapp::graphite
 
   hdo::firewall { "app": }
-  hdo::networkinterfaces { "files": }
+  hdo::networkinterfaces { "app": }
 }
