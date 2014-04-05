@@ -1,6 +1,6 @@
 class grafana(
     $root = '/webapps/grafana'
-  ) {
+) {
 
   include hdo::common
   include apache
@@ -37,7 +37,7 @@ class grafana(
     group   => $hdo::params::user,
     mode    => '0644',
     content => template('grafana/config.js.erb'),
-    require => Exec['extract-kibana']
+    require => Exec['extract-grafana']
   }
 
   file { "${root}/latest":
