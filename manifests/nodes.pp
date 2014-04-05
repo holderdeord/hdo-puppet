@@ -8,6 +8,7 @@ node 'ops1' {
 
   include munin::master
   include munin::node
+  include hdo::collectd::default
 
   include nagios::monitor
   include nagios::monitor::front
@@ -40,14 +41,16 @@ node 'hetzner03' {
   include postfix
 
   include munin::node
+  include hdo::collectd::default
   include nagios::target
   include nagios::target::http
 
   include elasticsearch
 
   class { 'hdo::database':
-    munin        => true,
     local_backup => absent,
+    munin        => true,
+    collectd     => true,
   }
 
   class { 'hdo::webapp':
@@ -70,6 +73,7 @@ node 'app' {
   include hdo::users::admins
 
   include munin::node
+  include hdo::collectd::default
   include nagios::target
   include nagios::target::http
 
@@ -89,6 +93,7 @@ node 'app' {
 
   class { 'hdo::database':
     munin        => true,
+    collectd     => true,
     local_backup => present,
   }
 

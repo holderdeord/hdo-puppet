@@ -89,4 +89,10 @@ class passenger::nginx($port = 80) inherits passenger {
   }
 
   class { 'munin::nginx': port => $listen }
+
+  class { 'collectd::plugin::nginx':
+    url     => "http://localhost:${listen}/nginx_status",
+    require => Class['hdo::collectd'],
+    notify  => Service['collectd'],
+  }
 }

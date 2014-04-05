@@ -1,7 +1,3 @@
-#
-# Hetzner's default Ubuntu image points at their outdated mirrors, so we add our own sources.list here.
-#
-
 class { 'apt':
   always_apt_update    => true,
   purge_sources_list   => true,
@@ -14,6 +10,12 @@ apt::source { 'puppetlabs':
   key        => '4BD6EC30',
   key_server => 'pgp.mit.edu',
 }
+
+apt::ppa { 'ppa:vbulax/collectd5': }
+
+#
+# Hetzner's default Ubuntu image points at their outdated mirrors, so we add our own sources.list here.
+#
 
 apt::source { 'de-archive':
   location   => 'http://de.archive.ubuntu.com/ubuntu/',

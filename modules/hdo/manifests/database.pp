@@ -2,6 +2,7 @@ class hdo::database(
   $primary_ip   = undef,
   $standby_ip   = undef,
   $munin        = false,
+  $collectd     = false,
   $local_backup = 'absent',
 ){
 
@@ -12,7 +13,7 @@ class hdo::database(
   include hdo::common
 
   $db_name     = "hdo_${hdo::params::environment}"
-  $backup_root = '/home/hdo/pg-backups'
+  $backup_root = "${hdo::params::home}/pg-backups"
 
   if $primary_ip == undef {
     # this is the primary (or a standalone)
@@ -95,7 +96,7 @@ class hdo::database(
     }
   }
 
-  if $munin == true {
+  if $munin {
     munin::plugin { 'postgres_bgwriter':                                                 }
     munin::plugin { 'postgres_cache_ALL':        plugin_name => 'postgres_cache_'        }
     munin::plugin { 'postgres_checkpoints':                                              }
@@ -111,6 +112,23 @@ class hdo::database(
     munin::plugin { 'postgres_xlog':                                                     }
 
     package { 'libdbd-pg-perl': ensure => installed, }
+  }
+
+  $hack = '' # to avoid syntax error / linting bug
+
+  if $collectd {
+    class { 'collectd::plugin::postgresql':
+      databases => { "${db_name}${hack}" => {
+          'host'     => 'localhost',
+          'user'     => $hdo::params::db_username,
+          'password' => $hdo::params::db_password,
+          'sslmode'  => 'prefer',
+          'query'    => ['backends', 'transactions', 'query_plans', 'queries', 'table_states', 'disk_io', 'disk_usage'],
+        }
+      },
+      require   => Class['hdo::collectd'],
+      notify    => Service['collectd'],
+    }
   }
 
   $local_backup_script = '/var/lib/postgresql/postgresql-local-backup.sh'

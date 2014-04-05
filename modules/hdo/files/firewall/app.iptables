@@ -38,7 +38,7 @@ $IPT -A INPUT -p tcp --dport 443 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 $IPT -A INPUT -p tcp --dport 4949 -m state --state NEW -s 5.9.122.47 -j ACCEPT
 
 # accept elasticsearch
-#    ...from ops1.holderdeord.no (kibana)
+#    ...from ops1.holderdeord.no (kibana/grafana)
 $IPT -A INPUT -p tcp --dport 9200 -m state --state NEW -s 5.9.122.47 -j ACCEPT
 
 $IPT-save > /etc/iptables.rules

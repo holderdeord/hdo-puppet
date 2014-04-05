@@ -85,8 +85,17 @@ GIT
   specs:
     logrotate (1.0.2)
 
+GIT
+  remote: https://github.com/jarib/puppet-module-collectd.git
+  ref: graphite-separate-instances
+  sha: 2292b08427ae497cdccff0c4037f8232cdb210cc
+  specs:
+    collectd (1.1.0)
+      puppetlabs/stdlib (>= 3.0.0)
+
 DEPENDENCIES
   apache (>= 0)
+  collectd (>= 0)
   firewall (>= 0)
   fsalum/puppetmaster (= 0.0.4)
   hipchat (>= 0)

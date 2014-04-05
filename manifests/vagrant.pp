@@ -22,11 +22,19 @@ node 'hdo-ops-vm' {
   include hdo::common
   include kibana
   include grafana
+  include elasticsearch
 
+  class { 'hdo::collectd':
+    graphite => 'localhost'
+  }
 }
 
 node 'hdo-app-vm' {
-  include nagios::target
+  # include nagios::target
+
+  class { 'hdo::collectd':
+    graphite => '192.168.1.10'
+  }
 
   class { 'hdo::webapp':
     db_host           => 'localhost',
@@ -35,8 +43,10 @@ node 'hdo-app-vm' {
 
   class { 'hdo::database':
     local_backup => absent,
+    collectd     => true,
   }
 
   include hdo::files
   include elasticsearch
+
 }
