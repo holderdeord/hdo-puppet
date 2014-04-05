@@ -24,7 +24,7 @@
   <Location />
     AuthName "<%= @srvname %>"
     AuthType Basic
-    AuthUserFile /opt/kibana/kibana.htpasswd
+    AuthUserFile /webapps/kibana/kibana.htpasswd
     <LimitExcept OPTIONS>
       Require valid-user
     </LimitExcept>

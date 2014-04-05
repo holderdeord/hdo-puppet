@@ -11,8 +11,8 @@ Vagrant.configure("2") do |config|
     ops.vm.network 'private_network', ip: "192.168.1.10"
   end
 
-  config.vm.define :files do |files|
-    files.vm.host_name = 'hdo-files-vm'
+  config.vm.define :app do |files|
+    files.vm.host_name = 'hdo-app-vm'
 
     files.vm.box       = default_box
     files.vm.box_url   = default_box_url
