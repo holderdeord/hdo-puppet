@@ -86,9 +86,9 @@ GIT
     logrotate (1.0.2)
 
 GIT
-  remote: https://github.com/jarib/puppet-module-collectd.git
-  ref: graphite-separate-instances
-  sha: 2292b08427ae497cdccff0c4037f8232cdb210cc
+  remote: https://github.com/pdxcat/puppet-module-collectd.git
+  ref: 02a4edf30360d0ccbee1da116f5fbf5b70e648f3
+  sha: 02a4edf30360d0ccbee1da116f5fbf5b70e648f3
   specs:
     collectd (1.1.0)
       puppetlabs/stdlib (>= 3.0.0)

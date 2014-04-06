@@ -35,5 +35,5 @@ mod "nodejs",
   :ref => "0.5.0"
 
 mod "collectd",
-  :git => "https://github.com/jarib/puppet-module-collectd.git",
-  :ref => "graphite-separate-instances"
+  :git => "https://github.com/pdxcat/puppet-module-collectd.git",
+  :ref => "02a4edf30360d0ccbee1da116f5fbf5b70e648f3"
