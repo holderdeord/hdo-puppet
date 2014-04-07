@@ -16,7 +16,6 @@ class hdo::collectd(
     separateinstances => true,
   }
 
-  class { '::collectd::plugin::syslog': log_level => 'debug' }
   class { '::collectd::plugin::cpu': }
   class { '::collectd::plugin::df': }
   class { '::collectd::plugin::disk': }
@@ -25,8 +24,10 @@ class hdo::collectd(
   class { '::collectd::plugin::irq': }
   class { '::collectd::plugin::load': }
   class { '::collectd::plugin::memory': }
+  class { '::collectd::plugin::ntpd': }
   class { '::collectd::plugin::processes': }
   class { '::collectd::plugin::swap': }
+  class { '::collectd::plugin::syslog': log_level => 'debug' }
   class { '::collectd::plugin::users': }
 
 }
