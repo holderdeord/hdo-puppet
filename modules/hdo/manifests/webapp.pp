@@ -30,7 +30,6 @@ class hdo::webapp(
   }
 
   package { [
-    'htop',
     'dpkg',
     'libxml2',
     'libxml2-dev',

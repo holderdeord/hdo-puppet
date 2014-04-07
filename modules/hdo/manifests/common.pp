@@ -4,6 +4,7 @@ class hdo::common {
   $home = "/home/${hdo::params::user}"
 
   package { [
+      'htop',
       'vim',
       'build-essential',
       'git-core',
