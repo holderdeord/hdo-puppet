@@ -11,12 +11,6 @@ class hdo::collectd(
     require      => [Apt::Ppa['ppa:vbulax/collectd5'], Class['apt::update']],
   }
 
-  # make sure config is not world readable
-  exec { 'fix-collectd-plugin-permissions':
-    command => "chmod 0740 ${::collectd::params::plugin_conf_dir}",
-    require => File[$::collectd::params::plugin_conf_dir],
-  }
-
   class { '::collectd::plugin::write_graphite':
     graphitehost      => $graphite,
     separateinstances => true,

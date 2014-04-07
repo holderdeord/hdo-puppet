@@ -87,8 +87,8 @@ GIT
 
 GIT
   remote: https://github.com/pdxcat/puppet-module-collectd.git
-  ref: 02a4edf30360d0ccbee1da116f5fbf5b70e648f3
-  sha: 02a4edf30360d0ccbee1da116f5fbf5b70e648f3
+  ref: 6bb76aa27c8ae7bf7669921498d2b8aaf692df59
+  sha: 6bb76aa27c8ae7bf7669921498d2b8aaf692df59
   specs:
     collectd (1.1.0)
       puppetlabs/stdlib (>= 3.0.0)
