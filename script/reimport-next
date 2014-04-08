@@ -12,10 +12,13 @@ scp $1 "${user}@hetzner03.holderdeord.no:/tmp/dbdump.sql"
 read -r -d '' REMOTE_SCRIPT <<-'EOS'
 sudo -p 'password for %p@%H: ' -v
 sudo service nginx stop &&
+  sudo service collectd stop &&
   sleep 3 &&
   sudo su - postgres -c 'dropdb hdo_staging && createdb hdo_staging && psql hdo_staging < /tmp/dbdump.sql' &&
   sudo su - hdo -c 'cd /webapps/hdo-site/current && RAILS_ENV=staging bundle exec rake tmp:clear db:migrate cache:precompute search:reindex' &&
+  sudo service collectd start &&
   sudo service nginx start
+
 rm /tmp/dbdump.sql
 EOS
 

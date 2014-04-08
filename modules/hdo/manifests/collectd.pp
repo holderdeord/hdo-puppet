@@ -30,4 +30,13 @@ class hdo::collectd(
   class { '::collectd::plugin::syslog': log_level => 'debug' }
   class { '::collectd::plugin::users': }
 
+  include nagios::base
+
+  file { "${nagios::base::checks_dir}/collectd" :
+    ensure => present,
+    source => 'puppet:///modules/hdo/nagioschecks/collectd',
+    mode   => '0755',
+    owner  => $nagios::base::user,
+    group  => $nagios::base::user
+  }
 }

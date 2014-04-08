@@ -1,0 +1,13 @@
+#!/bin/bash
+export LC_ALL=en_US.UTF-8
+output=$(/etc/init.d/collectd status) > /dev/null 2>&1
+RETCODE=$?
+
+if [ $RETCODE -gt 0 ]
+then
+  echo "collectd: FAILED "
+  exit 2
+else
+  echo "collectd: OK "
+  exit 0
+fi
