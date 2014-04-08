@@ -33,10 +33,10 @@ node 'ops1' {
 }
 
 #
-# next.holderdeord.no
+# staging.holderdeord.no, backend for next.holderdeord.no
 #
 
-node 'hetzner03' {
+node 'staging' {
   include hdo::users::admins
   include postfix
 

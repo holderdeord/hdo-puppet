@@ -7,7 +7,7 @@ fi
 
 user="${HDO_USER:=$USER}"
 
-scp $1 "${user}@hetzner03.holderdeord.no:/tmp/dbdump.sql"
+scp $1 "${user}@staging.holderdeord.no:/tmp/dbdump.sql"
 
 read -r -d '' REMOTE_SCRIPT <<-'EOS'
 sudo -p 'password for %p@%H: ' -v
@@ -22,4 +22,4 @@ sudo service nginx stop &&
 rm /tmp/dbdump.sql
 EOS
 
-ssh -t "${user}@hetzner03.holderdeord.no" "$REMOTE_SCRIPT"
+ssh -t "${user}@staging.holderdeord.no" "$REMOTE_SCRIPT"

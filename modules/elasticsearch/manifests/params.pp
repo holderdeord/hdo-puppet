@@ -13,7 +13,7 @@ class elasticsearch::params {
     $es_heap_size = '2g'
   }
 
-  if $::hostname in ['hetzner03'] {
+  if $::hostname in ['staging'] {
     $cluster_name = 'holderdeord-staging'
     $host = '127.0.0.1'
   } else {
@@ -21,6 +21,6 @@ class elasticsearch::params {
     $host = '0.0.0.0'
   }
 
-  $number_of_shards = 5
+  $number_of_shards   = 5
   $number_of_replicas = 0 # currently only single-node clusters
 }
