@@ -1,5 +1,5 @@
 class passenger::nginx($port = 80) inherits passenger {
-  $root        = '/opt/nginx'
+  $root        = "/opt/nginx-passenger${passenger::params::version}-ruby${ruby::version}"
   $init_script = '/etc/init.d/nginx'
   $config_dir  = "${root}/conf"
   $log_dir     = "${root}/logs"
@@ -14,6 +14,12 @@ class passenger::nginx($port = 80) inherits passenger {
     creates   => $root,
     require   => [Ruby::Gem['passenger'], Package['libcurl4-openssl-dev']],
     timeout   => 600
+  }
+
+  file { '/opt/nginx':
+    ensure  => $root,
+    require => Exec['install-passenger-nginx'],
+    notify  => Service['nginx']
   }
 
   include nagios::base

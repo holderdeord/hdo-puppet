@@ -11,6 +11,7 @@ class ruby::build {
   exec { 'update-ruby-build':
     command => "git reset --hard origin/master && git pull && git reset --hard ${revision} && ./install.sh",
     cwd     => $dir,
+    onlyif  => "git rev-parse HEAD | grep -v ${revision}",
     require => Exec['clone-ruby-build'],
   }
 }
