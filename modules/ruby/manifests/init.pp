@@ -1,31 +1,24 @@
 class ruby {
-  package { [
-    'rbenv',
-    'libreadline-dev',
-    'libssl-dev'
-    ]:
-    ensure => installed
-  }
+  $deps = ['libreadline-dev', 'libssl-dev']
 
+  package { $deps:   ensure => installed }
+  package { 'rbenv': ensure => absent    }
+
+
+  include ruby::rbenv
   include ruby::build
 
-  $rbenv_root = '/usr/lib/rbenv'
-  $version    = '2.0.0-p353'
-  $binary     = "${rbenv_root}/shims/ruby"
-  $gems       = "${rbenv_root}/versions/${version}/lib/ruby/gems/2.0.0/gems"
+  $base_version = '2.0.0'
+  $version      = '2.0.0-p353'
 
-  file { "${ruby::rbenv_root}/global":
+  $binary       = "${ruby::rbenv::dir}/shims/ruby"
+  $gems         = "${ruby::rbenv::dir}/versions/${version}/lib/ruby/gems/${base_version}/gems"
+
+  file { "${ruby::rbenv::dir}/global":
     ensure  => file,
     mode    => '0755',
     content => $version,
     require => Ruby::Version[$version],
-  }
-
-  file { '/etc/profile.d/rbenv.sh':
-    ensure  => present,
-    mode    => '0755',
-    content => template('ruby/rbenv.sh.erb'),
-    require => File["${ruby::rbenv_root}/global"]
   }
 
   ruby::version { $version: }

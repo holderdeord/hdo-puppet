@@ -1,2 +1,6 @@
-export RBENV_ROOT="<%= scope.lookupvar('ruby::rbenv_root') -%>"
-[ -d "$RBENV_ROOT" ] && eval "$(rbenv init -)"
+export RBENV_ROOT="<%= scope.lookupvar('ruby::rbenv::dir') -%>"
+
+if [ -d "${RBENV_ROOT}" ]; then
+  export PATH="${RBENV_ROOT}/bin:${PATH}"
+  eval "$(rbenv init -)"
+fi

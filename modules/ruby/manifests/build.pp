@@ -1,5 +1,6 @@
 class ruby::build {
-  $dir = '/opt/ruby-build'
+  $dir      = '/opt/ruby-build'
+  $revision = '0a9b5e3a1e2c38c58abe8ca10d60f8d0c8a14249'
 
   exec { 'clone-ruby-build':
     command => "git clone git://github.com/sstephenson/ruby-build ${dir} && cd ${dir}",
@@ -7,10 +8,9 @@ class ruby::build {
     require => Package['git-core'],
   }
 
-  # this sha is known to work with rbenv from apt
   exec { 'update-ruby-build':
-    command => 'git reset --hard origin/master && git pull && git reset --hard 458d3331675f9f35517cfb095489496eff785aa3 && ./install.sh',
+    command => "git reset --hard origin/master && git pull && git reset --hard ${revision} && ./install.sh",
     cwd     => $dir,
-    require => Exec['clone-ruby-build']
+    require => Exec['clone-ruby-build'],
   }
 }
