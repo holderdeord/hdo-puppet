@@ -48,7 +48,7 @@ $IPT -A INPUT -i lo -p udp -m multiport --ports 8125 -j ACCEPT
 # graphite
 #    ...from app.holderdeord.no
 $IPT -A INPUT -p tcp --dport 2003 -m state --state NEW -s 46.4.88.198 -j ACCEPT
-#    ...from hetzner03.holderdeord.no
-$IPT -A INPUT -p tcp --dport 2003 -m state --state NEW -s 9.145.15 -j ACCEPT
+#    ...from staging.holderdeord.no
+$IPT -A INPUT -p tcp --dport 2003 -m state --state NEW -s 5.9.145.15 -j ACCEPT
 
 $IPT-save > /etc/iptables.rules
