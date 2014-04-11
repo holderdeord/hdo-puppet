@@ -79,7 +79,7 @@ Deploy hdo-site:
 
 ##### Failover
 
-IP failover is available for 46.4.70.210, configurable in the Hetzner robot console.
+IP failover is available for 46.4.70.210 (holderdeord.no), configurable in the Hetzner robot console.
 It can be pointed at ops1 to serve a basic downtime page.
 
 ##### Hiera
