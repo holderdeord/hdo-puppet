@@ -39,4 +39,30 @@ class hdo::collectd(
     owner  => $nagios::base::user,
     group  => $nagios::base::user
   }
+
+  collectd::plugin::tail::file { 'auth-log':
+    filename => '/var/log/auth.log',
+    instance => 'auth',
+    matches  => [
+      {
+        regex    => '\\<sshd[^:]*: Accepted publickey for [^ ]+ from\\>',
+        dstype   => 'CounterInc',
+        type     => 'counter',
+        instance => 'auth-publickey',
+      },
+      {
+        regex    => '\\<sshd[^:]*: Invalid user [^ ]+ from\\>',
+        dstype   => 'CounterInc',
+        type     => 'counter',
+        instance => 'auth-invalid-user',
+      },
+      {
+        regex    => '\\<sshd[^:]*: Failed password\\>',
+        dstype   => 'CounterInc',
+        type     => 'counter',
+        instance => 'auth-failed-password',
+      }
+    ]
+  }
+
 }
