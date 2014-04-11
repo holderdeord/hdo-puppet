@@ -11,7 +11,8 @@ class hdo::common {
       'emacs23-nox',
       'sysstat',
       'curl',
-      'unzip'
+      'unzip',
+      'iptables-persistent',
     ]:
     ensure => installed,
   }
