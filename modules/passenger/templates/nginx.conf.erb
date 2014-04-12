@@ -20,7 +20,7 @@ http {
   # server_names_hash_bucket_size 64;
   # server_name_in_redirect       off;
 
-  include                         <%= config_dir %>/mime.types;
+  include                         <%= @config_dir %>/mime.types;
   default_type                    application/octet-stream;
 
   #
@@ -28,8 +28,8 @@ http {
   #
   log_format                      custom '$remote_addr/$http_x_forwarded_for - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $http_x_client_country';
 
-  access_log                      <%= log_dir %>/access.log custom;
-  error_log                       <%= log_dir %>/error.log;
+  access_log                      <%= @log_dir %>/access.log custom;
+  error_log                       <%= @log_dir %>/error.log;
 
   gzip                            on;
   gzip_disable                    "msie6";
@@ -53,5 +53,5 @@ http {
   passenger_friendly_error_pages off;
 
   # virtual hosts
-  include                        <%= sites_dir %>/*.conf;
+  include                        <%= @sites_dir %>/*.conf;
 }

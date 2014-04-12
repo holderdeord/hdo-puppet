@@ -10,19 +10,19 @@ server {
 }
 
 server {
-  listen        <%= listen %>;
+  listen        <%= @listen %>;
   root          <%= scope.lookupvar('public_dir') %>;
-  server_name   <%= server_name %> "~^(beta|www|hdo-app-vm)\.holderdeord\.no$";
+  server_name   <%= @server_name %> "~^(beta|www|hdo-app-vm)\.holderdeord\.no$";
 
-  <% if ssl == true %>
+  <% if @ssl == true %>
     listen 443 default ssl;
 
     ssl_protocols              SSLv3 TLSv1;
     ssl_ciphers                HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers  on;
 
-    ssl_certificate            <%= ssl_path %>.crt;
-    ssl_certificate_key        <%= ssl_path %>.key;
+    ssl_certificate            <%= @ssl_path %>.crt;
+    ssl_certificate_key        <%= @ssl_path %>.key;
 
     ssl_session_cache          shared:SSL:10m;
     ssl_session_timeout        5m;
