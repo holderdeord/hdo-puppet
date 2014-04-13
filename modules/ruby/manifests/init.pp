@@ -8,8 +8,8 @@ class ruby {
   include ruby::rbenv
   include ruby::build
 
-  $base_version = '2.1.0'
-  $version      = '2.1.1'
+  $base_version = '2.0.0'
+  $version      = '2.0.0-p451'
 
   $binary       = "${ruby::rbenv::dir}/shims/ruby"
   $gems         = "${ruby::rbenv::dir}/versions/${version}/lib/ruby/gems/${base_version}/gems"
