@@ -45,7 +45,9 @@ node 'staging' {
   include nagios::target
   include nagios::target::http
 
-  include elasticsearch
+  class { 'hdo::elasticsearch':
+    cluster_name => 'holderdeord-staging'
+  }
 
   class { 'hdo::database':
     local_backup => absent,
@@ -77,7 +79,7 @@ node 'app' {
   include nagios::target
   include nagios::target::http
 
-  include elasticsearch
+  class { 'hdo::elasticsearch': }
 
   class { 'postfix':
     smtp_listen => 'all',

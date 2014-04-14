@@ -22,7 +22,6 @@ node 'hdo-ops-vm' {
   include hdo::common
   include kibana
   include grafana
-  include elasticsearch
 
   class { 'hdo::collectd':
     graphite => 'localhost'
@@ -47,6 +46,8 @@ node 'hdo-app-vm' {
   }
 
   include hdo::files
-  include elasticsearch
 
+  class { 'hdo::elasticsearch':
+    cluster_name => 'holderdeord-staging'
+  }
 }

@@ -86,6 +86,14 @@ GIT
     logrotate (1.0.2)
 
 GIT
+  remote: https://github.com/elasticsearch/puppet-elasticsearch
+  ref: 0.3.0
+  sha: 8de54d0304e2e01cd171ee8d09e6a1f40be603f2
+  specs:
+    elasticsearch (0.3.0)
+      puppetlabs/stdlib (>= 3.2.0)
+
+GIT
   remote: https://github.com/pdxcat/puppet-module-collectd.git
   ref: 6bb76aa27c8ae7bf7669921498d2b8aaf692df59
   sha: 6bb76aa27c8ae7bf7669921498d2b8aaf692df59
@@ -96,6 +104,7 @@ GIT
 DEPENDENCIES
   apache (>= 0)
   collectd (>= 0)
+  elasticsearch (>= 0)
   firewall (>= 0)
   fsalum/puppetmaster (= 0.0.4)
   hipchat (>= 0)

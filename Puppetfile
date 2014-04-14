@@ -37,3 +37,7 @@ mod "nodejs",
 mod "collectd",
   :git => "https://github.com/pdxcat/puppet-module-collectd.git",
   :ref => "6bb76aa27c8ae7bf7669921498d2b8aaf692df59"
+
+mod "elasticsearch",
+  :git => "https://github.com/elasticsearch/puppet-elasticsearch",
+  :ref => "0.3.0"
