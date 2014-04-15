@@ -37,7 +37,7 @@ $IPT -A INPUT -p tcp --dport 80 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 $IPT -A INPUT -p tcp --dport 8140 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
 # statsd
-#    ...from hetzner03.holderdeord.no
+#    ...from staging.holderdeord.no
 $IPT -A INPUT -s 5.9.145.15 -p udp -m multiport --ports 8125 -j ACCEPT
 #    ...from app.holderdeord.no
 $IPT -A INPUT -s 46.4.88.198 -p udp -m multiport --ports 8125 -j ACCEPT
