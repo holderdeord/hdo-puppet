@@ -103,6 +103,7 @@ node 'app' {
 
   include hdo::files
   include hdo::webapp::graphite
+  include hdo::webapp::exporter
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app": }
