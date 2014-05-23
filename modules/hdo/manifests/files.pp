@@ -37,4 +37,12 @@ class hdo::files {
     content => template('hdo/nginx-valgvake-vhost.conf.erb'),
     notify  => Service['nginx']
   }
+
+  exec { 'clone-hal-browser':
+    command => "git clone git://github.com/mikekelly/hal-browser ${files_root}/hal-browser",
+    user    => hdo,
+    creates => "${files_root}/hal-browser",
+    require => File[$files_root]
+  }
+
 }

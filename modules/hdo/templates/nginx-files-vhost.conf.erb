@@ -11,4 +11,6 @@ server {
   location /pdf/alternative-statsbudsjett {
     autoindex on;
   }
+
+  rewrite ^/hal-browser/?$ /hal-browser/browser.html#http://www.holderdeord.no/api/ last;
 }
