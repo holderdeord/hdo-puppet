@@ -48,6 +48,7 @@ node 'hdo-app-vm' {
   include hdo::files
 
   class { 'hdo::elasticsearch':
+    version      => '1.1.1',
     cluster_name => 'holderdeord-staging'
   }
 }

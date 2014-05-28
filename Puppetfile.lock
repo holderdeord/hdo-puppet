@@ -87,10 +87,10 @@ GIT
 
 GIT
   remote: https://github.com/elasticsearch/puppet-elasticsearch
-  ref: 0.3.0
-  sha: 8de54d0304e2e01cd171ee8d09e6a1f40be603f2
+  ref: 0.3.2
+  sha: 042720d52a3879786c2f9d9f67961c4f42004fae
   specs:
-    elasticsearch (0.3.0)
+    elasticsearch (0.3.2)
       puppetlabs/stdlib (>= 3.2.0)
 
 GIT

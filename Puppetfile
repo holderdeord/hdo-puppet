@@ -40,4 +40,4 @@ mod "collectd",
 
 mod "elasticsearch",
   :git => "https://github.com/elasticsearch/puppet-elasticsearch",
-  :ref => "0.3.0"
+  :ref => "0.3.2"

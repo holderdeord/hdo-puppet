@@ -23,8 +23,9 @@ class hdo::elasticsearch(
   }
 
   class { '::elasticsearch':
-    version               => $version,
+    package_url           => "http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${version}.deb",
     java_install          => true,
+    autoupgrade           => true,
     default_logging_level => $log_level,
     init_defaults         => $init_defaults,
     config                => $config,
