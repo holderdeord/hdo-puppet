@@ -24,6 +24,7 @@ node 'ops1' {
   include hdo::deployer
   include hdo::puppetmasterd
 
+  class { 'nodejs': manage_repo => true }
   hdo::firewall { "ops1": }
 
   class { 'hdo::database::backup_sync':
@@ -68,7 +69,9 @@ node 'staging' {
 }
 
 #
-# main server + holderdeord.no A record (301 -> www/fastly -> app)
+# app server
+# holderdeord.no A record (301 -> www/fastly -> app)
+# 'files' server
 #
 
 node 'app' {
@@ -79,6 +82,7 @@ node 'app' {
   include nagios::target
   include nagios::target::http
 
+  class { 'nodejs': manage_repo => true }
   class { 'hdo::elasticsearch': }
 
   class { 'postfix':
