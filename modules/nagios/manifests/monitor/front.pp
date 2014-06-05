@@ -19,19 +19,19 @@ class nagios::monitor::front {
     target => $front_hosts,
   }
 
-  nagios_service { 'check_http_holderdeord.no':
-    check_command       => 'check_http!holderdeord.no',
+  nagios_service { 'check_https_holderdeord.no':
+    check_command       => 'check_https!holderdeord.no',
     use                 => 'generic-service',
     host_name           => 'holderdeord.no',
     notification_period => '24x7',
-    service_description => 'holderdeord_check_http',
+    service_description => 'holderdeord_check_https',
   }
 
-  nagios_service { 'check_http_www.holderdeord.no':
-    check_command       => 'check_http!www.holderdeord.no',
+  nagios_service { 'check_https_www.holderdeord.no':
+    check_command       => 'check_https!www.holderdeord.no',
     use                 => 'generic-service',
     host_name           => 'www.holderdeord.no',
     notification_period => '24x7',
-    service_description => 'www_check_http',
+    service_description => 'www_check_https',
   }
 }
