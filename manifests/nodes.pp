@@ -46,6 +46,8 @@ node 'staging' {
   include nagios::target
   include nagios::target::http
 
+  class { 'nodejs': manage_repo => true }
+
   class { 'hdo::elasticsearch':
     cluster_name => 'holderdeord-staging',
   }
@@ -83,6 +85,7 @@ node 'app' {
   include nagios::target::http
 
   class { 'nodejs': manage_repo => true }
+
   class { 'hdo::elasticsearch': }
 
   class { 'postfix':
