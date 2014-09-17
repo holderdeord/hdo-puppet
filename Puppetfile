@@ -28,7 +28,7 @@ mod "puppetdb",
   :git => "git://github.com/puppetlabs/puppetlabs-puppetdb",
   :ref => "3.0.0"
 
-mod 'fsalum/puppetmaster', '0.0.4'
+mod 'fsalum-puppetmaster', '0.0.4'
 
 mod "nodejs",
   :git => "git://github.com/puppetlabs/puppetlabs-nodejs",
