@@ -14,12 +14,12 @@ define munin::plugin($source = false, $plugin_name = $name) {
   if $source != false {
     # custom plugin
     file { $plugin_path:
-      ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      source  => $source,
-      notify  => Service['munin-node'],
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      source => $source,
+      notify => Service['munin-node'],
     }
   } else {
     # default plugin

@@ -41,9 +41,9 @@ class kibana(
   }
 
   exec { 'create-kibana-htpasswd':
-    command   => "htpasswd -b -s -c ${htpasswd_path} ${credentials}",
-    creates   => $htpasswd_path,
-    require   => Class['apache'],
+    command => "htpasswd -b -s -c ${htpasswd_path} ${credentials}",
+    creates => $htpasswd_path,
+    require => Class['apache'],
   }
 
 

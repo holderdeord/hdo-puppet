@@ -34,9 +34,9 @@ class hdo::common {
   }
 
   file { $hdo::params::webapp_root:
-    ensure  => 'directory',
-    mode    => '0775',
-    owner   => $hdo::params::user
+    ensure => 'directory',
+    mode   => '0775',
+    owner  => $hdo::params::user
   }
 
   file { "/home/${hdo::params::user}":

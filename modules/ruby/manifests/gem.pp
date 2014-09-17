@@ -13,9 +13,9 @@ define ruby::gem($version = 'latest') {
   }
 
   exec { "${name}-gem-${version}":
-    command   => $install_cmd,
-    onlyif    => $search_cmd,
-    notify    => Exec["rbenv-rehash-for-${name}-${version}"],
-    require   => Class['ruby']
+    command => $install_cmd,
+    onlyif  => $search_cmd,
+    notify  => Exec["rbenv-rehash-for-${name}-${version}"],
+    require => Class['ruby']
   }
 }

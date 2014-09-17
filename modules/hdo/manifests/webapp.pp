@@ -24,9 +24,9 @@ class hdo::webapp(
       $shared_root,
       $config_root
     ]:
-    ensure  => 'directory',
-    mode    => '0775',
-    owner   => 'hdo'
+    ensure => 'directory',
+    mode   => '0775',
+    owner  => 'hdo'
   }
 
   package { [

@@ -8,9 +8,9 @@ class nagios::monitor::front {
   }
 
   nagios_host { 'www.holderdeord.no':
-    ensure  => present,
-    use     => 'generic-host',
-    target  => $front_hosts,
+    ensure => present,
+    use    => 'generic-host',
+    target => $front_hosts,
   }
 
   nagios_host { 'holderdeord.no':

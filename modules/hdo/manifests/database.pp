@@ -36,9 +36,9 @@ class hdo::database(
     service_provider => init,         # defaults to upstart
 
     config_hash      => {
-      'postgres_password'        => $postgres_password,
-      'listen_addresses'         => '*',
-      'ip_mask_allow_all_users'  => '0.0.0.0/0',
+      'postgres_password'       => $postgres_password,
+      'listen_addresses'        => '*',
+      'ip_mask_allow_all_users' => '0.0.0.0/0',
     }
   }
 

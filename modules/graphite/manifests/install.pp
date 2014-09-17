@@ -31,11 +31,11 @@ class graphite::install inherits graphite::params {
 
 
   exec { "install-${graphite::params::whisper_version}":
-    command     => 'python setup.py install',
-    cwd         => $whisper_build_dir,
-    creates     => '/usr/local/bin/whisper-create.py',
-    require     => Exec["download-${graphite::params::whisper_version}"],
-    logoutput   => on_failure,
+    command   => 'python setup.py install',
+    cwd       => $whisper_build_dir,
+    creates   => '/usr/local/bin/whisper-create.py',
+    require   => Exec["download-${graphite::params::whisper_version}"],
+    logoutput => on_failure,
   }
 
   #
@@ -79,11 +79,11 @@ class graphite::install inherits graphite::params {
   }
 
   exec { "install-${graphite::params::carbon_version}":
-    command     => 'python setup.py install',
-    cwd         => $carbon_build_dir,
-    creates     => "${graphite::params::root}/lib/carbon",
-    require     => [Exec["download-${graphite::params::carbon_version}"], Exec["install-${graphite::params::whisper_version}"]],
-    logoutput   => on_failure,
+    command   => 'python setup.py install',
+    cwd       => $carbon_build_dir,
+    creates   => "${graphite::params::root}/lib/carbon",
+    require   => [Exec["download-${graphite::params::carbon_version}"], Exec["install-${graphite::params::whisper_version}"]],
+    logoutput => on_failure,
   }
 
 }

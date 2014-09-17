@@ -72,8 +72,8 @@ class statsd(
   }
 
   service { 'statsd':
-    ensure     => $ensure,
-    provider   => 'upstart',
-    require    => [File['/etc/init/statsd.conf'], File['/var/log/statsd']]
+    ensure   => $ensure,
+    provider => 'upstart',
+    require  => [File['/etc/init/statsd.conf'], File['/var/log/statsd']]
   }
 }
