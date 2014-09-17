@@ -1,21 +1,25 @@
 FORGE
-  remote: http://forge.puppetlabs.com
+  remote: http://forgeapi.puppetlabs.com
   specs:
-    fsalum/puppetmaster (0.0.4)
-      puppetlabs/inifile (>= 1.0.0)
-    puppetlabs/apt (1.1.0)
-      puppetlabs/stdlib (>= 2.2.1)
-    puppetlabs/concat (1.1.0-rc1)
-      puppetlabs/stdlib (>= 3.0.0)
-    puppetlabs/firewall (0.1.1)
-    puppetlabs/inifile (1.0.0)
-    puppetlabs/postgresql (3.2.0)
-      puppetlabs/apt (< 2.0.0, >= 1.1.0)
-      puppetlabs/concat (< 2.0.0, >= 1.0.0)
-      puppetlabs/firewall (>= 0.0.4)
-      puppetlabs/stdlib (< 5.0.0, >= 3.2.0)
-    puppetlabs/stdlib (3.2.0)
-    ripienaar/concat (0.2.0)
+    puppetlabs-apt (1.1.0)
+      puppetlabs-stdlib (>= 2.2.1)
+    puppetlabs-concat (1.1.0-rc1)
+      puppetlabs-stdlib (>= 3.0.0)
+    puppetlabs-firewall (0.1.1)
+    puppetlabs-inifile (1.0.0)
+    puppetlabs-postgresql (3.2.0)
+      puppetlabs-apt (< 2.0.0, >= 1.1.0)
+      puppetlabs-concat (< 2.0.0, >= 1.0.0)
+      puppetlabs-firewall (>= 0.0.4)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-stdlib (3.2.0)
+    ripienaar-concat (0.2.0)
+
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    fsalum-puppetmaster (0.0.4)
+      puppetlabs-inifile (>= 1.0.0)
 
 GIT
   remote: git://github.com/jarib/puppet-hipchat
@@ -30,10 +34,10 @@ GIT
   sha: e5c1dbcd91776f826a8bee7b935a41478c4a8385
   specs:
     postgresql (2.2.1)
-      puppetlabs/apt (< 2.0.0, >= 1.1.0)
-      puppetlabs/firewall (>= 0.0.4)
-      puppetlabs/stdlib (< 5.0.0, >= 3.2.0)
-      ripienaar/concat (>= 0.2.0)
+      puppetlabs-apt (< 2.0.0, >= 1.1.0)
+      puppetlabs-firewall (>= 0.0.4)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+      ripienaar-concat (>= 0.2.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-apache.git
@@ -41,8 +45,8 @@ GIT
   sha: b18fad908fe7cb8fbc6604fde1962c85540095f4
   specs:
     apache (0.6.0)
-      puppetlabs/firewall (>= 0.0.4)
-      puppetlabs/stdlib (>= 2.2.1)
+      puppetlabs-firewall (>= 0.0.4)
+      puppetlabs-stdlib (>= 2.2.1)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-firewall.git
@@ -57,8 +61,8 @@ GIT
   sha: 341240dc027c9d1d2980b9c24bf7dd2518383723
   specs:
     nodejs (0.5.0)
-      puppetlabs/apt (>= 0.0.3)
-      puppetlabs/stdlib (>= 2.0.0)
+      puppetlabs-apt (>= 0.0.3)
+      puppetlabs-stdlib (>= 2.0.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-puppetdb
@@ -66,10 +70,10 @@ GIT
   sha: c0f33d804179087f8b4251af90959e1bf7dc093e
   specs:
     puppetdb (3.0.0)
-      puppetlabs/firewall (>= 0.0.4)
-      puppetlabs/inifile (~> 1)
-      puppetlabs/postgresql (< 4.0.0, >= 3.1.0)
-      puppetlabs/stdlib (>= 2.2.0)
+      puppetlabs-firewall (>= 0.0.4)
+      puppetlabs-inifile (~> 1)
+      puppetlabs-postgresql (< 4.0.0, >= 3.1.0)
+      puppetlabs-stdlib (>= 2.2.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
@@ -91,7 +95,7 @@ GIT
   sha: 042720d52a3879786c2f9d9f67961c4f42004fae
   specs:
     elasticsearch (0.3.2)
-      puppetlabs/stdlib (>= 3.2.0)
+      puppetlabs-stdlib (>= 3.2.0)
 
 GIT
   remote: https://github.com/pdxcat/puppet-module-collectd.git
@@ -99,14 +103,14 @@ GIT
   sha: 6bb76aa27c8ae7bf7669921498d2b8aaf692df59
   specs:
     collectd (1.1.0)
-      puppetlabs/stdlib (>= 3.0.0)
+      puppetlabs-stdlib (>= 3.0.0)
 
 DEPENDENCIES
   apache (>= 0)
   collectd (>= 0)
   elasticsearch (>= 0)
   firewall (>= 0)
-  fsalum/puppetmaster (= 0.0.4)
+  fsalum-puppetmaster (= 0.0.4)
   hipchat (>= 0)
   logrotate (>= 0)
   nodejs (>= 0)
