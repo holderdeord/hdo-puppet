@@ -37,7 +37,7 @@ class hdo::puppetmasterd {
   class { 'puppetdb':
     database           => 'embedded',
     listen_address     => $puppet_server,
-    ssl_listen_address => $puppet_server,
+    ssl_listen_address => '0.0.0.0',
     require            => Class['puppetmaster']
   }
 
