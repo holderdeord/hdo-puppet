@@ -9,7 +9,7 @@ ROOT="$(dirname $0)/.."
 ${ROOT}/script/bootstrap
 ${ROOT}/bin/puppet parser validate $(find modules/ -name "*.pp")
 
-${ROOT}/bin/puppet-lint --log-format "%{fullpath}:%{linenumber} %{KIND} %{message}" \
+${ROOT}/bin/puppet-lint --log-format "%{fullpath}:%{line} %{KIND} %{message}" \
   --no-documentation-check \
   --no-80chars-check \
   --no-class_inherits_from_params_class-check \

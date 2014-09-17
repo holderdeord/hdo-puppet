@@ -5,9 +5,9 @@ class hdo::files {
   $files_root  = '/webapps/files'
 
   file { [$files_root, '/webapps/valgvake']:
-    ensure  => 'directory',
-    mode    => '0775',
-    owner   => 'hdo'
+    ensure => 'directory',
+    mode   => '0775',
+    owner  => 'hdo'
   }
 
   file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
