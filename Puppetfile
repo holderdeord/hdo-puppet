@@ -18,7 +18,7 @@ mod "puppetlabs-postgresql",
 
 mod "puppetlabs-stdlib",
   :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git",
-  :ref => "4.0.2"
+  :ref => "4.3.2"
 
 mod "jarib-hipchat",
   :git => "git://github.com/jarib/puppet-hipchat",

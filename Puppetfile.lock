@@ -65,10 +65,10 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
-  ref: 4.0.2
-  sha: bebecd33783b483f6af059e311b9631d3a3336cc
+  ref: 4.3.2
+  sha: da11903285aca54ac399d66cb453f5a8db3ac355
   specs:
-    puppetlabs-stdlib (4.0.2)
+    puppetlabs-stdlib (4.3.2)
 
 GIT
   remote: git://github.com/rodjek/puppet-logrotate.git
