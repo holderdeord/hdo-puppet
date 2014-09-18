@@ -18,7 +18,7 @@ class hdo::database(
   if $primary_ip == undef {
     # this is the primary (or a standalone)
     # let's create the DB
-    postgresql::db { $db_name:
+    postgresql::server::db { $db_name:
       user     => $hdo::params::db_username,
       password => postgresql_password($hdo::params::db_username, $hdo::params::db_password)
     }
@@ -29,17 +29,14 @@ class hdo::database(
   }
 
   class { 'postgresql::server':
-    # no idea why this is necessary - either the module isn't properly tested on ubuntu,
-    # or something is non-standard about our VM image.
+    ip_mask_allow_all_users => '0.0.0.0/0',
+    listen_addresses        => '*',
+    postgres_password       => $postgres_password,
 
-    service_name     => 'postgresql', # defaults to postgresql-9.1
-    service_provider => init,         # defaults to upstart
-
-    config_hash      => {
-      'postgres_password'       => $postgres_password,
-      'listen_addresses'        => '*',
-      'ip_mask_allow_all_users' => '0.0.0.0/0',
-    }
+    # # no idea why this is necessary - either the module isn't properly tested on ubuntu,
+    # # or something is non-standard about our VM image.
+    service_name            => 'postgresql', # defaults to postgresql-9.1
+    service_provider        => init,         # defaults to upstart
   }
 
   include nagios::base

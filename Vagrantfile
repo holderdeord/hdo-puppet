@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     puppet.manifest_file  = "vagrant.pp"
 
     puppet.options = '--show_diff'
-    puppet.options << ' --verbose --debug' if ENV['DEBUG']
+    puppet.options << ' --verbose --debug --trace' if ENV['DEBUG']
     puppet.options << ' --noop' if ENV['NOOP']
     puppet.options << ' --graph' if ENV['GRAPH']
   end
