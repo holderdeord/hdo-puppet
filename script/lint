@@ -2,18 +2,21 @@
 
 set -e
 
-echo -n "Linting..."
-
 ROOT="$(dirname $0)/.."
 
+echo 'Bootstrapping...'
 ${ROOT}/script/bootstrap
+
+echo 'Parsing...'
 ${ROOT}/bin/puppet parser validate $(find modules/ -name "*.pp")
 
+echo 'Linting...'
 ${ROOT}/bin/puppet-lint --log-format "%{fullpath}:%{line} %{KIND} %{message}" \
   --no-documentation-check \
   --no-80chars-check \
   --no-class_inherits_from_params_class-check \
   --fail-on-warnings \
+  --with-context \
   modules/
 
 echo "All good!"

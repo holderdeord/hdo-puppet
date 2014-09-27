@@ -111,18 +111,18 @@ class hdo::database(
     package { 'libdbd-pg-perl': ensure => installed, }
   }
 
-  $hack = '' # to avoid syntax error / linting bug
-
   if $collectd {
+    $db_config = { "${db_name}" => { # quote to work around puppet-lint bug
+        'host'     => 'localhost',
+        'user'     => $hdo::params::db_username,
+        'password' => $hdo::params::db_password,
+        'sslmode'  => 'prefer',
+        'query'    => ['backends', 'transactions', 'query_plans', 'queries', 'table_states', 'disk_io', 'disk_usage'],
+      }
+    }
+
     class { 'collectd::plugin::postgresql':
-      databases => { "${db_name}${hack}" => {
-          'host'     => 'localhost',
-          'user'     => $hdo::params::db_username,
-          'password' => $hdo::params::db_password,
-          'sslmode'  => 'prefer',
-          'query'    => ['backends', 'transactions', 'query_plans', 'queries', 'table_states', 'disk_io', 'disk_usage'],
-        }
-      },
+      databases => $db_config,
       require   => Class['hdo::collectd'],
       notify    => Service['collectd'],
     }
