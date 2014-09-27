@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 # iptables script generated 2013-03-11
 # http://www.mista.nu/iptables
 
 IPT="/sbin/iptables"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+IP_BLOCK_FILE="${DIR}/ip.blocked"
 
 # Flush old rules, old custom tables
 $IPT --flush
@@ -13,6 +15,15 @@ $IPT --delete-chain
 $IPT -P INPUT DROP
 $IPT -P FORWARD DROP
 $IPT -P OUTPUT ACCEPT
+
+# Drop specific IPs if specified
+if [ -f $IP_BLOCK_FILE ]
+then
+    for ip in $(cat $IP_BLOCK_FILE)
+    do
+        $IPT -A INPUT -s $ip -j DROP
+    done
+fi
 
 # Enable free use of loopback interfaces
 $IPT -A INPUT -i lo -j ACCEPT
