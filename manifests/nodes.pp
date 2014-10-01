@@ -106,11 +106,11 @@ node 'app' {
     local_backup => present,
   }
 
-  class { 'hdo::webapp::apiupdater': }
-
   include hdo::files
   include hdo::webapp::graphite
   include hdo::webapp::exporter
+  include hdo::webapp::apichangelog
+  include hdo::webapp::apiupdater
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app": }
