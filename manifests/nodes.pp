@@ -111,6 +111,7 @@ node 'app' {
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
   include hdo::webapp::apiupdater
+  include hdo::webapp::rebeltweeter
 
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app": }
