@@ -20,6 +20,8 @@ class hdo::params {
   $hdo_basic_auth                 = hiera('hdo_basic_auth', '')
   $twitter_consumer_key           = hiera('twitter_consumer_key', '')
   $twitter_consumer_secret        = hiera('twitter_consumer_secret', '')
+  $twitter_access_token           = hiera('twitter_access_token', '')
+  $twitter_access_token_secret    = hiera('twitter_access_token_secret', '')
   $twitter_pp_consumer_key        = hiera('twitter_pp_consumer_key', '')
   $twitter_pp_consumer_secret     = hiera('twitter_pp_consumer_secret', '')
   $twitter_pp_access_token        = hiera('twitter_pp_access_token', '')
