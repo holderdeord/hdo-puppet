@@ -12,5 +12,9 @@ server {
     autoindex on;
   }
 
+  location /pdf/retriever/utbrytere {
+    autoindex on;
+  }
+
   rewrite ^/hal-browser/?$ /hal-browser/browser.html last;
 }
