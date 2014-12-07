@@ -9,12 +9,5 @@ notifications:
     on_failure: change
   recipients:
     - jari@holderdeord.no
-  irc:
-    channels:
-      - "irc.freenode.net#holderdeord"
-    on_success: change
-    on_failure: change
-    template:
-      - "%{author} | %{commit} | %{message} | %{build_url}"
 script:
   - script/lint
