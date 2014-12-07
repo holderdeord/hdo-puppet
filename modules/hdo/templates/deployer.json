@@ -27,9 +27,9 @@
         "directory": "<%= @blogdir %>",
         "token": "<%= @token %>",
         "command": [
-            "bash",
-            "-c",
-            "ssh hdo@staging.holderdeord.no 'cd /webapps/blog && git fetch origin && git checkout -f %{sha} && bundle exec jekyll build --lsi --drafts'"
+            "ssh",
+            "hdo@staging.holderdeord.no",
+            "cd /webapps/blog && git fetch origin && git checkout -f %{sha} && bash -l -c 'bundle install --deployment && bundle exec jekyll build --lsi --drafts'"
         ]
     }
   }
