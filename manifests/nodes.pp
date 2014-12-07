@@ -65,7 +65,14 @@ node 'staging' {
   }
 
   # run api updates some hours before prod
-  class { 'hdo::webapp::apiupdater': hour => 18 }
+  class { 'hdo::webapp::apiupdater':
+    hour => 18
+  }
+
+  class { 'hdo::blog':
+    server_name => 'drafts.holderdeord.no',
+    drafts      => true
+  }
 
   hdo::firewall { "next": }
 }

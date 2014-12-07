@@ -51,4 +51,6 @@ node 'hdo-app-vm' {
     version      => '1.1.1',
     cluster_name => 'holderdeord-staging'
   }
+
+  class { 'hdo::blog': drafts => true }
 }
