@@ -23,7 +23,7 @@
         "deploy:cleanup"
       ]
     },
-    "holderdeord/hdo-blog#master": {
+    "holderdeord/hdo-blog#gh-pages": {
         "directory": "<%= @blogdir %>",
         "token": "<%= @token %>",
         "command": [
