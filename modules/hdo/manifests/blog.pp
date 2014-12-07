@@ -1,5 +1,4 @@
 class hdo::blog(
-  $listen      = 80,
   $server_name = $::fqdn,
   $drafts      = false
 ) {
@@ -37,7 +36,9 @@ class hdo::blog(
     require => Exec['bundle hdo-blog']
   }
 
-  class { 'passenger::nginx': port => $listen }
+  if ! defined(Class['passenger::nginx']) {
+    class { 'passenger::nginx': }
+  }
 
   file { "${passenger::nginx::sites_dir}/blog-${server_name}.conf":
     ensure  => file,
