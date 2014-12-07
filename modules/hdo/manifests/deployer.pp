@@ -3,6 +3,7 @@ class hdo::deployer {
   include passenger::apache
 
   $appdir  = '/opt/hdo-site'
+  $blogdir = '/opt/hdo-blog'
   $root    = '/webapps/hdo-webhook-deployer'
 
   $current   = "${root}/current"
@@ -29,6 +30,12 @@ class hdo::deployer {
     user    => hdo,
     creates => "${appdir}/config",
     require => File[$appdir]
+  }
+
+  exec { 'clone-hdo-blog':
+    command => "git clone git://github.com/holderdeord/hdo-blog ${blogdir}",
+    user    => hdo,
+    creates => $blogdir
   }
 
   exec { 'restart-hdo-webhook-deployer':

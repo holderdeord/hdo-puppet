@@ -22,6 +22,15 @@
         "deploy:web:enable",
         "deploy:cleanup"
       ]
+    },
+    "holderdeord/hdo-blog#master": {
+        "directory": "<%= @blogdir %>",
+        "token": "<%= @token %>",
+        "command": [
+            "bash",
+            "-c",
+            "ssh hdo@staging.holderdeord.no 'cd /webapps/blog && git fetch origin && git checkout -f %{sha} && bundle exec jekyll build --lsi --drafts'"
+        ]
     }
   }
 }
