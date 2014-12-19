@@ -26,10 +26,11 @@
     "holderdeord/hdo-blog#gh-pages": {
         "directory": "<%= @blogdir %>",
         "token": "<%= @token %>",
+        "timeout": 240,
         "command": [
             "ssh",
             "hdo@staging.holderdeord.no",
-            "cd /webapps/blog && git fetch origin && git checkout -f %{sha} && git clean -f -d && bash -l -c 'bundle install --deployment && echo -e \"url: http://drafts.holderdeord.no/\nshow_drafts: true\nlsi: true\" > _drafts_config.yml && bundle exec jekyll build --config _config.yml,_drafts_config.yml'"
+            "cd /webapps/blog && git fetch origin && git checkout -f %{sha} && bash -l -c 'bundle install --deployment && echo -e \"url: http://drafts.holderdeord.no/\nshow_drafts: true\nlsi: true\" > _drafts_config.yml && bundle exec jekyll build --config _config.yml,_drafts_config.yml'"
         ]
     }
   }
