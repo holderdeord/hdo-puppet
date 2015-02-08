@@ -1,0 +1,19 @@
+# http://upstart.ubuntu.com/wiki/Stanzas
+
+description <%= @description %>
+author      <%= @author %>
+
+stop on shutdown
+respawn
+respawn limit 20 5
+
+# Max open files are @ 1024 by default. Bit few.
+limit nofile 32768 32768
+
+script
+  exec sudo -u <%= @user %> 'cd <%= @webapp_root %> && NODE_ENV=production npm start 2>&1 > <%= @app_log %>'
+end script
+
+post-start script
+   echo "started <%= @description %>"
+end script
