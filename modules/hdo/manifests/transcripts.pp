@@ -81,4 +81,6 @@ class hdo::transcripts(
     ifempty      => false,
     missingok    => true
   }
+
+  service { $app_name: ensure => running }
 }
