@@ -21,7 +21,7 @@ class hdo::blog(
     require => Exec['clone hdo-blog']
   }
 
-  $base_command = 'bundle exec jekyll build --lsi'
+  $base_command = 'bundle exec jekyll build'
 
   if ($drafts) {
     $build_command = "${base_command} --drafts"
