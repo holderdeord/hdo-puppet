@@ -18,11 +18,12 @@ class hdo::transcripts(
   }
 
   exec { 'build hdo-transcript-search webapp':
-    command => "bash -l -c 'npm run build'",
-    user    => hdo,
-    cwd     => $webapp_root,
-    creates => "${public_root}/bundle.js",
-    require => [Class['nodejs'], Exec['clone hdo-transcript-search']]
+    command     => "bash -l -c 'npm run build'",
+    user        => hdo,
+    cwd         => $webapp_root,
+    creates     => "${public_root}/bundle.js",
+    environment => ["HOME=${hdo::params::home}"],
+    require     => [Class['nodejs'], Exec['clone hdo-transcript-search']]
   }
 
   exec { 'bundle hdo-transcript-search indexer':
