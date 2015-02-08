@@ -74,6 +74,10 @@ node 'staging' {
     drafts      => true
   }
 
+  class { 'hdo::transcripts':
+    server_name => 'transcripts-staging.holderdeord.no'
+  }
+
   hdo::firewall { "next": }
 }
 
