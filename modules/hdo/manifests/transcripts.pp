@@ -66,7 +66,7 @@ class hdo::transcripts(
 
   file { "/etc/init/${app_name}.conf":
     ensure  => $ensure,
-    user    => root,
+    owner   => root,
     group   => root,
     content => template('hdo/node-upstart.conf.erb'),
     require => File[$app_log]
