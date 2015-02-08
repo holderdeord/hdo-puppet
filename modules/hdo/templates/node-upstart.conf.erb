@@ -11,7 +11,9 @@ respawn limit 20 5
 limit nofile 32768 32768
 
 script
-  exec sudo -u <%= @user %> 'cd <%= @webapp_root %> && NODE_ENV=production npm start 2>&1 > <%= @app_log %>'
+  cd /webapps/hdo-transcript-search/webapp
+  export NODE_ENV=production
+  exec sudo -u <%= @user %> npm start 2>&1 ><%= @app_log %>
 end script
 
 post-start script
