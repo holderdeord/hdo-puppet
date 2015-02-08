@@ -22,7 +22,7 @@ class hdo::transcripts(
     user    => hdo,
     cwd     => $webapp_root,
     creates => "${public_root}/bundle.js",
-    require => Class['nodejs']
+    require => [Class['nodejs'], Exec['clone hdo-transcript-search']]
   }
 
   exec { 'bundle hdo-transcript-search indexer':
