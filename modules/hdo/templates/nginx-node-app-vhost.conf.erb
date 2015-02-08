@@ -2,23 +2,20 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
-upstream node_app_<%= @server_name.gsub(/[^a-zA-Z]/, '_') %> {
-  server 127.0.0.1:<%= @port %>;
-}
-
 server {
   listen         80;
   server_name    <%= @server_name %>;
   root           <%= @public_root %>;
+  try_files      $uri $uri/ @node;
 
-  location / {
+  location @node {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_set_header X-Nginx-Proxy true;
 
-    proxy_pass http://node_app_<%= @server_name.gsub(/[^a-zA-Z]/, '_') %>/;
-    proxy_redirect off;
+    proxy_pass       http://127.0.0.1:<%= @port %>;
+    proxy_redirect   off;
   }
 }
 
