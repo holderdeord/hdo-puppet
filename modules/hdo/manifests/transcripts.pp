@@ -46,7 +46,7 @@ class hdo::transcripts(
     command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby -Ilib bin/hdo-transcript-indexer'",
     user        => hdo,
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
-    require     => Class['build hdo-transcript-search indexer'],
+    require     => Exec['bundle hdo-transcript-search indexer'],
     hour        => '3',
     minute      => '30'
   }
