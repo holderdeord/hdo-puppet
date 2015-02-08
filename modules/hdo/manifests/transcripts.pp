@@ -83,4 +83,12 @@ class hdo::transcripts(
   }
 
   service { $app_name: ensure => running }
+
+  file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => '0440',
+    content => "hdo ALL = (root) NOPASSWD: /sbin/start ${app_name}, /sbin/stop ${app_name}, /sbin/restart ${app_name}, /sbin/status ${app_name}",
+  }
 }
