@@ -18,7 +18,7 @@ class hdo::transcripts(
   }
 
   exec { 'build hdo-transcript-search webapp':
-    command => "bash -l -c 'npm build'",
+    command => "bash -l -c 'npm run build'",
     user    => hdo,
     cwd     => $webapp_root,
     creates => "${public_root}/bundle.js",
