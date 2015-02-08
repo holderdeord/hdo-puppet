@@ -1,37 +1,49 @@
 {
-  "logdir": "<%= @logdir %>",
-  "github_client_id": "<%= @github_client_id %>",
-  "github_client_secret": "<%= @github_client_secret %>",
-  "statsd": "ops1.holderdeord.no:8125",
-  "basic_auth": "<%= @basic_auth %>",
-  "projects": {
-    "holderdeord/hdo-site#master": {
-      "directory": "<%= @appdir %>",
-      "token": "<%= @token %>",
-      "timeout": 240,
-      "environment": {
-        "HIPCHAT_API_TOKEN": "<%= @hipchat_api_token %>"
-      },
-      "command": [
-        "cap",
-        "-S",
-        "revision=%{sha}",
-        "staging",
-        "deploy:web:disable",
-        "deploy:migrations",
-        "deploy:web:enable",
-        "deploy:cleanup"
-      ]
-    },
-    "holderdeord/hdo-blog#gh-pages": {
-        "directory": "<%= @blogdir %>",
-        "token": "<%= @token %>",
-        "timeout": 240,
-        "command": [
-            "ssh",
-            "hdo@staging.holderdeord.no",
-            "cd /webapps/blog && git fetch origin && git checkout -f %{sha} && bash -l -c 'bundle install --deployment && echo -e \"url: http://drafts.holderdeord.no/\nshow_drafts: true\nlsi: true\" > _drafts_config.yml && bundle exec jekyll build --config _config.yml,_drafts_config.yml'"
-        ]
+    "logdir": "<%= @logdir %>",
+    "github_client_id": "<%= @github_client_id %>",
+    "github_client_secret": "<%= @github_client_secret %>",
+    "statsd": "ops1.holderdeord.no:8125",
+    "basic_auth": "<%= @basic_auth %>",
+    "projects": {
+
+        "holderdeord/hdo-site#master": {
+            "directory": "<%= @appdir %>",
+            "token": "<%= @token %>",
+            "timeout": 240,
+            "environment": {
+                "HIPCHAT_API_TOKEN": "<%= @hipchat_api_token %>"
+            },
+            "command": [
+                "cap",
+                "-S",
+                "revision=%{sha}",
+                "staging",
+                "deploy:web:disable",
+                "deploy:migrations",
+                "deploy:web:enable",
+                "deploy:cleanup"
+            ]
+        },
+
+        "holderdeord/hdo-blog#gh-pages": {
+            "directory": "<%= @blogdir %>",
+            "token": "<%= @token %>",
+            "timeout": 240,
+            "command": [
+                "ssh",
+                "hdo@staging.holderdeord.no",
+                "cd /webapps/blog && git fetch origin && git checkout -f %{sha} && bash -l -c 'bundle install --deployment && echo -e \"url: http://drafts.holderdeord.no/\nshow_drafts: true\nlsi: true\" > _drafts_config.yml && bundle exec jekyll build --config _config.yml,_drafts_config.yml'"
+            ]
+        },
+
+        "holderdeord/hdo-transcript-search#master": {
+            "directory": "<%= @transcriptdir %>",
+            "token": "<%= @token %>",
+            "command": [
+                "ssh",
+                "hdo@staging.holderdeord.no",
+                "cd /webapps/hdo-transcript-search && git fetch origin && git checkout -f %{sha} && bash -l -c 'cd webapp && npm run build && service hdo-transcript-search restart'"
+            ]
+        }
     }
-  }
 }

@@ -9,6 +9,7 @@ upstream node_app_<%= @server_name.gsub(/[^a-zA-Z]/, '_') %> {
 server {
   listen         80;
   server_name    <%= @server_name %>;
+  root           <%= @public_root %>;
 
   location / {
     proxy_set_header X-Real-IP $remote_addr;

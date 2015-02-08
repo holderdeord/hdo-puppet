@@ -2,9 +2,10 @@ class hdo::deployer {
   include hdo::common
   include passenger::apache
 
-  $appdir  = '/opt/hdo-site'
-  $blogdir = '/opt/hdo-blog'
-  $root    = '/webapps/hdo-webhook-deployer'
+  $appdir        = '/opt/hdo-site'
+  $blogdir       = '/opt/hdo-blog'
+  $transcriptdir = '/opt/hdo-transcript-search'
+  $root          = '/webapps/hdo-webhook-deployer'
 
   $current   = "${root}/current"
   $tmpdir    = "${current}/tmp"
@@ -20,7 +21,7 @@ class hdo::deployer {
 
   ruby::gem { 'hipchat': }
 
-  file { [$appdir, $blogdir]:
+  file { [$appdir, $blogdir, $transcriptdir]:
     ensure => directory,
     owner  => $hdo::params::user,
   }
@@ -37,6 +38,13 @@ class hdo::deployer {
     user    => hdo,
     creates => "${blogdir}/_config.yml",
     require => File[$blogdir]
+  }
+
+  exec { 'clone-hdo-transcript-search':
+    command => "git clone git://github.com/holderdeord/hdo-transcript-search ${transcriptdir}",
+    user    => hdo,
+    creates => "${blogdir}/webapp",
+    require => File[$transcriptdir]
   }
 
   exec { 'restart-hdo-webhook-deployer':
