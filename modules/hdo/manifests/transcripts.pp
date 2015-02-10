@@ -52,7 +52,7 @@ class hdo::transcripts(
 
   cron { "index ${app_name} daily":
     ensure      => $ensure,
-    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby -Ilib bin/hdo-transcript-indexer'",
+    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby -Ilib bin/hdo-transcript-indexer >/var/log/hdo-transcript-indexer.log'",
     user        => hdo,
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => Exec["bundle ${app_name} indexer"],
