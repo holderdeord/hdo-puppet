@@ -12,6 +12,7 @@ class hdo::transcripts(
   $webapp_root      = "${transcripts_root}/webapp"
   $public_root      = "${webapp_root}/public"
   $app_log          = "/var/log/${app_name}.log"
+  $indexer_log      = '/var/log/hdo-transcript-indexer.log'
 
   file { $app_log:
     ensure => file,
@@ -50,12 +51,17 @@ class hdo::transcripts(
     notify  => Service['nginx']
   }
 
+  file { $indexer_log:
+    ensure => file,
+    owner  => hdo,
+  }
+
   cron { "index ${app_name} daily":
     ensure      => $ensure,
-    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby -Ilib bin/hdo-transcript-indexer >/var/log/hdo-transcript-indexer.log'",
+    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby -Ilib bin/hdo-transcript-indexer > ${indexer_log}'",
     user        => hdo,
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
-    require     => Exec["bundle ${app_name} indexer"],
+    require     => [Exec["bundle ${app_name} indexer"], File[$indexer_log]],
     hour        => '3',
     minute      => '30'
   }
