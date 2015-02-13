@@ -22,7 +22,7 @@ class hdo::transcripts(
   exec { "clone ${app_name}":
     command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root}",
     user    => hdo,
-    creates => $transcripts_root,
+    creates => $webapp_root,
     require => [Package['git-core'], File[$hdo::params::webapp_root]]
   }
 
