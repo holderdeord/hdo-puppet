@@ -12,7 +12,8 @@
     Options <%= @options %>
     AllowOverride None
     Order allow,deny
-    allow from all
+    Allow from all
+    Require all granted
   </Directory>
 
   ErrorLog <%= @logroot %>/<%= @name %>_error.log
