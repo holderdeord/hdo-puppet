@@ -19,25 +19,25 @@ apt::ppa { 'ppa:vbulax/collectd5': }
 
 apt::source { 'de-archive':
   location   => 'http://de.archive.ubuntu.com/ubuntu/',
-  release    => 'precise',
+  release    => $lsbdistcodename,
   repos      => 'main restricted universe multiverse',
 }
 
 apt::source { 'de-archive-updates':
   location   => 'http://de.archive.ubuntu.com/ubuntu/',
-  release    => 'precise-updates',
+  release    => "${lsbdistcodename}-updates",
   repos      => 'main restricted universe multiverse',
 }
 
 apt::source { 'de-archive-backports':
   location   => 'http://de.archive.ubuntu.com/ubuntu/',
-  release    => 'precise-backports',
+  release    => "${lsbdistcodename}-backports",
   repos      => 'main restricted universe multiverse',
 }
 
 apt::source { 'security':
   location   => 'http://security.ubuntu.com/ubuntu',
-  release    => 'precise-security',
+  release    => "${lsbdistcodename}-security",
   repos      => 'main restricted universe multiverse',
 }
 
