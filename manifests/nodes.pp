@@ -8,7 +8,7 @@ node 'ops1' {
 
   include munin::master
   include munin::node
-  class { 'hdo::collectd::default': version => '5.4.0' }
+  class { 'hdo::collectd::default': version => '5.4.0-3ubuntu2' }
 
   include nagios::monitor
   include nagios::monitor::front
