@@ -11,7 +11,9 @@ apt::source { 'puppetlabs':
   key_server => 'pgp.mit.edu',
 }
 
-apt::ppa { 'ppa:vbulax/collectd5': }
+if $lsbdistcodename == 'precise' {
+  apt::ppa { 'ppa:vbulax/collectd5': }
+}
 
 #
 # Hetzner's default Ubuntu image points at their outdated mirrors, so we add our own sources.list here.
