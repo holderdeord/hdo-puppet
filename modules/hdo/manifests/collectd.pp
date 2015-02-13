@@ -8,7 +8,6 @@ class hdo::collectd(
     purge        => true,
     recurse      => true,
     purge_config => true,
-    require      => [Apt::Ppa['ppa:vbulax/collectd5'], Class['apt::update']],
   }
 
   class { '::collectd::plugin::write_graphite':
