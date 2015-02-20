@@ -5,7 +5,7 @@ class grafana(
   include hdo::common
   include apache
 
-  $version       = '1.5.2'
+  $version       = '1.5.4'
   $document_root = "${root}/grafana-${version}"
   $credentials   = hiera('basic_auth', 'hdo hdo')
 
@@ -17,7 +17,7 @@ class grafana(
   }
 
   exec { 'download-grafana':
-    command => "curl --fail -L https://github.com/torkelo/grafana/releases/download/v${version}/grafana-${version}.zip -o ${document_root}.zip",
+    command => "curl --fail -L https://github.com/torkelo/grafana/archive/v${version}.tar.gz -o ${document_root}.zip",
     creates => "${document_root}.zip",
     user    => $hdo::params::user,
     require => [File[$root], Package['curl']],
