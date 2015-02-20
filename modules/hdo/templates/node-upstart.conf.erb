@@ -12,8 +12,7 @@ limit nofile 32768 32768
 
 script
   cd /webapps/hdo-transcript-search/webapp
-  export NODE_ENV=production
-  exec sudo -u <%= @user %> npm start 2>&1 ><%= @app_log %>
+  exec sudo -u <%= @user %> NODE_ENV=production npm start 2>&1 ><%= @app_log %>
 end script
 
 post-start script
