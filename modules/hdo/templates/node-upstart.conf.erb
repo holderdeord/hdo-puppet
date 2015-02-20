@@ -10,9 +10,11 @@ respawn limit 20 5
 # Max open files are @ 1024 by default. Bit few.
 limit nofile 32768 32768
 
+
+env NODE_ENV=production
 script
   cd /webapps/hdo-transcript-search/webapp
-  exec sudo -u <%= @user %> NODE_ENV=production npm start 2>&1 ><%= @app_log %>
+  exec sudo -u <%= @user %> npm start 2>&1 ><%= @app_log %>
 end script
 
 post-start script

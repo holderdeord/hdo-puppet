@@ -29,20 +29,25 @@
     <LimitExcept OPTIONS>
       Require valid-user
     </LimitExcept>
+
+    Require all granted
   </Location>
 
   Alias /content/ <%= @docroot %>/content/
   <Location "/content/">
     SetHandler None
+    Require all granted
   </Location>
 
   Alias /media/ "@DJANGO_ROOT@/contrib/admin/media/"
   <Location "/media/">
     SetHandler None
+    Require all granted
   </Location>
 
   Alias /grafana/ <%= @docroot %>/grafana/latest/
   <Location "/grafana/">
     SetHandler None
+    Require all granted
   </Location>
 </VirtualHost>
