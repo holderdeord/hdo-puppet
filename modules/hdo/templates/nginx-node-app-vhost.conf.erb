@@ -6,7 +6,7 @@ server {
   listen         80;
   server_name    <%= @server_name %>;
   root           <%= @public_root %>;
-  try_files      $uri $uri/ @node;
+  try_files      $uri @node;
 
   location @node {
     proxy_set_header X-Real-IP $remote_addr;
