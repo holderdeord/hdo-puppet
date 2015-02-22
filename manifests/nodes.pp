@@ -50,6 +50,7 @@ node 'staging' {
 
   class { 'hdo::elasticsearch':
     cluster_name => 'holderdeord-staging',
+    version      => '1.4.4'
   }
 
   class { 'hdo::database':
