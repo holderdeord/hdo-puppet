@@ -49,8 +49,7 @@ node 'staging' {
   class { 'nodejs': manage_repo => true }
 
   class { 'hdo::elasticsearch':
-    cluster_name => 'holderdeord-staging',
-    version      => '1.4.4'
+    cluster_name => 'holderdeord-staging'
   }
 
   class { 'hdo::database':
