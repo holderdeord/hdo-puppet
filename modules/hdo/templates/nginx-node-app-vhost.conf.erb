@@ -2,7 +2,7 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
-proxy_cache_path /tmp/nginx/<%= @app_name %> level=1:2 keys_zone=<%= @app_name %>:10m inactive=1d;
+proxy_cache_path /tmp/nginx/<%= @app_name %> levels=1:2 keys_zone=<%= @app_name %>:10m inactive=1d;
 
 server {
   listen         80;
