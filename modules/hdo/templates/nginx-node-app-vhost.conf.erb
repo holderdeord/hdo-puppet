@@ -2,6 +2,8 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
+proxy_cache_path /tmp/nginx/<%= @app_name %> level=1:2 keys_zone=<%= @app_name %>:10m inactive=1d;
+
 server {
   listen         80;
   server_name    <%= @server_name %>;
@@ -9,13 +11,22 @@ server {
   try_files      $uri @node;
 
   location @node {
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Nginx-Proxy true;
+    proxy_cache_key    "$scheme$request_method$host$request_uri";
+    proxy_cache        <%= @app_name %>;
+    proxy_cache_bypass $http_cache_control;                  # respect Cache-Control=no-cache from the client
+    add_header         X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response
 
-    proxy_pass       http://127.0.0.1:<%= @port %>;
-    proxy_redirect   off;
+    proxy_set_header   X-Real-IP $remote_addr;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   Host $http_host;
+    proxy_set_header   X-Nginx-Proxy true;
+
+    # temporary hack
+    auth_basic           "Restricted";
+    auth_basic_user_file /opt/nginx/.htpasswd;
+
+    proxy_pass         http://127.0.0.1:<%= @port %>;
+    proxy_redirect     off;
   }
 }
 
