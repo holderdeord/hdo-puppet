@@ -1,6 +1,13 @@
 server {
-listen      80;
-server_name <%= @server_name %>;
-root        <%= @blog_root %>/_site;
-autoindex   off;
+  listen      80;
+  server_name <%= @server_name %>;
+  root        <%= @blog_root %>/_site;
+  autoindex   off;
+
+  location ~ ^/(google.+\.html|robots\.txt) {  }
+
+  location / {
+    auth_basic 'Restricted';
+    auth_basic_user_file /opt/nginx/.htpasswd;
+  }
 }
