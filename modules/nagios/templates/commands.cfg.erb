@@ -1,16 +1,21 @@
 # This file is managed by Puppet. Edits will be lost.
 
 define command {
-	command_line                   /usr/lib/nagios/plugins/check_by_ssh -p 22 -l <%= scope.lookupvar('nagios::base::user') %>  -i <%= scope.lookupvar('private_key') %> -t 30 -o StrictHostKeyChecking=no -H $HOSTADDRESS$ -C '<%= scope.lookupvar("nagios::base::home") %>/nagios.sh'
-	command_name                   check_over_ssh
+	command_line  /usr/lib/nagios/plugins/check_by_ssh -p 22 -l <%= scope.lookupvar('nagios::base::user') %>  -i <%= scope.lookupvar('private_key') %> -t 30 -o StrictHostKeyChecking=no -H $HOSTADDRESS$ -C '<%= scope.lookupvar("nagios::base::home") %>/nagios.sh'
+	command_name  check_over_ssh
 }
 
 define command {
-	command_line                   /usr/lib/nagios/plugins/check_by_ssh -p 22 -l <%= scope.lookupvar('nagios::base::user') %> -i <%= scope.lookupvar('private_key') %> -t 30 -o StrictHostKeyChecking=no -H $HOSTADDRESS$ -C '/usr/lib/nagios/plugins/check_load -w $ARG2$ -c $ARG3$'
-	command_name                   remote_load
+	command_line  /usr/lib/nagios/plugins/check_by_ssh -p 22 -l <%= scope.lookupvar('nagios::base::user') %> -i <%= scope.lookupvar('private_key') %> -t 30 -o StrictHostKeyChecking=no -H $HOSTADDRESS$ -C '/usr/lib/nagios/plugins/check_load -w $ARG2$ -c $ARG3$'
+	command_name  remote_load
 }
 
 define command {
-	command_line                   /usr/lib/nagios/plugins/check_by_ssh -p 22 -l <%= scope.lookupvar('nagios::base::user') %> -i <%= scope.lookupvar('private_key') %> -t 30 -o StrictHostKeyChecking=no -H $HOSTADDRESS$ -C '/usr/lib/nagios/plugins/check_disk -w $ARG2$ -c $ARG3$ -p $ARG4$'
-	command_name                   remote_disk
+	command_line  /usr/lib/nagios/plugins/check_by_ssh -p 22 -l <%= scope.lookupvar('nagios::base::user') %> -i <%= scope.lookupvar('private_key') %> -t 30 -o StrictHostKeyChecking=no -H $HOSTADDRESS$ -C '/usr/lib/nagios/plugins/check_disk -w $ARG2$ -c $ARG3$ -p $ARG4$'
+	command_name  remote_disk
+}
+
+define command{
+  command_name    check_http_auth
+  command_line    /usr/lib/nagios/plugins/check_http -H '$HOSTADDRESS$' -I '$HOSTADDRESS$' -a '$ARG1$' '$ARG2$'
 }
