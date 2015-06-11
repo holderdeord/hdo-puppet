@@ -24,7 +24,7 @@ node 'ops1' {
   include hdo::deployer
   include hdo::puppetmasterd
 
-  class { 'nodejs': manage_repo => true }
+
   hdo::firewall { "ops1": }
 
   class { 'hdo::database::backup_sync':
@@ -46,7 +46,7 @@ node 'staging' {
   include nagios::target
   include nagios::target::http
 
-  class { 'nodejs': manage_repo => true }
+  class { 'nodejs': }
 
   class { 'hdo::elasticsearch':
     cluster_name => 'holderdeord-staging'
@@ -95,7 +95,7 @@ node 'app' {
   include nagios::target
   include nagios::target::http
 
-  class { 'nodejs': manage_repo => true }
+  class { 'nodejs': }
 
   class { 'hdo::elasticsearch': }
 

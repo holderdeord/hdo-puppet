@@ -52,6 +52,10 @@ Exec {
   ]
 }
 
+package { ['build-essential']:
+  ensure => installed,
+}
+
 include hdo::users
 
 import 'nodes.pp'

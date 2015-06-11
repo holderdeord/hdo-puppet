@@ -116,8 +116,8 @@ the permission should be writable by root and readable by the puppet group:
 
 Install Puppet >= 3.0:
 
-    $ wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
-    $ dpkg -i puppetlabs-release-precise.deb
+    $ wget http://apt.puppetlabs.com/puppetlabs-release-trusty.deb
+    $ dpkg -i puppetlabs-release-trusty.deb
     $ apt-get update
     $ apt-get install puppet
 
@@ -128,3 +128,12 @@ Configure the node to talk to the puppetmaster by adding the following to /etc/p
     pluginsync = true
 
 Then sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
+
+
+If you want to run without a puppetmaster, you need a few additional packages:
+
+    $ apt-get install ruby-full git-core
+
+Then apply the site manifest:
+
+    bundle exec puppet apply --modulepath modules:third-party manifests/site.pp

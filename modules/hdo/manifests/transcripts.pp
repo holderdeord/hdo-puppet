@@ -1,7 +1,8 @@
 class hdo::transcripts(
   $ensure      = 'present',
   $server_name = 'transcripts.holderdeord.no',
-  $port        = 7575
+  $port        = 7575,
+  $restrict    = false
   ) {
   include hdo::common
   include hdo::params
@@ -32,14 +33,14 @@ class hdo::transcripts(
     cwd         => $webapp_root,
     creates     => "${public_root}/bundle.js",
     environment => ["HOME=${hdo::params::home}"],
-    require     => [Class['nodejs'], Exec["clone ${app_name}"]]
+    require     => [Class['hdo::nodejs'], Exec["clone ${app_name}"]]
   }
 
   exec { "bundle ${app_name} indexer":
     command => "bash -l -c 'bundle install --deployment'",
     cwd     => $indexer_root,
     user    => hdo,
-    require => Exec["clone ${app_name}"]
+    require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
   }
 
   file { "${passenger::nginx::sites_dir}/transcripts.holderdeord.no.conf":

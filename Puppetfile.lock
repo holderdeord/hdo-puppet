@@ -45,12 +45,11 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-nodejs
-  ref: 0.5.0
-  sha: 341240dc027c9d1d2980b9c24bf7dd2518383723
+  ref: 0.8.0
+  sha: 1749fb79bc8937f0df432bb4d550659ed59b6320
   specs:
-    puppetlabs-nodejs (0.5.0)
-      puppetlabs-apt (>= 0.0.3)
-      puppetlabs-stdlib (>= 2.0.0)
+    puppetlabs-nodejs (0.8.0)
+      puppetlabs-stdlib (< 5.0.0, >= 2.2.1)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-puppetdb
@@ -65,10 +64,10 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
-  ref: 4.3.2
-  sha: da11903285aca54ac399d66cb453f5a8db3ac355
+  ref: 4.6.0
+  sha: 73474b00b5ae3cbccec6cd0711311d6450139e51
   specs:
-    puppetlabs-stdlib (4.3.2)
+    puppetlabs-stdlib (4.6.0)
 
 GIT
   remote: git://github.com/rodjek/puppet-logrotate.git

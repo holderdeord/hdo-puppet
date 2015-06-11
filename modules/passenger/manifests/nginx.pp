@@ -1,16 +1,37 @@
-class passenger::nginx($port = 80) inherits passenger {
+class passenger::nginx(
+  $port = 80,
+  $nagios = true,
+  $munin  = true,
+  $collectd = true,
+  $purge = false
+) inherits passenger {
   $root        = "/opt/nginx-passenger${passenger::params::version}-ruby${ruby::version}"
   $init_script = '/etc/init.d/nginx'
   $config_dir  = "${root}/conf"
   $log_dir     = "${root}/logs"
   $sites_dir   = "${config_dir}/sites-enabled"
+  $tmp_dir     = "/tmp/nginx"
   $config      = "${config_dir}/nginx.conf"
   $mime_types  = "${config_dir}/mime.types"
   $daemon      = "${root}/sbin/nginx"
   $listen      = $port
 
+  if ($purge) {
+    $cache_purge_dir = '/tmp/ngx_cache_purge'
+    $extra_flags     = "--add-module=${cache_purge_dir}"
+
+    exec { 'clone ngx_cache_purge':
+      command => "git clone https://github.com/FRiCKLE/ngx_cache_purge ${cache_purge_dir}",
+      creates => $cache_purge_dir,
+      require => [Package['git-core']],
+      before  => Exec['install-passenger-nginx'],
+    }
+  } else {
+    $extra_flags = ''
+  }
+
   exec { 'install-passenger-nginx':
-    command => "bash -l -c 'passenger-install-nginx-module --extra-configure-flags=\'--with-http_stub_status_module\' --auto --auto-download --prefix ${root}'",
+    command => "bash -l -c 'passenger-install-nginx-module --extra-configure-flags=\"${extra_flags} --with-http_stub_status_module --prefix=${root}\" --auto --auto-download --prefix=${root}'",
     creates => $root,
     require => [Ruby::Gem['passenger'], Package['libcurl4-openssl-dev']],
     timeout => 900
@@ -20,16 +41,6 @@ class passenger::nginx($port = 80) inherits passenger {
     ensure  => $root,
     require => Exec['install-passenger-nginx'],
     notify  => Service['nginx']
-  }
-
-  include nagios::base
-
-  file { "${nagios::base::checks_dir}/nginx":
-    ensure => present,
-    owner  => $nagios::base::user,
-    group  => $nagios::base::user,
-    mode   => '0700',
-    source => 'puppet:///modules/passenger/nagioschecks/nginx'
   }
 
   file { $init_script:
@@ -68,12 +79,19 @@ class passenger::nginx($port = 80) inherits passenger {
     require => Exec['install-passenger-nginx']
   }
 
+  file { $tmp_dir:
+    ensure  => directory,
+    owner   => root,
+    group   => root,
+    require => Exec['install-passenger-nginx']
+  }
+
   service { 'nginx':
     ensure     => running,
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    require    => File[$init_script],
+    require    => [File[$init_script], File[$tmp_dir]],
   }
 
   logrotate::rule { 'nginx':
@@ -94,11 +112,29 @@ class passenger::nginx($port = 80) inherits passenger {
     notify  => Service['nginx']
   }
 
-  class { 'munin::nginx': port => $listen }
+  if $nagios == true {
+    include nagios::base
 
-  class { 'collectd::plugin::nginx':
-    url     => "http://localhost:${listen}/nginx_status",
-    require => Class['hdo::collectd'],
-    notify  => Service['collectd'],
+    file { "${nagios::base::checks_dir}/nginx":
+      ensure => present,
+      owner  => $nagios::base::user,
+      group  => $nagios::base::user,
+      mode   => '0700',
+      source => 'puppet:///modules/passenger/nagioschecks/nginx'
+    }
   }
+
+  if $muning == true {
+    class { 'munin::nginx': port => $listen }
+  }
+
+  if $collectd == true {
+    class { 'collectd::plugin::nginx':
+      url     => "http://localhost:${listen}/nginx_status",
+      require => Class['hdo::collectd'],
+      notify  => Service['collectd'],
+    }
+  }
+
+
 }

@@ -18,16 +18,18 @@ fi
 
 set -e
 
-# Add pre-commit lint
-hook="${ROOT}/.git/hooks/pre-commit"
+# Add pre-commit lint if we're in a git repo
+if [[ -d "${ROOT}/.git" ]]; then
+  hook="${ROOT}/.git/hooks/pre-commit"
 
-if [[ ! -x $hook ]]; then
-  cat > $hook <<END
-#!/bin/sh
-$(pwd)/script/lint
+  if [[ ! -x $hook ]]; then
+    cat > $hook <<END
+  #!/bin/sh
+  $(pwd)/script/lint
 END
 
-  chmod +x $hook
+    chmod +x $hook
+  fi
 fi
 
 # We don't want old config hanging around.
