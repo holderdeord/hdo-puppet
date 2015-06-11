@@ -43,6 +43,8 @@ class hdo::transcripts(
     require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
   }
 
+  $purge = true
+
   file { "${passenger::nginx::sites_dir}/transcripts.holderdeord.no.conf":
     ensure  => file,
     owner   => root,
