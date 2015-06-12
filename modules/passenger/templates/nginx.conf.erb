@@ -52,6 +52,8 @@ http {
   passenger_pool_idle_time       <%= scope.lookupvar('passenger::params::pool_idle_time') %>;
   passenger_friendly_error_pages off;
 
+  proxy_cache_path               /tmp/nginx/hdo     levels=1:2    keys_zone=hdo:256m    inactive=30d;
+
   # virtual hosts
   include                        <%= @sites_dir %>/*.conf;
 }

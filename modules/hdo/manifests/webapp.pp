@@ -40,7 +40,9 @@ class hdo::webapp(
     ensure => 'installed'
   }
 
-  class { 'passenger::nginx': port => $listen }
+  if ! defined(Class['passenger::nginx']) {
+    class { 'passenger::nginx': port => $listen }
+  }
 
   file { "${passenger::nginx::sites_dir}/${server_name}.conf":
     ensure  => file,

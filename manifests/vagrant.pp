@@ -46,4 +46,15 @@ node 'hdo-app-vm' {
     server_name => 'tale.holderdeord.no'
   }
 
+  class { 'hdo::database':
+    munin        => false,
+    collectd     => false,
+  }
+
+  class { 'hdo::webapp':
+    server_name       => 'app.holderdeord.no',
+    db_host           => 'localhost',
+    elasticsearch_url => 'http://localhost:9200',
+  }
+
 }

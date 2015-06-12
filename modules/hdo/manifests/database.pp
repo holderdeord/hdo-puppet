@@ -28,6 +28,11 @@ class hdo::database(
     $postgres_password = undef
   }
 
+  class { 'postgresql::globals':
+    encoding => 'UTF-8',
+    locale   => 'en_US.UTF-8',
+    version  => '9.3' # for some reason not detected automatically, at least not in vagrant
+  } ->
   class { 'postgresql::server':
     ip_mask_allow_all_users => '0.0.0.0/0',
     listen_addresses        => '*',
