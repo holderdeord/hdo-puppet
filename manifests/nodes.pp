@@ -124,8 +124,8 @@ node 'app' {
   include hdo::webapp::apiupdater
   include hdo::webapp::rebeltweeter
 
-  hdo::firewall { "app": }
-  hdo::networkinterfaces { "app": }
+  hdo::firewall { 'app': }
+  hdo::networkinterfaces { 'app': }
 }
 
 node 'hdo01' {
@@ -145,4 +145,7 @@ node 'hdo01' {
   class { 'hdo::transcripts':
     server_name => 'tale.holderdeord.no'
   }
+
+  hdo::firewall { 'hdo01': }
+
 }
