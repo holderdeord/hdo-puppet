@@ -65,8 +65,8 @@ class hdo::transcripts(
     user        => hdo,
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Exec["bundle ${app_name} indexer"], File[$indexer_log]],
-    hour        => '3',
-    minute      => '30'
+    hour        => '4',
+    minute      => '50'
   }
 
   $description = $app_name
