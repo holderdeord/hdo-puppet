@@ -100,4 +100,11 @@ class hdo::transcripts(
     mode    => '0440',
     content => "hdo ALL = (root) NOPASSWD: /sbin/start ${app_name}, /sbin/stop ${app_name}, /sbin/restart ${app_name}, /sbin/status ${app_name}\n",
   }
+
+  file { '/etc/profile.d/hdo-transcripts.sh':
+    ensure  => file,
+    mode    => '0775',
+    content => template('hdo/hdo-transcripts-profile.sh')
+  }
+
 }

@@ -17,7 +17,7 @@ class passenger::nginx(
   $listen      = $port
 
   if ($purge) {
-    $cache_purge_dir = '/tmp/ngx_cache_purge'
+    $cache_purge_dir = '/opt/ngx_cache_purge'
     $extra_flags     = "--add-module=${cache_purge_dir}"
 
     exec { 'clone ngx_cache_purge':

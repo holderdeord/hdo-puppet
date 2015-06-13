@@ -56,7 +56,7 @@ class hdo::webapp(
   file { '/etc/profile.d/hdo-webapp.sh':
     ensure  => file,
     mode    => '0775',
-    content => template('hdo/profile.sh')
+    content => template('hdo/hdo-site-profile.sh')
   }
 
   file { "${config_root}/database.yml":
