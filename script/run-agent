@@ -9,8 +9,6 @@ SERVER=$1
 shift
 COMMAND="sudo puppet agent --test $*"
 
-user="${HDO_USER:=$USER}"
-
 echo "Running puppet @ ${SERVER}: ${COMMAND}"
-ssh -t "${user}@${SERVER}.holderdeord.no" $COMMAND
+ssh -t "${SERVER}" $COMMAND
 

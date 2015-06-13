@@ -127,3 +127,22 @@ node 'app' {
   hdo::firewall { "app": }
   hdo::networkinterfaces { "app": }
 }
+
+node 'hdo01' {
+  include hdo::users::admins
+  include hdo::nodejs
+
+  class { 'hdo::elasticsearch': }
+
+  class { 'passenger::nginx':
+    port     => 80,
+    nagios   => false,
+    munin    => false,
+    collectd => false,
+    purge    => true
+  }
+
+  class { 'hdo::transcripts':
+    server_name => 'tale.holderdeord.no'
+  }
+}

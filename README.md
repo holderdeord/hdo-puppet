@@ -132,7 +132,7 @@ Then sign the SSL certificate as described [here](http://docs.puppetlabs.com/lea
 
 If you want to run without a puppetmaster, you need a few additional packages:
 
-    $ apt-get install ruby-full git-core
+    $ apt-get install ruby-full git-core build-essential
 
 Then apply the site manifest:
 

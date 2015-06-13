@@ -13,8 +13,6 @@ shift
 
 ROOT="$(dirname $0)/.."
 TARBALL="/tmp/hdo-puppet-drop.tgz"
-user="${HDO_USER:=$USER}"
-HOST="${SERVER}.holderdeord.no"
 
 COMMAND="
 if [[ -d /tmp/hdo-puppet-drop ]]; then
@@ -31,8 +29,8 @@ cd /tmp && \
 "
 
 tar zc --exclude .git --exclude .tmp --exclude .bundle -f $TARBALL -C $ROOT .
-scp $TARBALL "${user}@${HOST}:${TARBALL}"
+scp "${TARBALL}" "${SERVER}:${TARBALL}"
 
 echo "Running puppet @ ${SERVER}: ${COMMAND}"
-ssh -t "${user}@${HOST}" "$COMMAND"
+ssh -t "${SERVER}" "$COMMAND"
 
