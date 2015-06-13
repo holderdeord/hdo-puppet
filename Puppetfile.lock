@@ -38,10 +38,10 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-firewall.git
-  ref: 0.3.0
-  sha: edd273a2d0f2fa147a88be1ae8732853ae7a4086
+  ref: 1.6.0
+  sha: 2fd4e702706b820b1d7208e2f88ba8a8a0321701
   specs:
-    puppetlabs-firewall (0.3.0)
+    puppetlabs-firewall (1.6.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-nodejs
@@ -78,11 +78,11 @@ GIT
 
 GIT
   remote: https://github.com/elasticsearch/puppet-elasticsearch
-  ref: 0.3.2
-  sha: 042720d52a3879786c2f9d9f67961c4f42004fae
+  ref: 0.9.6
+  sha: e2a5bb02fcfe641614aaabd76fbdf192e5f471e4
   specs:
-    elasticsearch-elasticsearch (0.3.2)
-      puppetlabs-stdlib (>= 3.2.0)
+    elasticsearch-elasticsearch (0.9.6)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
 
 GIT
   remote: https://github.com/pdxcat/puppet-module-collectd.git

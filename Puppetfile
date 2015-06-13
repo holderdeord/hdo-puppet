@@ -2,7 +2,7 @@ forge "https://forgeapi.puppetlabs.com"
 
 mod "puppetlabs-apache",
   :git => "git://github.com/puppetlabs/puppetlabs-apache.git",
-  :ref => "1.4.1"
+  :ref => "0.6.0"
 
 mod "puppetlabs-firewall",
   :git => "git://github.com/puppetlabs/puppetlabs-firewall.git",
@@ -14,7 +14,7 @@ mod "rodjek-logrotate",
 
 mod "puppetlabs-postgresql",
   :git => "git://github.com/puppetlabs/puppet-postgresql.git",
-  :ref => "4.3.0"
+  :ref => "3.1.0"
 
 mod "puppetlabs-stdlib",
   :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git",
