@@ -31,6 +31,11 @@ class hdo::elasticsearch(
     config                => $config,
   }
 
+  elasticsearch::instance { 'hdo01':
+    config => $config,
+    init_defaults => $init_defaults,
+  }
+
   file { '/etc/elasticsearch/hdo.words.nb.txt':
     ensure  => file,
     mode    => '0644',
