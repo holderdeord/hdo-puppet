@@ -35,16 +35,14 @@ class hdo::elasticsearch(
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/hdo/elasticsearch/hdo.words.nb.txt',
-    require => File['/etc/elasticsearch'],
-    notify  => Service['elasticsearch'],
+    require => File['/etc/elasticsearch']
   }
 
   file { '/etc/elasticsearch/hdo.synonyms.nb.txt':
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/hdo/elasticsearch/hdo.synonyms.nb.txt',
-    require => File['/etc/elasticsearch'],
-    notify  => Service['elasticsearch'],
+    require => File['/etc/elasticsearch']
   }
 
   include nagios::base
