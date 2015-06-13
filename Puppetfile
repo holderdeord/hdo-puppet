@@ -41,3 +41,5 @@ mod "pdxcat-collectd",
 mod "elasticsearch-elasticsearch",
   :git => "https://github.com/elasticsearch/puppet-elasticsearch",
   :ref => "0.9.6"
+
+mod "puppetlabs-java", "1.3.0"
