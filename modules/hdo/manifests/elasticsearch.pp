@@ -32,7 +32,7 @@ class hdo::elasticsearch(
   }
 
   elasticsearch::instance { 'hdo01':
-    config => $config,
+    config        => $config,
     init_defaults => $init_defaults,
   }
 
