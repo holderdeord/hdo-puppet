@@ -10,7 +10,7 @@ mod "puppetlabs-firewall",
 
 mod "rodjek-logrotate",
   :git => "git://github.com/rodjek/puppet-logrotate.git",
-  :ref => "v1.1.1"
+  :ref => "v1.0.2"
 
 mod "puppetlabs-postgresql",
   :git => "git://github.com/puppetlabs/puppet-postgresql.git",
