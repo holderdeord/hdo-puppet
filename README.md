@@ -136,4 +136,4 @@ If you want to run without a puppetmaster, you need a few additional packages:
 
 Then apply the site manifest:
 
-    bundle exec puppet apply --modulepath modules:third-party manifests/site.pp
+    puppet apply --modulepath modules:third-party manifests/site.pp
