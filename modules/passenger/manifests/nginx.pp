@@ -10,7 +10,7 @@ class passenger::nginx(
   $config_dir  = "${root}/conf"
   $log_dir     = "${root}/logs"
   $sites_dir   = "${config_dir}/sites-enabled"
-  $tmp_dir     = "/tmp/nginx"
+  $tmp_dir     = '/tmp/nginx'
   $config      = "${config_dir}/nginx.conf"
   $mime_types  = "${config_dir}/mime.types"
   $daemon      = "${root}/sbin/nginx"
@@ -124,7 +124,7 @@ class passenger::nginx(
     }
   }
 
-  if $muning == true {
+  if $munin == true {
     class { 'munin::nginx': port => $listen }
   }
 
