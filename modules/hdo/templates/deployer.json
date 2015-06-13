@@ -45,6 +45,16 @@
                 "hdo@staging.holderdeord.no",
                 "cd /webapps/hdo-transcript-search && git fetch origin && git checkout -f %{sha} && bash -l -c 'cd webapp && npm run build && sudo restart hdo-transcript-search'"
             ]
+        },
+
+        "holderdeord/hdo-transcript-search#release": {
+            "directory": "<%= @transcriptdir %>",
+            "token": "<%= @token %>",
+            "command": [
+                "ssh",
+                "hdo@hdo01.holderdeord.no",
+                "cd /webapps/hdo-transcript-search && git fetch origin && git checkout -f %{sha} && bash -l -c 'cd webapp && npm run build && sudo restart hdo-transcript-search'"
+            ]
         }
     }
 }
