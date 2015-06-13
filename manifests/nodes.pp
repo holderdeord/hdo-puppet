@@ -143,7 +143,8 @@ node 'hdo01' {
   }
 
   class { 'hdo::transcripts':
-    server_name => 'tale.holderdeord.no'
+    server_name => 'tale.holderdeord.no',
+    restrict    => true
   }
 
   hdo::firewall { 'hdo01': }
