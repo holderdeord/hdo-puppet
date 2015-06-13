@@ -40,7 +40,6 @@ types {
     application/vnd.google-earth.kmz      kmz;
     application/x-7z-compressed           7z;
     application/x-cocoa                   cco;
-    application/x-font-woff               woff;
     application/x-java-archive-diff       jardiff;
     application/x-java-jnlp-file          jnlp;
     application/x-makeself                run;
@@ -61,7 +60,6 @@ types {
     application/octet-stream              bin exe dll;
     application/octet-stream              deb;
     application/octet-stream              dmg;
-    application/octet-stream              eot;
     application/octet-stream              iso img;
     application/octet-stream              msi msp msm;
 
