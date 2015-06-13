@@ -31,7 +31,7 @@ class hdo::transcripts(
     command     => "bash -l -c 'npm run build'",
     user        => hdo,
     cwd         => $webapp_root,
-    onlyif      => "ls ${public_root}/ | grep -Ev 'bundle.+.js$'",
+    onlyif      => "ls ${public_root}/ | grep -Ev 'bundle.+.js$' > /dev/null",
     environment => ["HOME=${hdo::params::home}"],
     require     => [Class['hdo::nodejs'], Exec["clone ${app_name}"]]
   }
