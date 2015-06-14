@@ -8,35 +8,40 @@ server {
   root           <%= @public_root %>;
   try_files      $uri @node;
 
+  proxy_cache_key       "$scheme://$host$uri$is_args$args";
+  proxy_cache           hdo;
+  proxy_cache_bypass    $http_cache_control; # respect Cache-Control=no-cache from the client
+  proxy_cache_lock      on;
+  proxy_cache_use_stale updating;
+  # proxy_cache_use_stale error timeout invalid_header updating;
+
+  <% if @purge %>
+  proxy_cache_purge  PURGE from <%= @purge == true ? 'all' : @purge %>;
+  <% end %>
+
+  add_header         X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response
+
+  proxy_set_header   X-Real-IP $remote_addr;
+  proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header   Host $http_host;
+  proxy_set_header   X-Nginx-Proxy true;
+  proxy_set_header   X-Forwarded-Proto $scheme;
+
+  <% if @restrict %>
+    auth_basic           "Restricted";
+    auth_basic_user_file /opt/nginx/.htpasswd;
+  <% end %>
+
   location @node {
-    proxy_cache_key       "$scheme://$host$uri$is_args$args";
-    proxy_cache           hdo;
-    proxy_cache_bypass    $http_cache_control; # respect Cache-Control=no-cache from the client
-    proxy_cache_lock      on;
-    proxy_cache_use_stale updating;
-    # proxy_cache_use_stale error timeout invalid_header updating;
-
-
-    <% if @purge %>
-    proxy_cache_purge  PURGE from <%= @purge == true ? 'all' : @purge %>;
-    <% end %>
-
-    add_header         X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response
-
-    proxy_set_header   X-Real-IP $remote_addr;
-    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header   Host $http_host;
-    proxy_set_header   X-Nginx-Proxy true;
-    proxy_set_header   X-Forwarded-Proto $scheme;
-
-
-    <% if @restrict %>
-      auth_basic           "Restricted";
-      auth_basic_user_file /opt/nginx/.htpasswd;
-    <% end %>
-
     proxy_pass         http://127.0.0.1:<%= @port %>;
     proxy_redirect     off;
+  }
+
+  location ~ ^/(images/|bundle\.[a-f0-9]+\.(css|js)) {
+    gzip_static        on;
+    add_header         Cache-Control "public, max-age=2592000";
+
+    break;
   }
 }
 
