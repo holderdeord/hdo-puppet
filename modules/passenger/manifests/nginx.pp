@@ -3,7 +3,8 @@ class passenger::nginx(
   $nagios = true,
   $munin  = true,
   $collectd = true,
-  $purge = false
+  $purge = false,
+  $pingdom = false
 ) inherits passenger {
   $root        = "/opt/nginx-passenger${passenger::params::version}-ruby${ruby::version}"
   $init_script = '/etc/init.d/nginx'
@@ -15,6 +16,7 @@ class passenger::nginx(
   $mime_types  = "${config_dir}/mime.types"
   $daemon      = "${root}/sbin/nginx"
   $listen      = $port
+  $pingdom_dir = "${hdo::params::webapp_root}/pingdom"
 
   if ($purge) {
     $cache_purge_dir = '/opt/ngx_cache_purge'
@@ -28,6 +30,15 @@ class passenger::nginx(
     }
   } else {
     $extra_flags = ''
+  }
+
+  if ($pingdom) {
+    exec { "clone pingdom-os-stats":
+      command => "git clone git://github.com/jarib/pingdom-os-stats ${pingdom_dir}",
+      user    => hdo,
+      creates => $pingdom_dir,
+      require => [Package['git-core'], File[$hdo::params::webapp_root]]
+    }
   }
 
   exec { 'install-passenger-nginx':
