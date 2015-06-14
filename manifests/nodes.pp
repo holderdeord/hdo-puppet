@@ -139,7 +139,8 @@ node 'hdo01' {
     nagios   => false,
     munin    => false,
     collectd => false,
-    purge    => true
+    purge    => true,
+    pingdom  => true
   }
 
   class { 'hdo::transcripts':
