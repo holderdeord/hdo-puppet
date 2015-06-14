@@ -33,7 +33,7 @@ class passenger::nginx(
   }
 
   if ($pingdom) {
-    exec { "clone pingdom-os-stats":
+    exec { 'clone pingdom-os-stats':
       command => "git clone git://github.com/jarib/pingdom-os-stats ${pingdom_dir}",
       user    => hdo,
       creates => $pingdom_dir,
