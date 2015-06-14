@@ -39,6 +39,15 @@ class passenger::nginx(
       creates => $pingdom_dir,
       require => [Package['git-core'], File[$hdo::params::webapp_root]]
     }
+
+    exec { 'npm install pingdom-os-stats':
+      command => 'npm install',
+      user    => hdo,
+      cwd     => $pingdom_dir
+      creates => "${pingdom_dir}/node_modules",
+      require => Exec['clone pingdom-os-stats']
+    }
+
   }
 
   exec { 'install-passenger-nginx':
