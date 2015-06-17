@@ -128,7 +128,7 @@ node 'app' {
   hdo::networkinterfaces { 'app': }
 }
 
-node 'hdo01' {
+node 'hdo01', 'hdo02' {
   include hdo::users::admins
   include hdo::nodejs
 
