@@ -102,6 +102,16 @@ class hdo::transcripts(
     missingok    => true
   }
 
+  logrotate::rule { "${app_name} indexer":
+    ensure       => $ensure,
+    path         => $indexer_log,
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
+  }
+
   service { $app_name: ensure => running }
 
   file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
