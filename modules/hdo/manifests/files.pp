@@ -8,12 +8,6 @@ class hdo::files(
   $files_root = $root
   $ssl        = true
 
-  file { [$files_root, '/webapps/valgvake']:
-    ensure => 'directory',
-    mode   => '0775',
-    owner  => 'hdo'
-  }
-
   file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
     ensure  => file,
     owner   => root,
@@ -32,12 +26,4 @@ class hdo::files(
     notify  => Service['nginx']
 
   }
-
-  exec { 'clone-hal-browser':
-    command => "git clone git://github.com/mikekelly/hal-browser ${files_root}/hal-browser",
-    user    => hdo,
-    creates => "${files_root}/hal-browser",
-    require => File[$files_root]
-  }
-
 }
