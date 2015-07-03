@@ -103,7 +103,7 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  logrotate::rule { "${app_name} indexer":
+  logrotate::rule { "${app_name}-indexer":
     ensure       => $ensure,
     path         => $indexer_log,
     compress     => true,
