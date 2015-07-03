@@ -31,7 +31,7 @@ class hdo::elasticsearch(
     config                => $config,
   }
 
-  elasticsearch::instance { 'hdo01':
+  elasticsearch::instance { $::hostname:
     config        => $config,
     init_defaults => $init_defaults,
   }
