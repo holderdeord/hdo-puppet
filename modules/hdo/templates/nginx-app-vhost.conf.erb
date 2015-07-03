@@ -14,7 +14,7 @@ server {
   server_name   <%= @server_name %> "~^(beta|www|hdo-app-vm)\.holderdeord\.no$";
 
   <% if @ssl %>
-    <%= scope.function_template('hdo/nginx-ssl-conf.erb') %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
   proxy_cache_key       "$scheme://$host$uri$is_args$args";

@@ -9,7 +9,7 @@ server {
   autoindex   off;
 
   <% if @ssl %>
-    <%= scope.function_template('hdo/nginx-ssl-conf.erb') %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
   location ~ /pdf/(alternative-statsbudsjett|partiprogram) {

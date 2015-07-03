@@ -118,7 +118,7 @@ class passenger::nginx(
     ensure  => directory,
     owner   => root,
     group   => 'ssl-cert',
-    mode    => '0640'
+    mode    => '0640',
     require => Exec['install-passenger-nginx']
   }
 

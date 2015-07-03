@@ -20,7 +20,7 @@ server {
   <% end %>
 
   <% if @ssl %>
-    <%= scope.function_template('hdo/nginx-ssl-conf.erb') %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
   add_header         X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response

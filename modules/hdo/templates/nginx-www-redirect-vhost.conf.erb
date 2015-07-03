@@ -7,7 +7,7 @@ server {
   server_name "~^(beta\.)?holderdeord.no";
 
   <% if @ssl %>
-    <%= scope.function_template('hdo/nginx-ssl-conf.erb') %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
   return 301 $scheme://www.holderdeord.no$request_uri;
