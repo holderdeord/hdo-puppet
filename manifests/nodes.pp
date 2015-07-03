@@ -128,7 +128,7 @@ node 'app' {
   hdo::networkinterfaces { 'app': }
 }
 
-node 'hdo01', 'hdo02' {
+node 'hdo01' {
   include hdo::users::admins
   include hdo::nodejs
 
@@ -144,7 +144,8 @@ node 'hdo01', 'hdo02' {
   }
 
   class { 'hdo::transcripts':
-    server_name => 'tale.holderdeord.no'
+    server_name => 'tale.holderdeord.no',
+    ssl         => true
   }
 
   hdo::firewall { 'hdo01': }
