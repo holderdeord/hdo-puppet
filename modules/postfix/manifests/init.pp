@@ -3,6 +3,7 @@ class postfix(
   $hostname = $::fqdn,
   $domain = $::domain,
   $network_table_extras = [],
+  $munin = true
   ) {
 
   $packages = ['postfix', 'heirloom-mailx']
@@ -57,7 +58,10 @@ class postfix(
     require => Package['postfix']
   }
 
-  munin::plugin { 'postfix_mailqueue': }
-  munin::plugin { 'postfix_mailstats': }
-  munin::plugin { 'postfix_mailvolume': }
+  if $munin {
+    munin::plugin { 'postfix_mailqueue': }
+    munin::plugin { 'postfix_mailstats': }
+    munin::plugin { 'postfix_mailvolume': }
+  }
+
 }

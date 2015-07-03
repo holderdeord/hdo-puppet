@@ -168,9 +168,9 @@ node 'hdo02' {
   }
 
   class { 'postfix':
-    smtp_listen => 'all',
-    # make sure to open firewall if you modify this:
     network_table_extras => ['46.4.88.198'],
+    smtp_listen          => 'all',
+    munin                => false
   }
 
   class { 'hdo::webapp':
