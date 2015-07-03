@@ -185,8 +185,8 @@ node 'hdo02' {
   }
 
   class { 'hdo::database':
-    munin        => true,
-    collectd     => true,
+    munin        => false,
+    collectd     => false,
     local_backup => present,
   }
 
