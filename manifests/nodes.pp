@@ -190,7 +190,10 @@ node 'hdo02' {
     local_backup => present,
   }
 
-  include hdo::files
+  class { 'hdo::files':
+    server_name => 'files2.holderdeord.no'
+  }
+
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
   include hdo::webapp::apiupdater

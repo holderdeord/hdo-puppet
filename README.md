@@ -121,3 +121,5 @@ Install Puppet >= 3.0:
     $ git clone https://github.com/holderdeord/hdo-puppet /opt/hdo-puppet
     $ cd /opt/hdo-puppet
     $ script/bootstrap && puppet apply --modulepath modules:third-party manifests/site.pp
+
+If the first run fails, try a `apt-get update` and run it again.

@@ -1,8 +1,11 @@
-class hdo::files {
+class hdo::files(
+  $root = '/webapps/files',
+  $server_name = 'files.holderdeord.no'
+  ) {
   include hdo::common
   include hdo::params
 
-  $files_root = '/webapps/files'
+  $files_root = $root
   $ssl        = true
 
   file { [$files_root, '/webapps/valgvake']:
