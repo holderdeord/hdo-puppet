@@ -176,7 +176,8 @@ node 'hdo02' {
   class { 'hdo::webapp':
     server_name       => 'www2.holderdeord.no',
     db_host           => 'localhost',
-    elasticsearch_url => 'http://localhost:9200'
+    elasticsearch_url => 'http://localhost:9200',
+    ssl               => true
   }
 
   class { 'hdo::transcripts':
