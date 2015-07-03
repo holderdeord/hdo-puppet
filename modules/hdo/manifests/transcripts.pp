@@ -2,7 +2,8 @@ class hdo::transcripts(
   $ensure      = 'present',
   $server_name = 'transcripts.holderdeord.no',
   $port        = 7575,
-  $restrict    = false
+  $restrict    = false,
+  $ssl         = false
   ) {
   include hdo::common
   include hdo::params

@@ -8,6 +8,10 @@ server {
   root        <%= @files_root %>;
   autoindex   off;
 
+  <% if @ssl %>
+    <%= scope.function_template('hdo/nginx-ssl-conf.erb') %>
+  <% end %>
+
   location ~ /pdf/(alternative-statsbudsjett|partiprogram) {
     autoindex on;
   }

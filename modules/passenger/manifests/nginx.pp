@@ -10,6 +10,7 @@ class passenger::nginx(
   $init_script = '/etc/init.d/nginx'
   $config_dir  = "${root}/conf"
   $log_dir     = "${root}/logs"
+  $ssl_dir     = "${root}/ssl"
   $sites_dir   = "${config_dir}/sites-enabled"
   $tmp_dir     = '/tmp/nginx'
   $config      = "${config_dir}/nginx.conf"
@@ -106,6 +107,21 @@ class passenger::nginx(
     require => Exec['install-passenger-nginx']
   }
 
+  file { $ssl_dir:
+    ensure  => directory,
+    owner   => root,
+    group   => 'ssl-cert',
+    require => Exec['install-passenger-nginx']
+  }
+
+  file { "${ssl_dir}/private":
+    ensure  => directory,
+    owner   => root,
+    group   => 'ssl-cert',
+    mode    => '0640'
+    require => Exec['install-passenger-nginx']
+  }
+
   service { 'nginx':
     ensure     => running,
     enable     => true,
@@ -155,6 +171,7 @@ class passenger::nginx(
       notify  => Service['collectd'],
     }
   }
+
 
 
 }
