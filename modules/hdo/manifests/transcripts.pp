@@ -72,9 +72,9 @@ class hdo::transcripts(
 
   cron { "download images for ${app_name} weekly":
     ensure      => $ensure,
-    command     => "bash -l -c 'cd ${transcripts_root} && bundle exec ruby scripts/download_images.rb > /dev/null'",
+    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby ../scripts/download_images.rb > /dev/null'",
     user        => hdo,
-    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}", "BUNDLE_GEMFILE=${indexer_root}/Gemfile"],
+    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Exec["bundle ${app_name} indexer"]],
     hour        => '2',
     minute      => '20',
