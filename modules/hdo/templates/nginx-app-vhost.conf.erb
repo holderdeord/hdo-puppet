@@ -49,7 +49,6 @@ server {
   location @passenger {
     passenger_enabled        on;
     passenger_min_instances  <%= scope.lookupvar('passenger::params::min_instances') %>;
-    passenger_env_var        HTTP_X_FORWARDED_PROTO $scheme;
     rails_env                <%= scope.lookupvar('hdo::params::environment') %>;
   }
 
