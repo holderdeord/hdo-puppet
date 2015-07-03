@@ -112,28 +112,12 @@ the permission should be writable by root and readable by the puppet group:
 
 #### Setting up agent on a new server
 
-[This script](https://gist.github.com/jarib/ed769214bac6a10a12b0) automates the process below.
-
 Install Puppet >= 3.0:
 
     $ wget http://apt.puppetlabs.com/puppetlabs-release-trusty.deb
     $ dpkg -i puppetlabs-release-trusty.deb
     $ apt-get update
-    $ apt-get install puppet
-
-Configure the node to talk to the puppetmaster by adding the following to /etc/puppet/puppet.conf:
-
-    [agent]
-    server = puppet.holderdeord.no
-    pluginsync = true
-
-Then sign the SSL certificate as described [here](http://docs.puppetlabs.com/learning/agent_master_basic.html).
-
-
-If you want to run without a puppetmaster, you need a few additional packages:
-
-    $ apt-get install ruby-full git-core build-essential
-
-Then apply the site manifest:
-
-    puppet apply --modulepath modules:third-party manifests/site.pp
+    $ apt-get install puppet ruby-full git-core build-essential
+    $ git clone https://github.com/holderdeord/hdo-puppet /opt/hdo-puppet
+    $ cd /opt/hdo-puppet
+    $ script/bootstrap && puppet apply --modulepath modules:third-party manifests/site.pp

@@ -148,6 +148,53 @@ node 'hdo01' {
     ssl         => true
   }
 
-  hdo::firewall { 'hdo01': }
+  hdo::firewall { 'basic': }
 
+}
+
+node 'hdo02' {
+  include hdo::users::admins
+  include hdo::nodejs
+
+  class { 'hdo::elasticsearch': }
+
+  class { 'passenger::nginx':
+    port     => 80,
+    nagios   => false,
+    munin    => false,
+    collectd => false,
+    purge    => true,
+    pingdom  => true
+  }
+
+  class { 'postfix':
+    smtp_listen => 'all',
+    # make sure to open firewall if you modify this:
+    network_table_extras => ['46.4.88.198'],
+  }
+
+  class { 'hdo::webapp':
+    server_name       => 'www2.holderdeord.no',
+    db_host           => 'localhost',
+    elasticsearch_url => 'http://localhost:9200'
+  }
+
+  class { 'hdo::transcripts':
+    server_name => 'tale2.holderdeord.no',
+    ssl         => true
+  }
+
+  class { 'hdo::database':
+    munin        => true,
+    collectd     => true,
+    local_backup => present,
+  }
+
+  include hdo::files
+  include hdo::webapp::exporter
+  include hdo::webapp::apichangelog
+  include hdo::webapp::apiupdater
+  # include hdo::webapp::rebeltweeter
+
+  hdo::firewall { 'basic': }
 }
