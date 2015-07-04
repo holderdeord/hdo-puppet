@@ -1,7 +1,9 @@
 class hdo::transcripts(
   $ensure      = 'present',
   $server_name = 'transcripts.holderdeord.no',
-  $port        = 7575
+  $port        = 7575,
+  $restrict    = false,
+  $ssl         = false
   ) {
   include hdo::common
   include hdo::params
@@ -14,36 +16,42 @@ class hdo::transcripts(
   $app_log          = "/var/log/${app_name}.log"
   $indexer_log      = '/var/log/hdo-transcript-indexer.log'
 
+  if $ensure == 'present' {
+    exec { "clone ${app_name}":
+      command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root}",
+      user    => hdo,
+      creates => $webapp_root,
+      require => [Package['git-core'], File[$hdo::params::webapp_root]]
+    }
+
+    exec { "build ${app_name} webapp":
+      command     => "bash -l -c 'npm run build'",
+      user        => hdo,
+      cwd         => $webapp_root,
+      onlyif      => "ls ${public_root}/ | grep -Ev 'bundle.+.js$' > /dev/null",
+      environment => ["HOME=${hdo::params::home}"],
+      require     => [Class['hdo::nodejs'], Exec["clone ${app_name}"]]
+    }
+
+    exec { "bundle ${app_name} indexer":
+      command => "bash -l -c 'bundle install --deployment'",
+      cwd     => $indexer_root,
+      user    => hdo,
+      require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
+    }
+  } else {
+    file { $transcripts_root: ensure => absent }
+  }
+
   file { $app_log:
-    ensure => file,
+    ensure => $ensure,
     owner  => hdo
   }
 
-  exec { "clone ${app_name}":
-    command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root}",
-    user    => hdo,
-    creates => $webapp_root,
-    require => [Package['git-core'], File[$hdo::params::webapp_root]]
-  }
-
-  exec { "build ${app_name} webapp":
-    command     => "bash -l -c 'npm run build'",
-    user        => hdo,
-    cwd         => $webapp_root,
-    creates     => "${public_root}/bundle.js",
-    environment => ["HOME=${hdo::params::home}"],
-    require     => [Class['nodejs'], Exec["clone ${app_name}"]]
-  }
-
-  exec { "bundle ${app_name} indexer":
-    command => "bash -l -c 'bundle install --deployment'",
-    cwd     => $indexer_root,
-    user    => hdo,
-    require => Exec["clone ${app_name}"]
-  }
+  $purge = true
 
   file { "${passenger::nginx::sites_dir}/transcripts.holderdeord.no.conf":
-    ensure  => file,
+    ensure  => $ensure,
     owner   => root,
     group   => root,
     mode    => '0644',
@@ -52,7 +60,7 @@ class hdo::transcripts(
   }
 
   file { $indexer_log:
-    ensure => file,
+    ensure => $ensure,
     owner  => hdo,
   }
 
@@ -62,8 +70,19 @@ class hdo::transcripts(
     user        => hdo,
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Exec["bundle ${app_name} indexer"], File[$indexer_log]],
-    hour        => '3',
-    minute      => '30'
+    hour        => '4',
+    minute      => '50'
+  }
+
+  cron { "download images for ${app_name} weekly":
+    ensure      => $ensure,
+    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby ../scripts/download_images.rb > /dev/null'",
+    user        => hdo,
+    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
+    require     => [Exec["bundle ${app_name} indexer"]],
+    hour        => '2',
+    minute      => '20',
+    weekday     => '2'
   }
 
   $description = $app_name
@@ -88,13 +107,37 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  service { $app_name: ensure => running }
+  logrotate::rule { "${app_name}-indexer":
+    ensure       => $ensure,
+    path         => $indexer_log,
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
+  }
+
+  $service_ensure = $ensure ? {
+    present => 'running',
+    default => 'stopped',
+  }
+
+  service { $app_name:
+    ensure => $service_ensure
+  }
 
   file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
-    ensure  => present,
+    ensure  => $ensure,
     owner   => root,
     group   => root,
     mode    => '0440',
     content => "hdo ALL = (root) NOPASSWD: /sbin/start ${app_name}, /sbin/stop ${app_name}, /sbin/restart ${app_name}, /sbin/status ${app_name}\n",
   }
+
+  file { '/etc/profile.d/hdo-transcripts.sh':
+    ensure  => $ensure,
+    mode    => '0775',
+    content => template('hdo/hdo-transcripts-profile.sh')
+  }
+
 }

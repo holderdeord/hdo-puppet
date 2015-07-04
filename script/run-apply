@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+if [[ "$#" -eq 0 || "$#" > 2 ]]; then
+  echo "USAGE: $0 [server] [puppet args]"
+  exit 65
+fi
+
+
+SERVER=$1
+shift
+
+ROOT="$(dirname $0)/.."
+TARBALL="/tmp/hdo-puppet-drop.tgz"
+
+COMMAND="
+if [[ -d /tmp/hdo-puppet-drop ]]; then
+  sudo rm -rf /tmp/hdo-puppet-drop
+fi
+
+mkdir /tmp/hdo-puppet-drop
+
+cd /tmp && \
+  tar zxf /tmp/hdo-puppet-drop.tgz -C hdo-puppet-drop && \
+  cd hdo-puppet-drop && \
+  script/bootstrap && \
+  sudo bundle exec puppet apply --test --modulepath modules:thirdparty manifests/site.pp $*
+"
+
+tar zc --exclude .git --exclude .tmp --exclude .bundle -f $TARBALL -C $ROOT .
+scp "${TARBALL}" "${SERVER}:${TARBALL}"
+
+echo "Running puppet @ ${SERVER}: ${COMMAND}"
+ssh -t "${SERVER}" "$COMMAND"
+

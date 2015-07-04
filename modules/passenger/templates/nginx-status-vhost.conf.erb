@@ -2,14 +2,24 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
-# nginx status
 server {
   listen <%= @listen %>;
-  server_name localhost;
+  server_name localhost <%= @fqdn %>;
+
   location /nginx_status {
     stub_status on;
     access_log off;
     allow 127.0.0.1;
     deny all;
   }
+
+  <% if @pingdom %>
+    location /pingdom/ {
+      passenger_app_root <%= @pingdom_dir %>;
+      passenger_enabled on;
+      passenger_app_type node;
+      passenger_startup_file index.js;
+      passenger_restart_dir <%= @pingdom_dir %>;
+    }
+  <% end %>
 }

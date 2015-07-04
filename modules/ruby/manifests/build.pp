@@ -1,6 +1,6 @@
 class ruby::build {
   $dir      = '/opt/ruby-build'
-  $revision = '0a9b5e3a1e2c38c58abe8ca10d60f8d0c8a14249'
+  $revision = 'e932d47195d76d6be9635a012056069e794039e0'
 
   exec { 'clone-ruby-build':
     command => "git clone git://github.com/sstephenson/ruby-build ${dir} && cd ${dir}",
@@ -11,7 +11,7 @@ class ruby::build {
   exec { 'update-ruby-build':
     command => "git reset --hard origin/master && git pull && git reset --hard ${revision} && ./install.sh",
     cwd     => $dir,
-    onlyif  => "git rev-parse HEAD | grep -v ${revision}",
+    onlyif  => "git rev-parse HEAD | grep -v ${revision} || [ ! -f /usr/local/bin/ruby-build ]",
     require => Exec['clone-ruby-build'],
   }
 }

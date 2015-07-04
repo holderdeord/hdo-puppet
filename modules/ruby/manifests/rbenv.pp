@@ -1,6 +1,6 @@
 class ruby::rbenv {
   $dir      = '/opt/rbenv'
-  $revision = '9375e99f921f428849f19efe2a2e500b3295d1a7'
+  $revision = '83ac0fbd94186f8f75a8217229ca845b0d25c131'
 
   exec { 'clone-rbenv':
     command => "git clone git://github.com/sstephenson/rbenv.git ${dir} && cd ${dir}",

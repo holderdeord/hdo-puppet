@@ -6,7 +6,6 @@ class hdo::common {
   package { [
       'htop',
       'vim',
-      'build-essential',
       'git-core',
       'emacs23-nox',
       'sysstat',

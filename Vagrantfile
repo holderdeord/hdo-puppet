@@ -1,12 +1,14 @@
 Vagrant.configure("2") do |config|
-  default_box     = 'hdo-devel-3'
-  default_box_url = "http://files.holderdeord.no/dev/setup/hdo-devel-3.box"
+  default_box     = 'ubuntu/trusty64'
+
+  config.vm.provider 'virtualbox' do |vm|
+    vm.memory = 2048
+  end
 
   config.vm.define :ops do |ops|
     ops.vm.host_name = 'hdo-ops-vm'
 
-    ops.vm.box       = default_box
-    ops.vm.box_url   = default_box_url
+    ops.vm.box = default_box
 
     ops.vm.network 'private_network', ip: "192.168.1.10"
   end
@@ -14,8 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :app do |app|
     app.vm.host_name = 'hdo-app-vm'
 
-    app.vm.box       = default_box
-    app.vm.box_url   = default_box_url
+    app.vm.box = default_box
 
     app.vm.network 'private_network', ip: '192.168.1.11'
   end

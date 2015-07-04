@@ -29,28 +29,32 @@ node 'hdo-ops-vm' {
 }
 
 node 'hdo-app-vm' {
-  # include nagios::target
+  include hdo::users::admins
+  include hdo::nodejs
 
-  class { 'hdo::collectd':
-    graphite => '192.168.1.10'
+  class { 'hdo::elasticsearch': }
+
+  class { 'passenger::nginx':
+    port     => 80,
+    nagios   => false,
+    munin    => false,
+    collectd => false,
+    purge    => true
   }
 
-  class { 'hdo::webapp':
-    db_host           => 'localhost',
-    elasticsearch_url => 'http://localhost:9200'
+  class { 'hdo::transcripts':
+    server_name => 'tale.holderdeord.no'
   }
 
   class { 'hdo::database':
-    local_backup => absent,
-    collectd     => true,
+    munin        => false,
+    collectd     => false,
   }
 
-  include hdo::files
-
-  class { 'hdo::elasticsearch':
-    version      => '1.1.1',
-    cluster_name => 'holderdeord-staging'
+  class { 'hdo::webapp':
+    server_name       => 'app.holderdeord.no',
+    db_host           => 'localhost',
+    elasticsearch_url => 'http://localhost:9200',
   }
 
-  class { 'hdo::blog': drafts => true }
 }

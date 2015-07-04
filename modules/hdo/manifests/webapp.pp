@@ -16,7 +16,6 @@ class hdo::webapp(
   $shared_root = "${deploy_root}/shared"
   $config_root = "${deploy_root}/shared/config"
   $public_dir  = "${app_root}/public"
-  $ssl_path    = "${config_root}/secure.holderdeord.no"
 
   file {
     [
@@ -40,7 +39,9 @@ class hdo::webapp(
     ensure => 'installed'
   }
 
-  class { 'passenger::nginx': port => $listen }
+  if ! defined(Class['passenger::nginx']) {
+    class { 'passenger::nginx': port => $listen }
+  }
 
   file { "${passenger::nginx::sites_dir}/${server_name}.conf":
     ensure  => file,
@@ -54,7 +55,7 @@ class hdo::webapp(
   file { '/etc/profile.d/hdo-webapp.sh':
     ensure  => file,
     mode    => '0775',
-    content => template('hdo/profile.sh')
+    content => template('hdo/hdo-site-profile.sh')
   }
 
   file { "${config_root}/database.yml":
@@ -78,15 +79,5 @@ class hdo::webapp(
     dateext      => true,
     ifempty      => false,
     missingok    => true
-  }
-
-  if $ssl == true {
-    # we ensure correct permissions here, but the content must be set up manually
-    file { ["${ssl_path}.crt", "${ssl_path}.key"]:
-      ensure => file,
-      owner  => root,
-      group  => root,
-      mode   => '0400'
-    }
   }
 }

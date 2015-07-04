@@ -4,9 +4,16 @@
 
 server {
   listen      80;
-  server_name files.holderdeord.no;
+  server_name <%= @server_name %>;
   root        <%= @files_root %>;
   autoindex   off;
+
+  access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
+  error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
+
+  <% if @ssl %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
+  <% end %>
 
   location ~ /pdf/(alternative-statsbudsjett|partiprogram) {
     autoindex on;

@@ -11,22 +11,37 @@ server {
 
 server {
   listen        <%= @listen %>;
-  root          <%= scope.lookupvar('public_dir') %>;
   server_name   <%= @server_name %> "~^(beta|www|hdo-app-vm)\.holderdeord\.no$";
 
-  <% if @ssl == true %>
-    listen 443 default ssl;
-
-    ssl_protocols              SSLv3 TLSv1;
-    ssl_ciphers                HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers  on;
-
-    ssl_certificate            <%= @ssl_path %>.crt;
-    ssl_certificate_key        <%= @ssl_path %>.key;
-
-    ssl_session_cache          shared:SSL:10m;
-    ssl_session_timeout        5m;
+  <% if @ssl %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
+
+  access_log            /opt/nginx/logs/<%= @server_name %>.access.log combined;
+  error_log             /opt/nginx/logs/<%= @server_name %>.error.log;
+
+  proxy_cache_key       "$scheme://$host$uri$is_args$args";
+  proxy_cache           hdo;
+  proxy_cache_bypass    $http_cache_control; # respect Cache-Control=no-cache from the client
+  proxy_cache_use_stale updating; # error timeout invalid_header updating
+  proxy_cache_purge     PURGE from all;
+
+  add_header            X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response
+
+  proxy_set_header      Host $http_host;
+  proxy_set_header      X-Real-IP $remote_addr;
+  proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header      X-Nginx-Proxy true;
+  proxy_set_header      X-Forwarded-Proto $scheme;
+
+  location / {
+    proxy_pass http://127.0.0.1:<%= Integer(@listen) + 1 %>;
+  }
+}
+
+server {
+  listen        <%= Integer(@listen) + 1 %>;
+  root          <%= scope.lookupvar('public_dir') %>;
 
   location ~ .(php)$ {
     deny all;
@@ -35,12 +50,9 @@ server {
   try_files $uri /system/maintenance.html @passenger;
 
   location @passenger {
-    passenger_enabled                on;
-    passenger_min_instances          <%= scope.lookupvar('passenger::params::min_instances') %>;
-    passenger_set_cgi_param          HTTP_X_FORWARDED_PROTO $scheme;
-    passenger_show_version_in_header off;
-
-    rails_env <%= scope.lookupvar('hdo::params::environment') %>;
+    passenger_enabled        on;
+    passenger_min_instances  <%= scope.lookupvar('passenger::params::min_instances') %>;
+    rails_env                <%= scope.lookupvar('hdo::params::environment') %>;
   }
 
   error_page 500 502 504 /500.html;
@@ -73,7 +85,6 @@ server {
   location ~ ^/(assets|images|javascripts|stylesheets|swfs|system|uploads)/ {
     gzip_static on;
     expires     max;
-    add_header  Cache-Control public;
     add_header  Last-Modified "";
     add_header  ETag "";
     break;

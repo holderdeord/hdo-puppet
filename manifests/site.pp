@@ -52,6 +52,26 @@ Exec {
   ]
 }
 
+package { ['build-essential']:
+  ensure => installed,
+}
+
+Logrotate::Rule {
+  su       => true,
+  su_owner => root,
+  su_group => syslog
+}
+
+class { 'hiera':
+  eyaml          => true,
+  hiera_yaml     => '/etc/puppet/hiera.yaml',
+  eyaml_datadir  => '/opt/hdo-puppet/hiera',
+  datadir        => '/opt/hdo-puppet/hiera',
+  datadir_manage => false,
+  hierarchy      => [ 'secure', '%{hostname}', 'common' ]
+}
+
 include hdo::users
+include hdo::timezone
 
 import 'nodes.pp'
