@@ -63,6 +63,11 @@ node 'hdo02' {
     ssl         => true
   }
 
+  class { 'hdo::blog':
+    server_name => 'blog.holderdeord.no',
+    drafts      => true
+  }
+
   class { 'hdo::database':
     munin        => false,
     collectd     => false,

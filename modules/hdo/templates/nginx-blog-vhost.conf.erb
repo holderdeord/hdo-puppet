@@ -6,6 +6,10 @@ server {
   root        <%= @blog_root %>/_site;
   autoindex   off;
 
+  <% if @ssl %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
+  <% end %>
+
   location ~ ^/(google.+\.html|robots\.txt) {  }
 
   location / {
