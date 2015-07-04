@@ -142,12 +142,6 @@ node 'hdo01' {
     pingdom  => true
   }
 
-  class { 'hdo::transcripts':
-    ensure      => absent,
-    server_name => 'tale.holderdeord.no',
-    ssl         => true
-  }
-
   class { 'hdo::blog':
     server_name => 'drafts.holderdeord.no',
     drafts      => true
