@@ -52,7 +52,7 @@ class passenger::nginx(
   }
 
   exec { 'install-passenger-nginx':
-    command => "bash -l -c 'passenger-install-nginx-module --extra-configure-flags=\"${extra_flags} --with-http_stub_status_module --prefix=${root}\" --auto --auto-download --prefix=${root}'",
+    command => "bash -l -c 'passenger-install-nginx-module --extra-configure-flags=\"${extra_flags} --with-http_spdy_module --with-http_stub_status_module --prefix=${root}\" --auto --auto-download --prefix=${root}'",
     creates => $root,
     require => [Ruby::Gem['passenger'], Package['libcurl4-openssl-dev']],
     timeout => 900
