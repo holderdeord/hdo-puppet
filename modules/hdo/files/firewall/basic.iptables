@@ -35,7 +35,9 @@ $IPT -A INPUT -p tcp ! --syn -m state --state NEW -s 0.0.0.0/0 -j DROP
 # Accept inbound TCP packets
 $IPT -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# accept SSH
+# accept SSH but rate limited to 3/min
+$IPT -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
+$IPT -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 -j DROP
 $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
 # Accept inbound ICMP messages
