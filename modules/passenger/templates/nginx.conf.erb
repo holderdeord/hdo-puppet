@@ -55,11 +55,7 @@ http {
 
   ssl_certificate                /opt/nginx/ssl/star.holderdeord.no.cer;
   ssl_certificate_key            /opt/nginx/ssl/star.holderdeord.no.key;
-
-  # Generate this using `openssl dhparam -out /opt/nginx/ssl/star.holderdeord.no.dhparams.pem 2048`
-  # See https://weakdh.org/sysadmin.html for more info.
-  
-  ssl_dhparam                    /opt/nginx/ssl/star.holderdeord.no.dhparams.pem;
+  ssl_dhparam                    /opt/nginx/ssl/star.holderdeord.no.dhparam.pem;
 
   ssl_session_cache              shared:SSL:10m;
   ssl_session_timeout            5m;
