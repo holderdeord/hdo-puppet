@@ -44,3 +44,4 @@ mod "elasticsearch-elasticsearch",
 
 mod "puppetlabs-java", "1.3.0"
 mod "hunner-hiera", "1.2.0"
+mod "puppetlabs-ntp", "4.0.0"

@@ -11,6 +11,8 @@ FORGE
     puppetlabs-inifile (1.0.0)
     puppetlabs-java (1.3.0)
       puppetlabs-stdlib (>= 2.4.0)
+    puppetlabs-ntp (4.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
 
 GIT
   remote: git://github.com/jarib/puppet-hipchat
@@ -74,10 +76,10 @@ GIT
 
 GIT
   remote: git://github.com/rodjek/puppet-logrotate.git
-  ref: v1.0.2
-  sha: 1a8431fda63809794e0732a6b0ae4bd6f968b16e
+  ref: 89ee645e2350045be48df7ac3ef86cbe4cd9b096
+  sha: 89ee645e2350045be48df7ac3ef86cbe4cd9b096
   specs:
-    rodjek-logrotate (1.0.2)
+    rodjek-logrotate (1.1.1)
 
 GIT
   remote: https://github.com/elasticsearch/puppet-elasticsearch
@@ -105,6 +107,7 @@ DEPENDENCIES
   puppetlabs-firewall (>= 0)
   puppetlabs-java (= 1.3.0)
   puppetlabs-nodejs (>= 0)
+  puppetlabs-ntp (= 4.0.0)
   puppetlabs-postgresql (>= 0)
   puppetlabs-puppetdb (>= 0)
   puppetlabs-stdlib (>= 0)
