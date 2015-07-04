@@ -16,31 +16,27 @@ class hdo::transcripts(
   $app_log          = "/var/log/${app_name}.log"
   $indexer_log      = '/var/log/hdo-transcript-indexer.log'
 
-  if $ensure == 'present' {
-    exec { "clone ${app_name}":
-      command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root}",
-      user    => hdo,
-      creates => $webapp_root,
-      require => [Package['git-core'], File[$hdo::params::webapp_root]]
-    }
+  exec { "clone ${app_name}":
+    command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root}",
+    user    => hdo,
+    creates => $webapp_root,
+    require => [Package['git-core'], File[$hdo::params::webapp_root]]
+  }
 
-    exec { "build ${app_name} webapp":
-      command     => "bash -l -c 'npm run build'",
-      user        => hdo,
-      cwd         => $webapp_root,
-      onlyif      => "ls ${public_root}/ | grep -Ev 'bundle.+.js$' > /dev/null",
-      environment => ["HOME=${hdo::params::home}"],
-      require     => [Class['hdo::nodejs'], Exec["clone ${app_name}"]]
-    }
+  exec { "build ${app_name} webapp":
+    command     => "bash -l -c 'npm run build'",
+    user        => hdo,
+    cwd         => $webapp_root,
+    onlyif      => "ls ${public_root}/ | grep -Ev 'bundle.+.js$' > /dev/null",
+    environment => ["HOME=${hdo::params::home}"],
+    require     => [Class['hdo::nodejs'], Exec["clone ${app_name}"]]
+  }
 
-    exec { "bundle ${app_name} indexer":
-      command => "bash -l -c 'bundle install --deployment'",
-      cwd     => $indexer_root,
-      user    => hdo,
-      require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
-    }
-  } else {
-    file { $transcripts_root: ensure => absent }
+  exec { "bundle ${app_name} indexer":
+    command => "bash -l -c 'bundle install --deployment'",
+    cwd     => $indexer_root,
+    user    => hdo,
+    require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
   }
 
   file { $app_log:
