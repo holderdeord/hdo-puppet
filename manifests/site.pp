@@ -57,12 +57,10 @@ package { ['build-essential']:
 }
 
 class { 'hiera':
-  hierarchy => [
-    'secure',
-    '%{hostname}',
-    'common',
-  ],
-  eyaml => true
+  eyaml          => true,
+  datadir        => "/opt/hdo-puppet/hiera",
+  datadir_manage => false,
+  hierarchy      => [ 'secure', '%{hostname}', 'common' ]
 }
 
 include hdo::users
