@@ -20,7 +20,8 @@ node 'hdo01' {
 
   class { 'hdo::blog':
     server_name => 'drafts.holderdeord.no',
-    drafts      => true
+    drafts      => true,
+    restrict    => true,
   }
 
   class { 'hdo::database::backup_sync':
@@ -65,7 +66,8 @@ node 'hdo02' {
 
   class { 'hdo::blog':
     server_name => 'blog.holderdeord.no',
-    drafts      => true
+    drafts      => true,
+    restrict    => false,
   }
 
   class { 'hdo::database':

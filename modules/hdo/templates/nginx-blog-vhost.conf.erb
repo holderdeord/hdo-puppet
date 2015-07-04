@@ -1,6 +1,5 @@
 server {
   listen      80;
-  listen      443 ssl;
 
   server_name <%= @server_name %>;
   root        <%= @blog_root %>/_site;
@@ -10,10 +9,12 @@ server {
     <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
-  location ~ ^/(google.+\.html|robots\.txt) {  }
+  <% if @restrict %>
+    location ~ ^/(google.+\.html|robots\.txt) {  }
 
-  location / {
-    auth_basic 'Restricted';
-    auth_basic_user_file /opt/nginx/.htpasswd;
-  }
+    location / {
+      auth_basic 'Restricted';
+      auth_basic_user_file /opt/nginx/.htpasswd;
+    }
+  <% end %>
 }

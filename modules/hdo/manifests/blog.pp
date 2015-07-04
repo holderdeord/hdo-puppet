@@ -2,6 +2,7 @@ class hdo::blog(
   $server_name = $::fqdn,
   $drafts      = false,
   $ssl         = true,
+  $restrict    = false,
 ) {
   include hdo::common
   include hdo::params
