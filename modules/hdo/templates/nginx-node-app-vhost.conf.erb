@@ -2,8 +2,23 @@
 # This file is managed by Puppet. Local edits will be lost.
 #
 
+<% if @ssl %>
 server {
-  listen         80;
+  listen          80;
+  server_name     <%= @server_name %>;
+
+  return          301 https://$server_name$request_uri;
+}
+<% end %>
+
+server {
+
+  <% if @ssl %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
+  <% else %>
+    listen       80;
+  <% end %>
+
   server_name    <%= @server_name %>;
   root           <%= @public_root %>;
   try_files      $uri @node;
@@ -20,10 +35,6 @@ server {
 
   <% if @purge %>
   proxy_cache_purge  PURGE from <%= @purge == true ? 'all' : @purge %>;
-  <% end %>
-
-  <% if @ssl %>
-    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
   add_header         X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response

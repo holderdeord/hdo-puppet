@@ -1,13 +1,22 @@
+<% if @ssl %>
 server {
-  listen      80;
+  listen          80;
+  server_name     <%= @server_name %>;
 
-  server_name <%= @server_name %>;
-  root        <%= @blog_root %>/_site;
-  autoindex   off;
+  return          301 https://$server_name$request_uri;
+}
+<% end %>
 
+server {
   <% if @ssl %>
     <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
+  <% else %>
+    listen       80;
   <% end %>
+
+  server_name    <%= @server_name %>;
+  root           <%= @blog_root %>/_site;
+  autoindex      off;
 
   <% if @restrict %>
     location ~ ^/(google.+\.html|robots\.txt) {  }

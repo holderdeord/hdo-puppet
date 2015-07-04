@@ -6,7 +6,7 @@ server {
   listen        80;
   server_name   "~^(beta\.)?holderdeord.no";
 
-  return 301 $scheme://www.holderdeord.no$request_uri;
+  return 301 https://www.holderdeord.no$request_uri;
 }
 
 server {
