@@ -8,6 +8,9 @@ server {
   root        <%= @files_root %>;
   autoindex   off;
 
+  access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
+  error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
+
   <% if @ssl %>
     <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
