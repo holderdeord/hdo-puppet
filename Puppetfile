@@ -43,3 +43,4 @@ mod "elasticsearch-elasticsearch",
   :ref => "0.9.6"
 
 mod "puppetlabs-java", "1.3.0"
+mod "hunner-hiera", "1.2.0"

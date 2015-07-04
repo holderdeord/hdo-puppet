@@ -56,6 +56,14 @@ package { ['build-essential']:
   ensure => installed,
 }
 
+class { 'hiera':
+  hierarchy => [
+    '%{hostname}',
+    'common',
+  ],
+  eyaml => true
+}
+
 include hdo::users
 include hdo::timezone
 

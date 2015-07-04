@@ -3,6 +3,7 @@ FORGE
   specs:
     fsalum-puppetmaster (0.0.4)
       puppetlabs-inifile (>= 1.0.0)
+    hunner-hiera (1.2.0)
     puppetlabs-apt (1.1.0)
       puppetlabs-stdlib (>= 2.2.1)
     puppetlabs-concat (1.1.0-rc1)
@@ -97,6 +98,7 @@ GIT
 DEPENDENCIES
   elasticsearch-elasticsearch (>= 0)
   fsalum-puppetmaster (= 0.0.4)
+  hunner-hiera (= 1.2.0)
   jarib-hipchat (>= 0)
   pdxcat-collectd (>= 0)
   puppetlabs-apache (>= 0)
