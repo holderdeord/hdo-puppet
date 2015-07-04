@@ -153,8 +153,10 @@ class passenger::nginx(
   $dhparam_path = "${ssl_dir}/star.holderdeord.no.dhparam.pem"
 
   exec { $dhparam_path:
-    command      => "openssl dhparam -out ${dhparams_path} 2048",
-    creates      => $dhparams_path
+    command => "openssl dhparam -out ${dhparams_path} 2048",
+    creates => $dhparams_path,
+    require => File[$ssl_dir],
+    notify  => Service['nginx'],
   }
 
   service { 'nginx':
