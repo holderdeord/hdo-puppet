@@ -58,6 +58,7 @@ package { ['build-essential']:
 
 class { 'hiera':
   hierarchy => [
+    'secure',
     '%{hostname}',
     'common',
   ],
