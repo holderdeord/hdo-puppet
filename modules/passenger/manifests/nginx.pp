@@ -172,6 +172,4 @@ class passenger::nginx(
     }
   }
 
-
-
 }

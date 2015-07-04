@@ -56,6 +56,12 @@ package { ['build-essential']:
   ensure => installed,
 }
 
+Logrotate::Rule {
+  su       => true,
+  su_owner => root,
+  su_group => syslog
+}
+
 class { 'hiera':
   eyaml          => true,
   hiera_yaml     => '/etc/puppet/hiera.yaml',
