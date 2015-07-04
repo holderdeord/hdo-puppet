@@ -1,5 +1,7 @@
 server {
   listen      80;
+  listen      443 ssl;
+
   server_name <%= @server_name %>;
   root        <%= @blog_root %>/_site;
   autoindex   off;
