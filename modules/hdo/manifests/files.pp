@@ -1,6 +1,6 @@
 class hdo::files(
-  $root = '/webapps/files',
-  $server_name = 'files.holderdeord.no'
+    $root = '/webapps/files',
+    $server_name = 'files.holderdeord.no'
   ) {
   include hdo::common
   include hdo::params
