@@ -114,12 +114,22 @@ class passenger::nginx(
     require => Exec['install-passenger-nginx']
   }
 
-  file { "${ssl_dir}/private":
-    ensure  => directory,
+  file { "${ssl_dir}/star.holderdeord.no.cer":
+    ensure  => file,
     owner   => root,
     group   => 'ssl-cert',
     mode    => '0640',
-    require => Exec['install-passenger-nginx']
+    source  => 'puppet:///modules/passenger/nginx/star.holderdeord.no.cer',
+    require => File[$ssl_dir]
+  }
+
+  file { "${ssl_dir}/star.holderdeord.no.key":
+    ensure  => file,
+    owner   => root,
+    group   => 'ssl-cert',
+    mode    => '0400',
+    content => hiera('hdo_ssl_key'),
+    require => File[$ssl_dir]
   }
 
   service { 'nginx':

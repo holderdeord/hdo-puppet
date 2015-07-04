@@ -113,13 +113,10 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  $service_ensure = $ensure ? {
-    present => 'running',
-    default => 'stopped',
-  }
-
-  service { $app_name:
-    ensure => $service_ensure
+  if $ensure === 'present' {
+    service { $app_name: ensure => 'running' }
+  } else {
+    service { $app_name: ensure => 'stopped' }
   }
 
   file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
