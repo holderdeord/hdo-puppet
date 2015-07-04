@@ -143,6 +143,7 @@ node 'hdo01' {
   }
 
   class { 'hdo::transcripts':
+    ensure      => absent,
     server_name => 'tale.holderdeord.no',
     ssl         => true
   }
