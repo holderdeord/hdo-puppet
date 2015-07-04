@@ -117,9 +117,9 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  $service_ensure = $ensure == 'present' ? {
-    true  => 'running',
-    false => 'stopped',
+  $service_ensure = $ensure ? {
+    present => 'running',
+    default => 'stopped',
   }
 
   service { $app_name:
