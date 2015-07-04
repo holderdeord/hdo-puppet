@@ -198,7 +198,7 @@ node 'hdo02' {
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
   include hdo::webapp::apiupdater
-  # include hdo::webapp::rebeltweeter
+  include hdo::webapp::rebeltweeter
 
   hdo::firewall { 'basic': }
 }
