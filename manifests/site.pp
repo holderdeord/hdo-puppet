@@ -57,6 +57,6 @@ package { ['build-essential']:
 }
 
 include hdo::users
-include hdo::timzeone
+include hdo::timezone
 
 import 'nodes.pp'
