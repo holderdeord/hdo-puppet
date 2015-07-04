@@ -150,6 +150,11 @@ node 'hdo01' {
 
   hdo::firewall { 'basic': }
 
+  class { 'hdo::database::backup_sync':
+    target      => 'hdo@hdo02.holderdeord.no:pg-backups',
+    destination => "${hdo::params::home}/pg-backups-sync",
+  }
+
 }
 
 node 'hdo02' {
