@@ -23,12 +23,7 @@ http {
   include                         <%= @config_dir %>/mime.types;
   default_type                    application/octet-stream;
 
-  #
-  # X-Client-Country (http://en.wikipedia.org/wiki/ISO_3166-1) provided by Fastly: https://fastly.zendesk.com/entries/22381546-What-GeoIP-features-are-available-
-  #
-  log_format                      custom '$remote_addr/$http_x_forwarded_for - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $http_x_client_country';
-
-  access_log                      <%= @log_dir %>/access.log custom;
+  access_log                      <%= @log_dir %>/access.log combined;
   error_log                       <%= @log_dir %>/error.log;
 
   gzip                            on;
