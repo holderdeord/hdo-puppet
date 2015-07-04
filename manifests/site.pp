@@ -58,7 +58,9 @@ package { ['build-essential']:
 
 class { 'hiera':
   eyaml          => true,
-  datadir        => "/opt/hdo-puppet/hiera",
+  hiera_yaml     => '/etc/puppet/hiera.yaml',
+  eyaml_datadir  => '/opt/hdo-puppet/hiera',
+  datadir        => '/opt/hdo-puppet/hiera',
   datadir_manage => false,
   hierarchy      => [ 'secure', '%{hostname}', 'common' ]
 }
