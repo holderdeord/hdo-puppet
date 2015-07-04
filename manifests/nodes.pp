@@ -174,14 +174,14 @@ node 'hdo02' {
   }
 
   class { 'hdo::webapp':
-    server_name       => 'www2.holderdeord.no',
+    server_name       => 'www.holderdeord.no',
     db_host           => 'localhost',
     elasticsearch_url => 'http://localhost:9200',
     ssl               => true
   }
 
   class { 'hdo::transcripts':
-    server_name => 'tale2.holderdeord.no',
+    server_name => 'tale.holderdeord.no',
     ssl         => true
   }
 
@@ -192,7 +192,7 @@ node 'hdo02' {
   }
 
   class { 'hdo::files':
-    server_name => 'files2.holderdeord.no'
+    server_name => 'files.holderdeord.no'
   }
 
   include hdo::webapp::exporter
