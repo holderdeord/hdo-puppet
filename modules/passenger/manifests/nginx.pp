@@ -167,7 +167,7 @@ class passenger::nginx(
     missingok    => true
   }
 
-  file { "${sites_dir}/status.conf":
+  file { "${sites_dir}/00_status.conf":
     ensure  => file,
     owner   => root,
     group   => root,
@@ -175,6 +175,8 @@ class passenger::nginx(
     content => template('passenger/nginx-status-vhost.conf.erb'),
     notify  => Service['nginx']
   }
+
+  file { "${sites_dir}/status.conf": ensure => absent }
 
   if $nagios == true {
     include nagios::base
