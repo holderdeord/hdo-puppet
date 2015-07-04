@@ -93,6 +93,24 @@ class passenger::nginx(
     notify  => Service['nginx']
   }
 
+  file { "${root}/html/index.html":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    source  => 'puppet:///modules/passenger/nginx/index.html',
+    require => Exec['install-passenger-nginx'],
+  }
+
+  file { "${root}/html/50x.html":
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    source  => 'puppet:///modules/passenger/nginx/50x.html',
+    require => Exec['install-passenger-nginx'],
+  }
+
   file { $sites_dir:
     ensure  => directory,
     owner   => root,
