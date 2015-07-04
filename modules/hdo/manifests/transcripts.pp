@@ -113,7 +113,7 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  if $ensure === 'present' {
+  if $ensure == 'present' {
     service { $app_name: ensure => 'running' }
   } else {
     service { $app_name: ensure => 'stopped' }
