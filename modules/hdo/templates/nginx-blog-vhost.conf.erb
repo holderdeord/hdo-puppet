@@ -15,7 +15,7 @@ server {
   <% end %>
 
   server_name    <%= @server_name %>;
-  root           <%= @blog_root %>/_site;
+  root           <%= @site_root %>;
   autoindex      off;
 
   <% if @restrict %>

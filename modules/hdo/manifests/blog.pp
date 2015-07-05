@@ -8,6 +8,7 @@ class hdo::blog(
   include hdo::params
 
   $blog_root = "${hdo::params::webapp_root}/blog"
+  $site_root = "${blog_root}/_site"
 
   exec { 'clone hdo-blog':
     command => "git clone git://github.com/holderdeord/hdo-blog ${blog_root}",
@@ -33,6 +34,7 @@ class hdo::blog(
 
   exec { 'build hdo-blog':
     command => "bash -l -c '${build_command}'",
+    creates => $site_root,
     user    => hdo,
     cwd     => $blog_root,
     require => Exec['bundle hdo-blog']
