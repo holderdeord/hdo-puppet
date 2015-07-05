@@ -8,9 +8,11 @@ mod "puppetlabs-firewall",
   :git => "git://github.com/puppetlabs/puppetlabs-firewall.git",
   :ref => "1.6.0"
 
-mod "rodjek-logrotate",
-  :git => "git://github.com/rodjek/puppet-logrotate.git",
-  :ref => "89ee645e2350045be48df7ac3ef86cbe4cd9b096"
+# mod "rodjek-logrotate",
+#   :git => "git://github.com/rodjek/puppet-logrotate.git",
+#   :ref => "89ee645e2350045be48df7ac3ef86cbe4cd9b096"
+
+mod "b4ldr-logrotate" # has pull request fixes that we need for Ubuntu Trusty.
 
 mod "puppetlabs-postgresql",
   :git => "git://github.com/puppetlabs/puppet-postgresql.git",

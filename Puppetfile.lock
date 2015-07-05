@@ -1,6 +1,7 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
+    b4ldr-logrotate (1.1.3)
     fsalum-puppetmaster (0.0.4)
       puppetlabs-inifile (>= 1.0.0)
     hunner-hiera (1.2.0)
@@ -75,13 +76,6 @@ GIT
     puppetlabs-stdlib (4.6.0)
 
 GIT
-  remote: git://github.com/rodjek/puppet-logrotate.git
-  ref: 89ee645e2350045be48df7ac3ef86cbe4cd9b096
-  sha: 89ee645e2350045be48df7ac3ef86cbe4cd9b096
-  specs:
-    rodjek-logrotate (1.1.1)
-
-GIT
   remote: https://github.com/elasticsearch/puppet-elasticsearch
   ref: 0.9.6
   sha: e2a5bb02fcfe641614aaabd76fbdf192e5f471e4
@@ -98,6 +92,7 @@ GIT
       puppetlabs-stdlib (>= 3.0.0)
 
 DEPENDENCIES
+  b4ldr-logrotate (>= 0)
   elasticsearch-elasticsearch (>= 0)
   fsalum-puppetmaster (= 0.0.4)
   hunner-hiera (= 1.2.0)
@@ -111,5 +106,4 @@ DEPENDENCIES
   puppetlabs-postgresql (>= 0)
   puppetlabs-puppetdb (>= 0)
   puppetlabs-stdlib (>= 0)
-  rodjek-logrotate (>= 0)
 
