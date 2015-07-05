@@ -154,7 +154,7 @@ class passenger::nginx(
 
   exec { $dhparam_path:
     command => "openssl dhparam -out ${dhparam_path} 2048",
-    creates => $dhparams_path,
+    creates => $dhparam_path,
     require => File[$ssl_dir],
     notify  => Service['nginx'],
   }
