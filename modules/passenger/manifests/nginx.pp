@@ -138,7 +138,8 @@ class passenger::nginx(
     group   => 'ssl-cert',
     mode    => '0640',
     source  => 'puppet:///modules/passenger/nginx/star.holderdeord.no.cer',
-    require => File[$ssl_dir]
+    require => File[$ssl_dir],
+    notify  => Service['nginx'],
   }
 
   file { "${ssl_dir}/star.holderdeord.no.key":
@@ -147,7 +148,8 @@ class passenger::nginx(
     group   => 'ssl-cert',
     mode    => '0400',
     content => hiera('hdo_ssl_key'),
-    require => File[$ssl_dir]
+    require => File[$ssl_dir],
+    notify  => Service['nginx'],
   }
 
   $dhparam_path = "${ssl_dir}/star.holderdeord.no.dhparam.pem"
