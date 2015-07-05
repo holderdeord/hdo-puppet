@@ -9,7 +9,7 @@ You need Ruby/Rubygems installed. Then simply run:
 
     $ script/bootstrap
 
-To get familiar with our setup, look at [nodes.pp](manifests/nodes.pp)
+To get familiar with our setup, look at the [site directory](manifests/site).
 
 ### Puppet code style
 
@@ -42,10 +42,7 @@ The VMs have their [own node definitions](manifests/vagrant.pp), and can be brou
 E.g.
 
     $ vagrant up ops
-    $ vagrant up cache
     $ vagrant up app
-    $ vagrant up es
-    $ vagrant up db
 
 Check out the [Vagrantfile](Vagrantfile) to see how the VMs are set up.
 
@@ -77,42 +74,15 @@ Deploy hdo-site:
 
 ### Production
 
-##### Failover
-
-IP failover is available for 46.4.70.210 (holderdeord.no), configurable in the Hetzner robot console.
-It can be pointed at ops1 to serve a basic downtime page.
-
 ##### Hiera
 
-Once the puppetmaster is running, add [Hiera](http://projects.puppetlabs.com/projects/hiera):
-
-```console
-$ cat > /etc/puppet/hiera.yaml
----
-:hierarchy:
-  - '%{hostname}'
-  - common
-
-:logger: console
-
-:backends:
-  - yaml
-
-:yaml:
-  :datadir: '/etc/puppet/hieradata'
-^D
-$ mkdir /etc/puppet/hieradata
-```
-
-Special configuration that shouldn't be checked into version control can now be added to `/etc/puppet/hieradata/%{hostname}.yaml`. After creating these,
-the permission should be writable by root and readable by the puppet group:
-
-    $ chown root:puppet /etc/puppet/hieradata/*
-    $ chmod 0640 /etc/puppet/hieradata/*
+Hiera is configured using puppet-hiera, and stored in `./hiera`.
+Secret variables use eyaml and can be edited using `bin/eyaml edit hiera/secure.eyaml`.
+To do this you need the private keys locally and configured in `~/.eyaml/config.yaml`.
 
 #### Setting up agent on a new server
 
-Install Puppet >= 3.0:
+As root:
 
     $ wget http://apt.puppetlabs.com/puppetlabs-release-trusty.deb
     $ dpkg -i puppetlabs-release-trusty.deb
@@ -120,7 +90,7 @@ Install Puppet >= 3.0:
     $ apt-get install puppet ruby-full git-core build-essential
     $ git clone https://github.com/holderdeord/hdo-puppet /opt/hdo-puppet
     $ cd /opt/hdo-puppet
-    $ script/bootstrap
-    $ puppet apply --test --modulepath modules:third-party manifests/site.pp
+    $ script/run-apply
 
 If the first run fails, try a `apt-get update` and run it again.
+

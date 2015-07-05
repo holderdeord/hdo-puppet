@@ -3,4 +3,4 @@
 set -e
 
 script/bootstrap
-puppet apply --test --modulepath modules:third-party manifests/site.pp
+puppet apply --test --modulepath modules:third-party manifests/site

@@ -74,5 +74,3 @@ class { 'hiera':
 include hdo::users
 include hdo::timezone
 include '::ntp'
-
-import 'nodes.pp'

@@ -1,4 +1,4 @@
-import "site.pp"
+import "site/00_all_nodes.pp"
 
 # not sure why this is necessary.
 group { 'puppet': ensure => present }
