@@ -66,8 +66,7 @@ class { 'hiera':
 }
 
 logrotate::conf { '/etc/logrotate.conf':
-  su       => true,
-  su_owner => root,
+  su_user  => root,
   su_group => syslog
 }
 
