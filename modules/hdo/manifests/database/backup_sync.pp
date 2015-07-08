@@ -10,7 +10,7 @@ class hdo::database::backup_sync(
   $log_file = '/var/log/hdo-backup-sync/sync.log'
 
   if $target == undef or $destination == undef {
-    fail('must specify target/destination')
+    fail('must specify target and destination')
   }
 
   $logdir  = '/var/log/hdo-backup-sync'
@@ -35,7 +35,6 @@ class hdo::database::backup_sync(
     ifempty      => false,
     missingok    => true
   }
-
 
   file { $backup_sync_script:
     ensure  => file,
