@@ -214,7 +214,7 @@ hdo_ssl_key: >
     VX4iST+fyUkA8K3QCEzab7fW2SGFjOzKB4Pw0f1dBl869s6JxoP1kM6rtjXv
     jKRjwyDFzc2p3gA=]
 
-morph_io_api_token: >
+morph_io_api_key: >
     ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEw
     DQYJKoZIhvcNAQEBBQAEggEADJ83u+16qg8NRbbUIv1joh2ofqLi6GFssaOP
     mNVNWHRP8xP4zFuSpc6baUb2hX5/xlxVwMiz10p5HWoWBU3fuAcXMUIPL8fy
