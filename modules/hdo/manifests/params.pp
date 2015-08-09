@@ -26,4 +26,5 @@ class hdo::params {
   $twitter_pp_consumer_secret     = hiera('twitter_pp_consumer_secret', '')
   $twitter_pp_access_token        = hiera('twitter_pp_access_token', '')
   $twitter_pp_access_token_secret = hiera('twitter_pp_access_token_secret', '')
+  $morph_io_api_key               = hiera('morph_io_api_key', '')
 }
