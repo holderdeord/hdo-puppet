@@ -8,4 +8,4 @@ DB_NAME="<%= @db_name %>"
 mkdir -p $BACKUP_ROOT
 
 pg_dump "$DB_NAME" | gzip -c > "${BACKUP_ROOT}/${DB_NAME}-$(date '+%F-%H%M%S').dump.gz"
-find "$BACKUP_ROOT" -mtime +60 -type f -exec rm {} +
+find "$BACKUP_ROOT" -mtime +90 -type f -exec rm {} +

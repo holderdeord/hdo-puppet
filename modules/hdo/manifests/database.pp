@@ -147,7 +147,7 @@ class hdo::database(
     command     => $local_backup_script,
     user        => 'hdo',
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
-    minute      => '45'
+    hour        => '7'
   }
 
   #
