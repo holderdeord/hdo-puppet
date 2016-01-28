@@ -23,5 +23,10 @@ server {
     autoindex on;
   }
 
+  location /prototyper/enighet {
+      auth_basic 'Restricted';
+      auth_basic_user_file /opt/nginx/.htpasswd;
+  }
+
   rewrite ^/hal-browser/?$ /hal-browser/browser.html last;
 }
