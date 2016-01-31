@@ -20,15 +20,15 @@ class hdo::agreement(
     command => "bash -l -c 'npm install'",
     cwd     => $repo_root,
     user    => hdo,
-    require => Exec['clone hdo-agreement']
+    require => Exec['clone hdo-enighet']
   }
 
-  exec { 'build hdo-agreement':
+  exec { 'build hdo-enighet':
     command => "bash -l -c 'npm run build'",
     creates => $site_root,
     user    => hdo,
     cwd     => $repo_root,
-    require => Exec['bundle hdo-agreement']
+    require => Exec['bundle hdo-enighet']
   }
 
   if ! defined(Class['passenger::nginx']) {
