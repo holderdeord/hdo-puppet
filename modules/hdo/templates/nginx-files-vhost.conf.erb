@@ -24,8 +24,7 @@ server {
   }
 
   location /prototyper/enighet {
-      auth_basic 'Restricted';
-      auth_basic_user_file /opt/nginx/.htpasswd;
+    redirect 301 https://enighet.holderdeord.no/;
   }
 
   rewrite ^/hal-browser/?$ /hal-browser/browser.html last;
