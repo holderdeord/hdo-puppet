@@ -49,7 +49,7 @@ class hdo::blog(
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => template('hdo/nginx-blog-vhost.conf.erb'),
+    content => template('hdo/nginx-static-vhost.conf.erb'),
     notify  => Service['nginx']
   }
 

@@ -41,6 +41,12 @@ node 'hdo02' {
     restrict    => false,
   }
 
+  class { 'hdo::agreement':
+    server_name => 'enighet.holderdeord.no',
+    ssl         => true,
+    restrict    => true
+  }
+
   class { 'hdo::database':
     munin        => false,
     collectd     => false,
