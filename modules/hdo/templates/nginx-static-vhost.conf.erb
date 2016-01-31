@@ -18,6 +18,9 @@ server {
   root           <%= @site_root %>;
   autoindex      off;
 
+  access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
+  error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
+
   <% if @restrict %>
     location ~ ^/(google.+\.html|robots\.txt) {  }
 
