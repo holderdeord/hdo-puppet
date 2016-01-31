@@ -28,7 +28,7 @@ class hdo::agreement(
     creates => $site_root,
     user    => hdo,
     cwd     => $repo_root,
-    require => Exec['bundle hdo-enighet']
+    require => Exec['npm install hdo-enighet']
   }
 
   if ! defined(Class['passenger::nginx']) {
