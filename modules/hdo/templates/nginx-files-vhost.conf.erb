@@ -24,8 +24,6 @@ server {
   }
 
   location /prototyper/enighet {
-    redirect 301 https://enighet.holderdeord.no/;
+    return 301 https://enighet.holderdeord.no/;
   }
-
-  rewrite ^/hal-browser/?$ /hal-browser/browser.html last;
 }
