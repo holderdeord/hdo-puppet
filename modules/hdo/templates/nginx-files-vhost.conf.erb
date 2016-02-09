@@ -15,9 +15,11 @@ server {
     <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
   <% end %>
 
-  <% if @cors %>
-    <%= scope.function_template(['hdo/nginx-cors.conf']) %>
-  <% end %>
+  location / {
+    <% if @cors %>
+      <%= scope.function_template(['hdo/nginx-cors.conf']) %>
+    <% end %>
+  }
 
   location ~ /pdf/(alternative-statsbudsjett|partiprogram) {
     autoindex on;
