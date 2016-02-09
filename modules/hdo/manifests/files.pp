@@ -7,6 +7,7 @@ class hdo::files(
 
   $files_root = $root
   $ssl        = true
+  $cors       = true
 
   file { "${passenger::nginx::sites_dir}/holderdeord.no.conf":
     ensure  => file,
