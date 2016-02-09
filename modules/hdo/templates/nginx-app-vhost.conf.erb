@@ -11,7 +11,7 @@ server {
 
 server {
   listen        <%= @listen %>;
-  server_name   <%= @server_name %> "~^(beta|www|hdo-app-vm)\.holderdeord\.no$";
+  server_name   <%= @server_name %> "~^(beta|www|hdo-app-vm|data)\.holderdeord\.no$";
 
   <% if @ssl %>
     <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
