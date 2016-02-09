@@ -1,3 +1,7 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+
 <% if @ssl %>
 server {
   listen          80;
@@ -29,9 +33,4 @@ server {
       auth_basic_user_file /opt/nginx/.htpasswd;
     }
   <% end %>
-
-  <% if @cors %>
-    <%= scope.function_template(['hdo/nginx-cors.conf']) %>
-  <% end %>
-
 }
