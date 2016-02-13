@@ -39,7 +39,8 @@ node 'hdo02' {
   class { 'hdo::portal':
     server_name => 'portal.holderdeord.no',
     ssl         => true,
-    port        => 7373
+    # port        => 7373,
+    passenger   => true
   }
 
   class { 'hdo::blog':

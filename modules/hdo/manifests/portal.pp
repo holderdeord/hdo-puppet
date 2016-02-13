@@ -1,8 +1,9 @@
 class hdo::portal(
-  $ensure      = 'present',
-  $server_name = 'portal.holderdeord.no',
-  $port        = 7373,
-  $ssl         = false
+    $ensure      = 'present',
+    $server_name = 'portal.holderdeord.no',
+    $port        = 7373,
+    $ssl         = false,
+    $passenger   = false,
   ) {
 
   include hdo::common
@@ -36,12 +37,17 @@ class hdo::portal(
 
   $purge = true
 
+  $nginx_conf = $passenger ? {
+    true => template('hdo/nginx-node-passenger-vhost.conf.erb'),
+    default => template('hdo/nginx-node-app-vhost.conf.erb')
+  }
+
   file { "${passenger::nginx::sites_dir}/portal.holderdeord.no.conf":
     ensure  => $ensure,
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => template('hdo/nginx-node-app-vhost.conf.erb'),
+    content => $nginx_conf,
     notify  => Service['nginx']
   }
 
@@ -67,7 +73,7 @@ class hdo::portal(
     missingok    => true
   }
 
-  if $ensure == 'present' {
+  if ($ensure == 'present' and $passenger != true) {
     service { $app_name: ensure => 'running' }
   } else {
     service { $app_name: ensure => 'stopped' }
