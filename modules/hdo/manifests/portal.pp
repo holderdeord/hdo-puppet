@@ -67,16 +67,6 @@ class hdo::portal(
     missingok    => true
   }
 
-  logrotate::rule { "${app_name}-indexer":
-    ensure       => $ensure,
-    path         => $indexer_log,
-    compress     => true,
-    copytruncate => true,
-    dateext      => true,
-    ifempty      => false,
-    missingok    => true
-  }
-
   if $ensure == 'present' {
     service { $app_name: ensure => 'running' }
   } else {
