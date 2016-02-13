@@ -10,7 +10,7 @@ class hdo::portal(
 
   $app_name         = 'hdo-portal'
   $app_root         = "${hdo::params::webapp_root}/${app_name}"
-  $public_root      = "${webapp_root}/build"
+  $public_root      = "${app_root}/build"
   $app_log          = "/var/log/${app_name}.log"
 
   exec { "clone ${app_name}":
