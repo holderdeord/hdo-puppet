@@ -1,7 +1,7 @@
 class hdo::portal(
   $ensure      = 'present',
   $server_name = 'portal.holderdeord.no',
-  $port        = 7575,
+  $port        = 7373,
   $ssl         = false
   ) {
 

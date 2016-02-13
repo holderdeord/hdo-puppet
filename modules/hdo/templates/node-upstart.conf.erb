@@ -10,8 +10,9 @@ respawn limit 20 5
 # Max open files are @ 1024 by default. Bit few.
 limit nofile 32768 32768
 
-
 env NODE_ENV=production
+env HTTP_PORT=<%= @port %>
+
 script
   cd <%= @app_root %>
   exec sudo -u <%= @user %> npm start 2>&1 ><%= @app_log %>
