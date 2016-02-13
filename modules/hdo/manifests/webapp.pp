@@ -4,7 +4,7 @@ class hdo::webapp(
   $db_host           = undef,
   $db_port           = undef,
   $elasticsearch_url = undef,
-  $ssl               = false,
+  $ssl               = false
 ) {
   include hdo::common
   include hdo::params

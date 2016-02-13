@@ -27,12 +27,19 @@ node 'hdo02' {
     server_name       => 'www.holderdeord.no',
     db_host           => 'localhost',
     elasticsearch_url => 'http://localhost:9200',
-    ssl               => true
+    ssl               => true,
   }
 
   class { 'hdo::transcripts':
     server_name => 'tale.holderdeord.no',
-    ssl         => true
+    ssl         => true,
+    port        => 7575
+  }
+
+  class { 'hdo::portal':
+    server_name => 'portal.holderdeord.no',
+    ssl         => true,
+    port        => 7373
   }
 
   class { 'hdo::blog':

@@ -1,23 +1,24 @@
-class hdo::transcripts(
+class hdo::portal(
   $ensure      = 'present',
-  $server_name = 'transcripts.holderdeord.no',
+  $server_name = 'portal.holderdeord.no',
   $port        = 7575,
-  $restrict    = false,
-  $ssl         = false
+  $vhost       = false
   ) {
+
+  if vhost != false {
+    fail('not yet implemented: hdo-portal vhost')
+  }
+
   include hdo::common
   include hdo::params
 
-  $app_name         = 'hdo-transcript-search'
-  $transcripts_root = "${hdo::params::webapp_root}/${app_name}"
-  $indexer_root     = "${transcripts_root}/indexer"
-  $app_root         = "${transcripts_root}/webapp"
-  $public_root      = "${webapp_root}/public"
+  $app_name         = 'hdo-portal'
+  $app_root         = "${hdo::params::webapp_root}/${app_name}"
+  $public_root      = "${webapp_root}/build"
   $app_log          = "/var/log/${app_name}.log"
-  $indexer_log      = '/var/log/hdo-transcript-indexer.log'
 
   exec { "clone ${app_name}":
-    command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root}",
+    command => "git clone git://github.com/holderdeord/${app_name} ${app_root}",
     user    => hdo,
     creates => $app_root,
     require => [Package['git-core'], File[$hdo::params::webapp_root]]
@@ -32,13 +33,6 @@ class hdo::transcripts(
     require     => [Class['hdo::nodejs'], Exec["clone ${app_name}"]]
   }
 
-  exec { "bundle ${app_name} indexer":
-    command => "bash -l -c 'bundle install --deployment'",
-    cwd     => $indexer_root,
-    user    => hdo,
-    require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
-  }
-
   file { $app_log:
     ensure => $ensure,
     owner  => hdo
@@ -46,39 +40,13 @@ class hdo::transcripts(
 
   $purge = true
 
-  file { "${passenger::nginx::sites_dir}/transcripts.holderdeord.no.conf":
+  file { "${passenger::nginx::sites_dir}/portal.holderdeord.no.conf":
     ensure  => $ensure,
     owner   => root,
     group   => root,
     mode    => '0644',
     content => template('hdo/nginx-node-app-vhost.conf.erb'),
     notify  => Service['nginx']
-  }
-
-  file { $indexer_log:
-    ensure => $ensure,
-    owner  => hdo,
-  }
-
-  cron { "index ${app_name} daily":
-    ensure      => $ensure,
-    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby -Ilib bin/hdo-transcript-indexer --mail > ${indexer_log}'",
-    user        => hdo,
-    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
-    require     => [Exec["bundle ${app_name} indexer"], File[$indexer_log]],
-    hour        => '4',
-    minute      => '50'
-  }
-
-  cron { "download images for ${app_name} weekly":
-    ensure      => $ensure,
-    command     => "bash -l -c 'cd ${indexer_root} && bundle exec ruby ../scripts/download_images.rb > /dev/null'",
-    user        => hdo,
-    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
-    require     => [Exec["bundle ${app_name} indexer"]],
-    hour        => '2',
-    minute      => '20',
-    weekday     => '2'
   }
 
   $description = $app_name
@@ -119,7 +87,7 @@ class hdo::transcripts(
     service { $app_name: ensure => 'stopped' }
   }
 
-  file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
+  file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
     ensure  => $ensure,
     owner   => root,
     group   => root,
@@ -127,10 +95,10 @@ class hdo::transcripts(
     content => "hdo ALL = (root) NOPASSWD: /sbin/start ${app_name}, /sbin/stop ${app_name}, /sbin/restart ${app_name}, /sbin/status ${app_name}\n",
   }
 
-  file { '/etc/profile.d/hdo-transcripts.sh':
+  file { '/etc/profile.d/hdo-portal.sh':
     ensure  => $ensure,
     mode    => '0775',
-    content => template('hdo/hdo-transcripts-profile.sh')
+    content => template('hdo/hdo-portal-profile.sh')
   }
 
 }
