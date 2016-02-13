@@ -5,10 +5,6 @@ class hdo::portal(
   $ssl         = false
   ) {
 
-  if vhost != false {
-    fail('not yet implemented: hdo-portal vhost')
-  }
-
   include hdo::common
   include hdo::params
 
