@@ -14,7 +14,7 @@ class hdo::portal(
   $app_log          = "/var/log/${app_name}.log"
 
   exec { "clone ${app_name}":
-    command => "git clone git://github.com/holderdeord/${app_name} ${app_root}",
+    command => "git clone git://github.com/holderdeord/${app_name} ${app_root} && cd ${app_root} && npm install",
     user    => hdo,
     creates => $app_root,
     require => [Package['git-core'], File[$hdo::params::webapp_root]]
@@ -78,7 +78,7 @@ class hdo::portal(
     owner   => root,
     group   => root,
     mode    => '0440',
-    content => "hdo ALL = (root) NOPASSWD: /sbin/start ${app_name}, /sbin/stop ${app_name}, /sbin/restart ${app_name}, /sbin/status ${app_name}\n",
+    content => template('hdo/node-app-sudoers.erb'),
   }
 
   file { '/etc/profile.d/hdo-portal.sh':

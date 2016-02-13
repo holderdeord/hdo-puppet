@@ -1,0 +1,4 @@
+<%= @user %> ALL = (root) NOPASSWD: /sbin/start <%= @app_name %>, /sbin/stop <%= @app_name %>, /sbin/restart <%= @app_name %>, /sbin/status <%= @app_name %>
+
+Defaults env_keep += "NODE_ENV"
+Defaults env_keep += "HTTP_PORT"
