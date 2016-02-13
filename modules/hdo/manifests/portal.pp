@@ -2,7 +2,7 @@ class hdo::portal(
   $ensure      = 'present',
   $server_name = 'portal.holderdeord.no',
   $port        = 7575,
-  $vhost       = false
+  $ssl         = false
   ) {
 
   if vhost != false {
