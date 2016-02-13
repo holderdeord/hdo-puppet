@@ -19,7 +19,6 @@ server {
       passenger_enabled on;
       passenger_app_type node;
       passenger_startup_file index.js;
-      passenger_restart_dir <%= @pingdom_dir %>;
     }
   <% end %>
 }

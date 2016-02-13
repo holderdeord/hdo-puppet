@@ -37,17 +37,12 @@ class hdo::portal(
 
   $purge = true
 
-  $nginx_conf = $passenger ? {
-    true => template('hdo/nginx-node-passenger-vhost.conf.erb'),
-    default => template('hdo/nginx-node-app-vhost.conf.erb')
-  }
-
   file { "${passenger::nginx::sites_dir}/portal.holderdeord.no.conf":
     ensure  => $ensure,
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => $nginx_conf,
+    content => template('hdo/nginx-node-app-vhost.conf.erb'),
     notify  => Service['nginx']
   }
 
@@ -79,13 +74,20 @@ class hdo::portal(
     service { $app_name: ensure => 'stopped' }
   }
 
-  file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
-    ensure  => $ensure,
-    owner   => root,
-    group   => root,
-    mode    => '0440',
-    content => template('hdo/node-app-sudoers.erb'),
+  if ($passenger == true) {
+    file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
+      ensure  => 'absent',
+    }
+  } else {
+    file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
+      ensure  => $ensure,
+      owner   => root,
+      group   => root,
+      mode    => '0440',
+      content => template('hdo/node-app-sudoers.erb'),
+    }
   }
+
 
   file { '/etc/profile.d/hdo-portal.sh':
     ensure  => $ensure,
