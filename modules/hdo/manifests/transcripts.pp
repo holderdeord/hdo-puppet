@@ -12,7 +12,7 @@ class hdo::transcripts(
   $transcripts_root = "${hdo::params::webapp_root}/${app_name}"
   $indexer_root     = "${transcripts_root}/indexer"
   $app_root         = "${transcripts_root}/webapp"
-  $public_root      = "${webapp_root}/public"
+  $public_root      = "${app_root}/public"
   $app_log          = "/var/log/${app_name}.log"
   $indexer_log      = '/var/log/hdo-transcript-indexer.log'
 
