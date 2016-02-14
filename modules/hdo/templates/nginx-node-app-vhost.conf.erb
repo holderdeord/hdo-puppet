@@ -73,7 +73,7 @@ server {
 }
 
 <% if @passenger && @ssl %>
-passenger_pre_start https://<%= @server_name %>/
+passenger_pre_start https://<%= @server_name %>/;
 <% elsif @passenger %>
-passenger_pre_start http://<%= @server_name %>/
+passenger_pre_start http://<%= @server_name %>/;
 <% end %>
