@@ -57,7 +57,7 @@ server {
       passenger_enabled on;
       passenger_app_type node;
       passenger_startup_file index.js;
-      passenger_min_instance 2;
+      passenger_min_instances 2;
     <% else %>
       proxy_pass         http://127.0.0.1:<%= @port %>;
       proxy_redirect     off;
