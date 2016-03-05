@@ -51,6 +51,7 @@ server {
 
   location @passenger {
     passenger_enabled        on;
+    passenger_show_version_in_header off;
     passenger_min_instances  <%= scope.lookupvar('passenger::params::min_instances') %>;
     rails_env                <%= scope.lookupvar('hdo::params::environment') %>;
   }
