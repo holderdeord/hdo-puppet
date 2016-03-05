@@ -64,9 +64,10 @@ server {
 
   location @node {
     gzip_vary         off; # handled in http directive
-    
+
     passenger_app_root <%= @app_root %>;
     passenger_enabled on;
+    passenger_show_version_in_header off;
     passenger_app_type node;
     passenger_startup_file <%= @passenger_startup_file || 'index.js' %>;
     passenger_min_instances 2;
