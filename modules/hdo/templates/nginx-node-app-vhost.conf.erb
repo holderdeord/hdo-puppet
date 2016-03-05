@@ -43,6 +43,8 @@ server {
   proxy_set_header   X-Nginx-Proxy true;
   proxy_set_header   X-Forwarded-Proto $scheme;
 
+  gzip_vary         off; # handled in http directive
+
   <% if @restrict %>
     auth_basic           "Restricted";
     auth_basic_user_file /opt/nginx/.htpasswd;
@@ -61,6 +63,8 @@ server {
   try_files      $uri @node;
 
   location @node {
+    gzip_vary         off; # handled in http directive
+    
     passenger_app_root <%= @app_root %>;
     passenger_enabled on;
     passenger_app_type node;
