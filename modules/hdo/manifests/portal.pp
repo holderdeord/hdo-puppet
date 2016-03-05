@@ -3,7 +3,6 @@ class hdo::portal(
     $server_name = 'portal.holderdeord.no',
     $port        = 7373,
     $ssl         = false,
-    $passenger   = false,
   ) {
 
   include hdo::common

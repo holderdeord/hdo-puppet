@@ -11,10 +11,9 @@ class hdo::transcripts(
   $app_name         = 'hdo-transcript-search'
   $transcripts_root = "${hdo::params::webapp_root}/${app_name}"
   $indexer_root     = "${transcripts_root}/indexer"
+  $indexer_log      = '/var/log/hdo-transcript-indexer.log'
   $app_root         = "${transcripts_root}/webapp"
   $public_root      = "${app_root}/public"
-  $app_log          = "/var/log/${app_name}.log"
-  $indexer_log      = '/var/log/hdo-transcript-indexer.log'
 
   exec { "clone ${app_name}":
     command => "git clone git://github.com/holderdeord/${app_name} ${transcripts_root} && cd ${transcripts_root} && npm install",
@@ -39,13 +38,7 @@ class hdo::transcripts(
     require => [Exec["clone ${app_name}"], Ruby::Gem['bundler']]
   }
 
-  file { $app_log:
-    ensure => $ensure,
-    owner  => hdo
-  }
-
   $purge = true
-  $passenger = true
   $passenger_startup_file = 'server.js'
 
   file { "${passenger::nginx::sites_dir}/transcripts.holderdeord.no.conf":
@@ -83,28 +76,6 @@ class hdo::transcripts(
     weekday     => '2'
   }
 
-  $description = $app_name
-  $author      = 'hdo-puppet'
-  $user        = 'hdo'
-
-  file { "/etc/init/${app_name}.conf":
-    ensure  => $ensure,
-    owner   => root,
-    group   => root,
-    content => template('hdo/node-upstart.conf.erb'),
-    require => File[$app_log]
-  }
-
-  logrotate::rule { $app_name:
-    ensure       => $ensure,
-    path         => $app_log,
-    compress     => true,
-    copytruncate => true,
-    dateext      => true,
-    ifempty      => false,
-    missingok    => true
-  }
-
   logrotate::rule { "${app_name}-indexer":
     ensure       => $ensure,
     path         => $indexer_log,
@@ -115,20 +86,26 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  service { $app_name: ensure => 'stopped' }
-
-  file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
-    ensure  => $ensure,
-    owner   => root,
-    group   => root,
-    mode    => '0440',
-    content => template('hdo/node-app-sudoers.erb')
-  }
-
   file { '/etc/profile.d/hdo-transcripts.sh':
     ensure  => $ensure,
     mode    => '0775',
     content => template('hdo/hdo-transcripts-profile.sh')
+  }
+
+  file { "/etc/init/${app_name}.conf":
+    ensure  => 'absent',
+  }
+
+  logrotate::rule { $app_name:
+    ensure => 'absent'
+  }
+
+  file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
+    ensure  => 'absent'
+  }
+
+  file { $app_log:
+    ensure => 'absent',
   }
 
 }
