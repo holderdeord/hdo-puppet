@@ -30,7 +30,7 @@ class hdo::portal(
   }
 
   file { $app_log:
-    ensure => 'absent',
+    ensure => $ensure,
     owner  => hdo
   }
 
@@ -45,8 +45,20 @@ class hdo::portal(
     notify  => Service['nginx']
   }
 
+  $description = $app_name
+  $author      = 'hdo-puppet'
+  $user        = 'hdo'
+
+  file { "/etc/init/${app_name}.conf":
+    ensure  => $ensure,
+    owner   => root,
+    group   => root,
+    content => template('hdo/node-upstart.conf.erb'),
+    require => File[$app_log]
+  }
+
   logrotate::rule { $app_name:
-    ensure       => 'absent',
+    ensure       => $ensure,
     path         => $app_log,
     compress     => true,
     copytruncate => true,
@@ -55,16 +67,16 @@ class hdo::portal(
     missingok    => true
   }
 
-  service { $app_name: ensure => 'stopped' }
-
-  file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
-    ensure  => 'absent',
-  }
-
   file { '/etc/profile.d/hdo-portal.sh':
     ensure  => $ensure,
     mode    => '0775',
     content => template('hdo/hdo-portal-profile.sh')
+  }
+
+  service { $app_name: ensure => 'stopped' }
+
+  file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
+    ensure  => 'absent',
   }
 
 }
