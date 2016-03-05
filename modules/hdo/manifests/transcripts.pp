@@ -45,6 +45,8 @@ class hdo::transcripts(
   }
 
   $purge = true
+  $passenger = true
+  $passenger_startup_file = 'server.js'
 
   file { "${passenger::nginx::sites_dir}/transcripts.holderdeord.no.conf":
     ensure  => $ensure,
@@ -113,11 +115,7 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  if $ensure == 'present' {
-    service { $app_name: ensure => 'running' }
-  } else {
-    service { $app_name: ensure => 'stopped' }
-  }
+  service { $app_name: ensure => 'stopped' }
 
   file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
     ensure  => $ensure,
