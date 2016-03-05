@@ -33,13 +33,12 @@ node 'hdo02' {
   class { 'hdo::transcripts':
     server_name => 'tale.holderdeord.no',
     ssl         => true,
-    port        => 7575
+    passenger   => true,
   }
 
   class { 'hdo::portal':
     server_name => 'portal.holderdeord.no',
     ssl         => true,
-    # port        => 7373,
     passenger   => true
   }
 

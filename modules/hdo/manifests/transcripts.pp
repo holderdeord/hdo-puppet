@@ -1,7 +1,7 @@
 class hdo::transcripts(
   $ensure      = 'present',
   $server_name = 'transcripts.holderdeord.no',
-  $port        = 7575,
+  $passenger   = false,
   $restrict    = false,
   $ssl         = false
   ) {
@@ -86,11 +86,7 @@ class hdo::transcripts(
   $user        = 'hdo'
 
   file { "/etc/init/${app_name}.conf":
-    ensure  => $ensure,
-    owner   => root,
-    group   => root,
-    content => template('hdo/node-upstart.conf.erb'),
-    require => File[$app_log]
+    ensure  => 'absent',
   }
 
   logrotate::rule { $app_name:
@@ -113,14 +109,10 @@ class hdo::transcripts(
     missingok    => true
   }
 
-  if $ensure == 'present' {
-    service { $app_name: ensure => 'running' }
-  } else {
-    service { $app_name: ensure => 'stopped' }
-  }
+  service { $app_name: ensure => 'stopped' }
 
   file { '/etc/sudoers.d/allow-hdo-service-hdo-transcript-search':
-    ensure  => $ensure,
+    ensure  => 'absent',
     owner   => root,
     group   => root,
     mode    => '0440',
