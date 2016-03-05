@@ -104,8 +104,4 @@ class hdo::transcripts(
     ensure  => 'absent'
   }
 
-  file { $app_log:
-    ensure => 'absent',
-  }
-
 }
