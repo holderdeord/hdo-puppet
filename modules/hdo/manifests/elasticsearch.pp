@@ -36,14 +36,14 @@ class hdo::elasticsearch(
     init_defaults => $init_defaults,
   }
 
-  file { '/etc/elasticsearch/hdo.words.nb.txt':
+  file { "/etc/elasticsearch/${::hostname}/hdo.words.nb.txt":
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/hdo/elasticsearch/hdo.words.nb.txt',
     require => File['/etc/elasticsearch']
   }
 
-  file { '/etc/elasticsearch/hdo.synonyms.nb.txt':
+  file { '/etc/elasticsearch/${::hostname}/hdo.synonyms.nb.txt':
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/hdo/elasticsearch/hdo.synonyms.nb.txt',
