@@ -2,18 +2,21 @@ FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
     b4ldr-logrotate (1.1.3)
+    ceritsc-yum (0.9.6)
+      puppetlabs-stdlib (>= 4.0.0)
     fsalum-puppetmaster (0.0.4)
       puppetlabs-inifile (>= 1.0.0)
     hunner-hiera (1.2.0)
-    puppetlabs-apt (1.1.0)
+    puppetlabs-apt (1.8.0)
       puppetlabs-stdlib (>= 2.2.1)
-    puppetlabs-concat (1.1.0-rc1)
-      puppetlabs-stdlib (>= 3.0.0)
-    puppetlabs-inifile (1.0.0)
+    puppetlabs-concat (1.2.5)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-inifile (1.5.0)
     puppetlabs-java (1.3.0)
       puppetlabs-stdlib (>= 2.4.0)
     puppetlabs-ntp (4.0.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
+    richardc-datacat (0.6.2)
 
 GIT
   remote: git://github.com/jarib/puppet-hipchat
@@ -77,11 +80,14 @@ GIT
 
 GIT
   remote: https://github.com/elasticsearch/puppet-elasticsearch
-  ref: 0.9.6
-  sha: e2a5bb02fcfe641614aaabd76fbdf192e5f471e4
+  ref: 0.10.3
+  sha: 36409eae08800fb2107d9ea4fef031f5348cb1ca
   specs:
-    elasticsearch-elasticsearch (0.9.6)
+    elasticsearch-elasticsearch (0.10.3)
+      ceritsc-yum (< 1.0.0, >= 0.9.6)
+      puppetlabs-apt (< 3.0.0, >= 1.4.0)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+      richardc-datacat (< 1.0.0, >= 0.6.2)
 
 GIT
   remote: https://github.com/pdxcat/puppet-module-collectd.git
