@@ -43,7 +43,7 @@ class hdo::elasticsearch(
     require => File['/etc/elasticsearch']
   }
 
-  file { '/etc/elasticsearch/${::hostname}/hdo.synonyms.nb.txt':
+  file { "/etc/elasticsearch/${::hostname}/hdo.synonyms.nb.txt":
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/hdo/elasticsearch/hdo.synonyms.nb.txt',
