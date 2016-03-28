@@ -1,5 +1,5 @@
 class hdo::elasticsearch(
-  $version            = '1.4.4',
+  $version            = '2.2.1',
   $cluster_name       = 'holderdeord',
   $number_of_shards   = 5,
   $number_of_replicas = 0,
