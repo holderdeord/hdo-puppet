@@ -13,9 +13,9 @@ script
     --out-dir <%= @output_dir %> \
     --credentials <%= @credentials_path %> \
     --plugins <%= @plugin_path %> \
-    --daemonize <%= @log_path %> \
     --interval <%= @interval %> \
-    --state <%= @state_path %>
+    --state <%= @state_path %> \
+    ><%= @log_path %> 2>&1
 end script
 
 post-start script

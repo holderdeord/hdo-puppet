@@ -11,13 +11,13 @@ class hdo::googledrivesync(
   $author      = 'hdo-puppet'
   $user        = 'hdo'
 
-  $output_dir = '/webapp/files/gdrive'
+  $output_dir = '/webapps/files/gdrive'
   $log_path = '/var/log/google-drive-sync.log'
   $state_dir = '/var/lib/hdo-google-drive-sync'
   $state_path = "${state_dir}/state.json"
   $credentials_path = "${state_dir}/credentials.json"
-  $plugin_path = "${state_dir}/plugin.json"
-  $upstart_conf_path = "/etc/init/${description}.conf" 
+  $plugin_path = "${state_dir}/plugin.js"
+  $upstart_conf_path = "/etc/init/${description}.conf"
 
   file { $log_path:
     ensure => file,
@@ -40,21 +40,21 @@ class hdo::googledrivesync(
   }
 
   file { $output_dir:
-    ensure => directory,
-    owner  => hdo,
+    ensure  => directory,
+    owner   => hdo,
     require => Class['hdo::files']
   }
 
   file { $plugin_path:
-    ensure => file,
-    owner  => hdo,
-    source => 'puppet:///modules/hdo/googledrivesync/plugin.js'
+    ensure  => file,
+    owner   => hdo,
+    source  => 'puppet:///modules/hdo/googledrivesync/plugin.js',
     require => File[$state_dir],
   }
 
   file { $credentials_path:
-    ensure => file,
-    owner  => hdo,
+    ensure  => file,
+    owner   => hdo,
     content => hiera('google_drive_api_credentials', '{}'),
     require => File[$state_dir],
   }
@@ -73,8 +73,8 @@ class hdo::googledrivesync(
   }
 
   service { $app_name:
-    ensure => running,
-    require => File
+    ensure  => running,
+    require => File[$upstart_conf_path]
   }
 
 }
