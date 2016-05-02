@@ -63,6 +63,7 @@ node 'hdo02' {
     server_name => 'files.holderdeord.no'
   }
 
+  include hdo::googledrivesync
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
   include hdo::webapp::apiupdater

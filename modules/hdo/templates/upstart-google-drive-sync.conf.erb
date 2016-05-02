@@ -1,0 +1,23 @@
+# http://upstart.ubuntu.com/wiki/Stanzas
+
+description <%= @description %>
+author      <%= @author %>
+
+stop on shutdown
+respawn
+respawn limit 20 5
+
+
+script
+  exec google-drive-sync \
+    --out-dir <%= @output_dir %> \
+    --credentials <%= @credentials_path %> \
+    --plugins <%= @plugin_path %> \
+    --daemonize <%= @log_path %> \
+    --interval <%= @interval %> \
+    --state <%= @state_path %>
+end script
+
+post-start script
+   echo "started <%= @description %>"
+end script

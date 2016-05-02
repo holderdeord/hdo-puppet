@@ -53,7 +53,7 @@ class hdo::portal(
     ensure  => $ensure,
     owner   => root,
     group   => root,
-    content => template('hdo/node-upstart.conf.erb'),
+    content => template('hdo/upstart-node.conf.erb'),
     require => File[$app_log]
   }
 
