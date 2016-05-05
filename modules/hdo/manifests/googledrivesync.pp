@@ -11,12 +11,12 @@ class hdo::googledrivesync(
   $author      = 'hdo-puppet'
   $user        = 'hdo'
 
-  $output_dir = '/webapps/files/gdrive'
-  $log_path = '/var/log/google-drive-sync.log'
-  $state_dir = '/var/lib/hdo-google-drive-sync'
-  $state_path = "${state_dir}/state.json"
-  $credentials_path = "${state_dir}/credentials.json"
-  $plugin_path = "${state_dir}/plugin.js"
+  $output_dir        = '/webapps/files/gdrive'
+  $log_path          = '/var/log/google-drive-sync.log'
+  $state_dir         = '/var/lib/hdo-google-drive-sync'
+  $state_path        = "${state_dir}/state.json"
+  $credentials_path  = "${state_dir}/credentials.json"
+  $plugin_path       = "${state_dir}/plugin.js"
   $upstart_conf_path = "/etc/init/${description}.conf"
 
   file { $log_path:
@@ -50,6 +50,7 @@ class hdo::googledrivesync(
     owner   => hdo,
     source  => 'puppet:///modules/hdo/googledrivesync/plugin.js',
     require => File[$state_dir],
+    notify  => Service[$app_name]
   }
 
   file { $credentials_path:
@@ -57,6 +58,7 @@ class hdo::googledrivesync(
     owner   => hdo,
     content => hiera('google_drive_api_credentials', '{}'),
     require => File[$state_dir],
+    notify  => Service[$app_name]
   }
 
   package { 'google-drive-sync':
