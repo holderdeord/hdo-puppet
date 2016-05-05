@@ -4,7 +4,9 @@ module.exports = function(gds) {
     gds.on('saved', function(fileName) {
         fetch('https://files.holderdeord.no/gdrive/' + fileName + '.json', {
             method: 'PURGE'
-        }).then(console.log('purge', fileName, res.status, res.statusText));
+        }).then(function(res) {
+            console.log('purge', fileName, res.status, res.statusText);
+        });
     });
 
     gds.on('synced', function(state) {
