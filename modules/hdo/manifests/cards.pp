@@ -1,4 +1,4 @@
-class hdo::agreement(
+class hdo::cards(
   $server_name = $::fqdn,
   $ssl         = true,
   $restrict    = false,
@@ -41,12 +41,11 @@ class hdo::agreement(
     minute      => '*'
   }
 
-
   if ! defined(Class['passenger::nginx']) {
     class { 'passenger::nginx': }
   }
 
-  file { "${passenger::nginx::sites_dir}/cards.holderdeord.no.conf":
+  file { "${passenger::nginx::sites_dir}/cards-${server_name}.conf":
     ensure  => file,
     owner   => root,
     group   => root,
