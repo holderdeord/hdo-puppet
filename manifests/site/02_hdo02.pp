@@ -42,31 +42,32 @@ node 'hdo02' {
     port        => 7373
   }
 
-  class { 'hdo::cards':
-    server_name => 'kort.holderdeord.no',
-    ssl         => true,
-    port        => 7171
-  }
-
-  class { 'hdo::blog':
-    server_name => 'blog.holderdeord.no',
-    drafts      => true,
-    restrict    => false,
-  }
-
-  class { 'hdo::agreement':
-    server_name => 'enighet.holderdeord.no',
-    ssl         => true
-  }
-
   class { 'hdo::database':
     munin        => false,
     collectd     => false,
     local_backup => present,
   }
 
+  # static sites:
+
+  class { 'hdo::agreement':
+    server_name => 'enighet.holderdeord.no',
+    ssl         => true
+  }
+
+  class { 'hdo::cards':
+    server_name => 'kort.holderdeord.no',
+    ssl         => true,
+  }
+
   class { 'hdo::files':
     server_name => 'files.holderdeord.no'
+  }
+
+  class { 'hdo::blog':
+    server_name => 'blog.holderdeord.no',
+    drafts      => true,
+    restrict    => false,
   }
 
   include hdo::googledrivesync
