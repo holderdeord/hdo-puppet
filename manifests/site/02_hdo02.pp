@@ -58,6 +58,7 @@ node 'hdo02' {
   class { 'hdo::cards':
     server_name => 'kort.holderdeord.no',
     ssl         => true,
+    restrict    => true
   }
 
   class { 'hdo::files':
