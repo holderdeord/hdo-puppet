@@ -33,7 +33,7 @@ class hdo::cards(
 
   cron { 'hdo-cards-update':
     ensure      => 'present',
-    command     => "bash -l -c 'cd ${hdo::params::repo_root} && ./node_modules/.bin/babel-node script/update.js --input /webapps/files/gdrive --output ./build/data'",
+    command     => "bash -l -c 'cd ${repo_root} && ./node_modules/.bin/babel-node script/update.js --input /webapps/files/gdrive --output ./build/data'",
     user        => hdo,
     environment => ["RAILS_ENV=${hdo::params::environment}", 'PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => Exec['build hdo-cards'],
