@@ -66,11 +66,6 @@ class hdo::googledrivesync(
     provider => 'npm',
   }
 
-  package { 'isomorphic-fetch':
-    ensure   => 'present',
-    provider => 'npm',
-  }
-
   file { $upstart_conf_path:
     ensure  => $ensure,
     owner   => root,
