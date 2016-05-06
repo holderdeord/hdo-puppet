@@ -2,6 +2,7 @@ class hdo::cards(
   $server_name = $::fqdn,
   $ssl         = true,
   $restrict    = false,
+  $cors        = true
 ) {
   include hdo::common
   include hdo::params
