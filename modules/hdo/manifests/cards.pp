@@ -2,7 +2,6 @@ class hdo::cards(
   $server_name = $::fqdn,
   $ssl         = true,
   $restrict    = false,
-  $cors        = true
 ) {
   include hdo::common
   include hdo::params
@@ -45,6 +44,9 @@ class hdo::cards(
   if ! defined(Class['passenger::nginx']) {
     class { 'passenger::nginx': }
   }
+
+  $cors = true
+  $history_api = true
 
   file { "${passenger::nginx::sites_dir}/cards-${server_name}.conf":
     ensure  => file,

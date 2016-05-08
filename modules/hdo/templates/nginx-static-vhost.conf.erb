@@ -29,6 +29,13 @@ server {
     location ~ ^/(google.+\.html|robots\.txt) {  }
   <% end %>
 
+  <% if @history_api %>
+    # Any route matching a file extension
+    location ~ ^.+\..+$ {
+      try_files $uri =404;
+    }
+  <% end %>
+
   location / {
     <% if @cors %>
       <%= scope.function_template(['hdo/nginx-cors.conf']) %>
@@ -37,6 +44,10 @@ server {
     <% if @restrict %>
       auth_basic 'Restricted';
       auth_basic_user_file /opt/nginx/.htpasswd;
+    <% end %>
+
+    <% if @history_api %>
+      try_files $uri /index.html;
     <% end %>
   }
 
