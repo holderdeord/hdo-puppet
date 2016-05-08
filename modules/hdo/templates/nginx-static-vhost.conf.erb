@@ -32,12 +32,16 @@ server {
   <% if @history_api %>
     # Any route matching a file extension
     location ~ ^.+\..+$ {
+      <% if @cors %>
+        <%= scope.function_template(['hdo/nginx-cors.conf']) %>
+      <% end %>
+
       try_files $uri =404;
     }
   <% end %>
 
   location / {
-    <% if @cors %>
+    <% if @cors && !@history_api %>
       <%= scope.function_template(['hdo/nginx-cors.conf']) %>
     <% end %>
 
@@ -47,7 +51,7 @@ server {
     <% end %>
 
     <% if @history_api %>
-      try_files $uri /index.html;
+      try_files $uri /index.html =404;
     <% end %>
   }
 
