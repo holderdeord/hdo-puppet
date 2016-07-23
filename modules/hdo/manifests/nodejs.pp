@@ -1,5 +1,5 @@
 class hdo::nodejs {
   class { '::nodejs':
-    repo_url_suffix => 'node_5.x',
+    repo_url_suffix => '6.x',
   }
 }
