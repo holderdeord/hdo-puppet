@@ -24,7 +24,7 @@ node 'hdo02' {
   }
 
   class { 'hdo::webapp':
-    server_name       => 'www.holderdeord.no',
+    server_name       => 'data.holderdeord.no',
     db_host           => 'localhost',
     elasticsearch_url => 'http://localhost:9200',
     ssl               => true,
@@ -37,7 +37,7 @@ node 'hdo02' {
   }
 
   class { 'hdo::portal':
-    server_name => 'portal.holderdeord.no',
+    server_name => 'www.holderdeord.no',
     ssl         => true,
     port        => 7373
   }
