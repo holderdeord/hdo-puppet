@@ -7,15 +7,24 @@ FORGE
     fsalum-puppetmaster (0.0.4)
       puppetlabs-inifile (>= 1.0.0)
     hunner-hiera (1.2.0)
-    puppetlabs-apt (1.8.0)
-      puppetlabs-stdlib (>= 2.2.1)
-    puppetlabs-concat (1.2.5)
-      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-apt (2.2.2)
+      puppetlabs-stdlib (< 5.0.0, >= 4.5.0)
+    puppetlabs-concat (2.2.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
     puppetlabs-inifile (1.5.0)
     puppetlabs-java (1.3.0)
       puppetlabs-stdlib (>= 2.4.0)
     puppetlabs-ntp (4.0.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
+    puppetlabs-postgresql (4.7.1)
+      puppetlabs-apt (< 3.0.0, >= 1.8.0)
+      puppetlabs-concat (< 3.0.0, >= 1.1.0)
+      puppetlabs-stdlib (~> 4.0)
+    puppetlabs-puppetdb (5.1.2)
+      puppetlabs-firewall (< 2.0.0, >= 1.1.3)
+      puppetlabs-inifile (< 2.0.0, >= 1.1.3)
+      puppetlabs-postgresql (< 5.0.0, >= 4.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.2.2)
     richardc-datacat (0.6.2)
     treydock-gpg_key (0.0.3)
 
@@ -25,17 +34,6 @@ GIT
   sha: d9f68ef542497ed5baee446ce920deada5af13ac
   specs:
     jarib-hipchat (0.0.2)
-
-GIT
-  remote: git://github.com/puppetlabs/puppet-postgresql.git
-  ref: 3.1.0
-  sha: 43174fb5bd00a64dbe5cf3d140c2ccf0187d770a
-  specs:
-    puppetlabs-postgresql (3.1.0)
-      puppetlabs-apt (< 2.0.0, >= 1.1.0)
-      puppetlabs-concat (< 2.0.0, >= 1.0.0)
-      puppetlabs-firewall (>= 0.0.4)
-      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-apache.git
@@ -61,17 +59,6 @@ GIT
     puppetlabs-nodejs (2.0.1)
       puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
       treydock-gpg_key (< 1.0.0, >= 0.0.3)
-
-GIT
-  remote: git://github.com/puppetlabs/puppetlabs-puppetdb
-  ref: 3.0.0
-  sha: c0f33d804179087f8b4251af90959e1bf7dc093e
-  specs:
-    puppetlabs-puppetdb (3.0.0)
-      puppetlabs-firewall (>= 0.0.4)
-      puppetlabs-inifile (~> 1.0)
-      puppetlabs-postgresql (< 4.0.0, >= 3.1.0)
-      puppetlabs-stdlib (>= 2.2.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
@@ -111,7 +98,7 @@ DEPENDENCIES
   puppetlabs-java (= 1.3.0)
   puppetlabs-nodejs (>= 0)
   puppetlabs-ntp (= 4.0.0)
-  puppetlabs-postgresql (>= 0)
-  puppetlabs-puppetdb (>= 0)
+  puppetlabs-postgresql (= 4.7.1)
+  puppetlabs-puppetdb (= 5.1.2)
   puppetlabs-stdlib (>= 0)
 

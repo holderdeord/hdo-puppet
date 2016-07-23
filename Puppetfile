@@ -14,9 +14,7 @@ mod "puppetlabs-firewall",
 
 mod "b4ldr-logrotate" # has pull request fixes that we need for Ubuntu Trusty.
 
-mod "puppetlabs-postgresql",
-  :git => "git://github.com/puppetlabs/puppet-postgresql.git",
-  :ref => "3.1.0"
+mod "puppetlabs-postgresql", "4.7.1"
 
 mod "puppetlabs-stdlib",
   :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git",
@@ -26,9 +24,7 @@ mod "jarib-hipchat",
   :git => "git://github.com/jarib/puppet-hipchat",
   :ref => "status-config"
 
-mod "puppetlabs-puppetdb",
-  :git => "git://github.com/puppetlabs/puppetlabs-puppetdb",
-  :ref => "3.0.0"
+mod "puppetlabs-puppetdb", "5.1.2"
 
 mod 'fsalum-puppetmaster', '0.0.4'
 
