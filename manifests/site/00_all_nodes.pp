@@ -1,14 +1,11 @@
 class { 'apt':
-  always_apt_update    => true,
-  purge_sources_list   => true,
-  purge_sources_list_d => true,
+  update => { frequency => 'daily' }
 }
 
 apt::source { 'puppetlabs':
   location   => 'http://apt.puppetlabs.com',
   repos      => 'main dependencies',
-  key        => '4BD6EC30',
-  key_server => 'pgp.mit.edu',
+  key        => { 'server' => 'pgp.mit.edu', 'id' => '4BD6EC30' }
 }
 
 if $lsbdistcodename == 'precise' {
