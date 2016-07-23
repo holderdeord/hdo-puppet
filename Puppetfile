@@ -34,7 +34,7 @@ mod 'fsalum-puppetmaster', '0.0.4'
 
 mod "puppetlabs-nodejs",
   :git => "git://github.com/puppetlabs/puppetlabs-nodejs",
-  :ref => "0.8.0"
+  :ref => "v2.0.1"
 
 mod "pdxcat-collectd",
   :git => "https://github.com/pdxcat/puppet-module-collectd.git",

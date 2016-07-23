@@ -17,6 +17,7 @@ FORGE
     puppetlabs-ntp (4.0.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     richardc-datacat (0.6.2)
+    treydock-gpg_key (0.0.3)
 
 GIT
   remote: git://github.com/jarib/puppet-hipchat
@@ -54,11 +55,12 @@ GIT
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-nodejs
-  ref: 0.8.0
-  sha: 1749fb79bc8937f0df432bb4d550659ed59b6320
+  ref: v2.0.1
+  sha: 6374b4113891246bb1cd61a0503c42694b7c28d7
   specs:
-    puppetlabs-nodejs (0.8.0)
-      puppetlabs-stdlib (< 5.0.0, >= 2.2.1)
+    puppetlabs-nodejs (2.0.1)
+      puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
+      treydock-gpg_key (< 1.0.0, >= 0.0.3)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-puppetdb
