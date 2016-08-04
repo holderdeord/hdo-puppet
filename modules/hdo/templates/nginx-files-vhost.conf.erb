@@ -7,6 +7,7 @@ server {
   server_name <%= @server_name %>;
   root        <%= @files_root %>;
   autoindex   off;
+  charset     utf-8;
 
   access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
   error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
