@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+if [[ "$#" -eq 0 ]]; then
+  echo "USAGE: $0 STAR_holderdeord.no.zip"
+  exit 1
+fi
+
+zipfile="$1"
+
+unzip "$zipfile"
+
+cat STAR_holderdeord_no.crt \
+  COMODORSADomainValidationSecureServerCA.crt \
+  COMODORSAAddTrustCA.crt \
+  AddTrustExternalCARoot.crt > modules/passenger/files/nginx/star.holderdeord.no.cer
+
+rm STAR_holderdeord_no.crt COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt

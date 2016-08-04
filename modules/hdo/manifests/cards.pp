@@ -45,6 +45,9 @@ class hdo::cards(
     class { 'passenger::nginx': }
   }
 
+  $cors = true
+  $history_api = true
+
   file { "${passenger::nginx::sites_dir}/cards-${server_name}.conf":
     ensure  => file,
     owner   => root,

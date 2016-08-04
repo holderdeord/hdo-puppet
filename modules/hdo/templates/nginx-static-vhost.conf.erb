@@ -27,10 +27,32 @@ server {
 
   <% if @restrict %>
     location ~ ^/(google.+\.html|robots\.txt) {  }
+  <% end %>
 
-    location / {
-      auth_basic 'Restricted';
-      auth_basic_user_file /opt/nginx/.htpasswd;
+  <% if @history_api %>
+    # Any route matching a file extension
+    location ~ ^.+\..+$ {
+      <% if @cors %>
+        <%= scope.function_template(['hdo/nginx-cors.conf']) %>
+      <% end %>
+
+      try_files $uri =404;
     }
   <% end %>
+
+  location / {
+    <% if @cors && !@history_api %>
+      <%= scope.function_template(['hdo/nginx-cors.conf']) %>
+    <% end %>
+
+    <% if @restrict %>
+      auth_basic 'Restricted';
+      auth_basic_user_file /opt/nginx/.htpasswd;
+    <% end %>
+
+    <% if @history_api %>
+      try_files $uri /index.html =404;
+    <% end %>
+  }
+
 }

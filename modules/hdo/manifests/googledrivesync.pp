@@ -62,7 +62,7 @@ class hdo::googledrivesync(
   }
 
   package { 'google-drive-sync':
-    ensure   => '1.0.5',
+    ensure   => '1.0.8',
     provider => 'npm',
   }
 
