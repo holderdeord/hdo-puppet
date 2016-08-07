@@ -5,7 +5,7 @@ class { 'apt':
 apt::source { 'puppetlabs':
   location   => 'http://apt.puppetlabs.com',
   repos      => 'main dependencies',
-  key        => { 'server' => 'pgp.mit.edu', 'id' => '4BD6EC30' }
+  key        => { 'server' => 'pgp.mit.edu', 'id' => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30' }
 }
 
 if $lsbdistcodename == 'precise' {
