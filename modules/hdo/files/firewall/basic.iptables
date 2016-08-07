@@ -40,6 +40,9 @@ $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
 $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 -j DROP
 $IPT -A INPUT -p tcp --dport 22 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
 
+# accept Ubuntu upgrade recovery SSH port
+$IPT -A INPUT -p tcp --dport 1022 -m state --state NEW -s 0.0.0.0/0 -j ACCEPT
+
 # Accept inbound ICMP messages
 $IPT -A INPUT -p ICMP --icmp-type 8 -s 0.0.0.0/0 -j ACCEPT
 
