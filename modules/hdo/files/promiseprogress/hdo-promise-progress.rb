@@ -59,7 +59,11 @@ __END__
 <html>
   <head>
     <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, shrink-to-fit=no" />
     <link rel="stylesheet" href="//files.holderdeord.no/dev/hdo-bootstrap/hdo-bootstrap.css"></link>
+
+
     <style>
       .hdo-logo {
         margin-top: 1rem;
