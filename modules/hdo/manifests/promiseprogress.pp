@@ -12,7 +12,7 @@ class hdo::promiseprogress(
 
   file { $script:
     ensure  => file,
-    owner   => $hdo::params::user,
+    user    => $hdo::params::user,
     mode    => '0744',
     source  => 'puppet:///modules/hdo/promiseprogress/hdo-promise-progress.rb',
     require => File[$root]
