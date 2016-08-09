@@ -6,7 +6,7 @@ class hdo::promiseprogress(
   include hdo::common
   $script = "${root}/hdo-promise-progress.rb"
 
-  file { $root:
+  file { [$root, $out]:
     ensure => directory
   }
 
