@@ -12,16 +12,16 @@ class hdo::promiseprogress(
 
   file { $script:
     ensure  => file,
-    owner   => hdo,
+    owner   => $hdo::params::user,
     mode    => '0744',
-    source  => 'puppet:///modules/hdo/promiseprogress/hdo-promise-progress.rb',
+    source  => 'puppet:///modules/hdo/promiseprogress/hdo-promise-progress.rb'
     require => File[$root]
   }
 
   cron { 'hdo-promise-progress':
     ensure      => 'present',
     command     => "bash -l -c 'ruby ${script} --input /webapps/files/gdrive/${spreadhsheetId}.json --output ${out}'",
-    owner       => hdo,
+    user        => $hdo::params::user,
     environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => File[$script],
     hour        => '*',
