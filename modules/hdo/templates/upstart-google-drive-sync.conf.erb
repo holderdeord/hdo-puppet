@@ -1,8 +1,10 @@
+# This file is managed by Puppet, do not edit manually, your changes will be overwritten.
 # http://upstart.ubuntu.com/wiki/Stanzas
 
 description <%= @description %>
 author      <%= @author %>
 
+start on filesystem and net-device-up IFACE!=lo
 stop on shutdown
 respawn
 respawn limit 20 5
