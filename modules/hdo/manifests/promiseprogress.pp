@@ -14,7 +14,7 @@ class hdo::promiseprogress(
     ensure  => file,
     owner   => $hdo::params::user,
     mode    => '0744',
-    source => 'puppet:///modules/hdo/promiseprogress/hdo-promise-progress.rb'
+    source  => 'puppet:///modules/hdo/promiseprogress/hdo-promise-progress.rb',
     require => File[$root]
   }
 
