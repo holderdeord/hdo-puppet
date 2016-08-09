@@ -8,6 +8,7 @@ class hdo::promiseprogress(
 
   file { [$root, $out]:
     ensure => directory
+    owner  => $hdo::params::user,
   }
 
   file { $script:
