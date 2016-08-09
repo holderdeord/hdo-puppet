@@ -1,6 +1,6 @@
 class hdo::promiseprogress(
-  $spreadhsheetId = '14LtkMlUJ3K7BPz_bJOEVjtktBK9V3tVeDLu5D1qiRnQ'
-  $root           = '/var/lib/hdo-promise-progress'
+  $spreadhsheetId = '14LtkMlUJ3K7BPz_bJOEVjtktBK9V3tVeDLu5D1qiRnQ',
+  $root           = '/var/lib/hdo-promise-progress',
   $out            = '/webapps/files/analyse/2017/loftesjekk'
 ) {
   include hdo::common
