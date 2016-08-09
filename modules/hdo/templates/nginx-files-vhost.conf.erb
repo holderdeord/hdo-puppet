@@ -7,7 +7,9 @@ server {
   server_name <%= @server_name %>;
   root        <%= @files_root %>;
   autoindex   off;
-  charset     utf-8;
+
+  charset       utf-8;
+  charset_types text/html text/xml text/plain text/vnd.wap.wml application/javascript application/rss+xml application/json;
 
   access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
   error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
