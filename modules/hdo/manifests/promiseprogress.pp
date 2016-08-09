@@ -7,7 +7,7 @@ class hdo::promiseprogress(
   $script = "${root}/hdo-promise-progress.rb"
 
   file { [$root, $out]:
-    ensure => directory
+    ensure => directory,
     owner  => $hdo::params::user,
   }
 
