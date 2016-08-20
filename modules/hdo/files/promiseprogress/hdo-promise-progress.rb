@@ -31,8 +31,8 @@ stats[:completed] = 0
 stats[:by_person] = Hash.new { |h, k| h[k] = { total: 0, completed: 0 } }
 
 promises.each do |p|
-  completed = p['ferdigsjekka?'].to_s.downcase == 'ja'
-  name      = p['hvem sjekker?']
+  completed = p['Ferdigsjekka?'].to_s.downcase == 'ja'
+  name      = p['Hvem sjekker?']
 
   pers = stats[:by_person][name]
   pers[:total] += 1
