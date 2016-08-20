@@ -32,7 +32,7 @@ class hdo::webapp::statsupdater(
     missingok    => true
   }
 
-  cron { 'api-update':
+  cron { 'hdo-stats-update':
     ensure      => $ensure,
     command     => "bash -l -c 'cd ${hdo::params::app_root} && bundle exec script/import stats >> ${logfile}'",
     user        => hdo,
