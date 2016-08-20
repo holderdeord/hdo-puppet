@@ -55,6 +55,16 @@ File.open(File.join(opts.output, "index.html"), "w") do |io|
   io << ERB.new(DATA.read, 0, "%-<>").result(binding)
 end
 
+stats_path = File.join(opts.output, 'stats.json')
+saved_stats = {'by_date' => {}}
+
+if File.exists?(stats_path)
+  saved_stats = JSON.parse(File.read(stats_path))
+end
+
+saved_stats['by_date'][Time.now.strftime("%Y-%m-%d")] = stats
+File.open(stats_path, 'w') { |io| io << saved_stats.to_json }
+
 __END__
 <html>
   <head>
