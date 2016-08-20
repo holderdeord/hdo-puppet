@@ -90,6 +90,7 @@ election = Date.new(2017, 9, 11)
 campaign = Date.new(2017, 4, 1)
 
 stats[:percent_complete] = ((stats[:completed] / stats[:total].to_f) * 100).round(1)
+stats[:percent_not_yet] = ((stats[:not_yet] / stats[:total].to_f) * 100).round(1)
 stats[:remaining] = stats[:total] - stats[:completed]
 stats[:days_to_election] = (election - Date.today).to_i
 stats[:days_to_campaign] = (campaign - Date.today).to_i
@@ -132,8 +133,8 @@ __END__
       }
 
       .huge {
-        font-size: 8rem;
-        /*margin-top: 4rem;*/
+        font-size: 7rem;
+        line-height: 1.2;
       }
 
       .vertical-align {
@@ -174,6 +175,9 @@ __END__
           <div>
             <div class="huge"><%= stats[:percent_complete].to_s.sub('.', ',') %>%</div>
             <div>ferdig</div>
+
+            <div class="huge"><%= stats[:percent_not_yet].to_s.sub('.', ',') %>%</div>
+            <div>kan ikke avgjøres enda</div>
           </div>
         </div>
       </div>
