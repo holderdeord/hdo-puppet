@@ -1,13 +1,18 @@
 language: ruby
 rvm:
-  - 2.0.0
+- 2.0.0
 notifications:
   hipchat:
     rooms:
-      secure: "dPDcvtGQXXzdj31ftZkRShrn+l1TCnTEPTdr6YVAfzAI1Ashzhr4yGvnNfMs\n4lbxYDJfRxpTO5Xd1Hte5HH7c0ijoHEGjajySSl43+nLeShw+CWhuxKSbmCM\nnICGbjLhNPSDTIg1QPO/AkUCF3YG6szmd3JX9XLathUrt0HOBTY="
+      secure: |-
+        dPDcvtGQXXzdj31ftZkRShrn+l1TCnTEPTdr6YVAfzAI1Ashzhr4yGvnNfMs
+        4lbxYDJfRxpTO5Xd1Hte5HH7c0ijoHEGjajySSl43+nLeShw+CWhuxKSbmCM
+        nICGbjLhNPSDTIg1QPO/AkUCF3YG6szmd3JX9XLathUrt0HOBTY=
     on_success: change
     on_failure: change
   recipients:
-    - jari@holderdeord.no
+  - jari@holderdeord.no
+  slack:
+    secure: azB2bz6DRp4eqJcoxH6xWj2b0mP1YJJdBXm6mByNoOhnS3i9LpkxuxYGISUYTMj8gyNbrZ8HwIpY4r7mLzWkI/W8/gZI3HSL0TAMqXLQLhmX38ghrn8LtdzXaU6JTIFLfU0aMsUXJKqEAun0yYEEFd0ZPc3xnbNTog90WgoqSEM=
 script:
-  - script/lint
+- script/lint
