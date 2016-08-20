@@ -5,6 +5,7 @@ require 'optparse'
 require 'ostruct'
 require 'erb'
 require 'date'
+require 'time'
 
 opts = OpenStruct.new
 
@@ -22,13 +23,35 @@ unless opts.input && opts.output
 end
 
 data = JSON.parse(File.read(opts.input))
-stats = {}
 
 promises = data['data']['promises']
 
+stats = {
+  total: promises.size,
+  completed: 0,
+  kept: 0,
+  broken: 0,
+  partly_kept: 0,
+  not_yet: 0,
+  unknown: 0,
+}
+
 stats[:total] = promises.size
 stats[:completed] = 0
-stats[:by_person] = Hash.new { |h, k| h[k] = { total: 0, completed: 0 } }
+stats[:kept] = 0
+stats[:broken] = 0
+stats[:not_yet] = 0
+stats[:by_person] = Hash.new do |h, k|
+  h[k] = {
+    total: 0,
+    completed: 0,
+    kept: 0,
+    broken: 0,
+    partly_kept: 0,
+    not_yet: 0,
+    unknown: 0
+  }
+end
 
 promises.each do |p|
   completed = p['Ferdigsjekka?'].to_s.downcase == 'ja'
@@ -36,6 +59,26 @@ promises.each do |p|
 
   pers = stats[:by_person][name]
   pers[:total] += 1
+
+  case p['Holdt?'].to_s.downcase
+  when 'ja'
+    stats[:kept] += 1
+    pers[:kept] += 1
+  when 'nei'
+    stats[:broken] += 1
+    pers[:broken] += 1
+  when 'delvis'
+    stats[:partly_kept] += 1
+    pers[:partly_kept] += 1
+  when 'ikke enda'
+    stats[:not_yet] += 1
+    pers[:not_yet] += 1
+  when ''
+    stats[:unknown] += 1
+    pers[:unknown] += 1
+  else
+    STDERR.puts "invalid value: #{p['Holdt?'].inspect}"
+  end
 
   if completed
     stats[:completed] += 1
@@ -51,10 +94,6 @@ stats[:remaining] = stats[:total] - stats[:completed]
 stats[:days_to_election] = (election - Date.today).to_i
 stats[:days_to_campaign] = (campaign - Date.today).to_i
 
-File.open(File.join(opts.output, "index.html"), "w") do |io|
-  io << ERB.new(DATA.read, 0, "%-<>").result(binding)
-end
-
 stats_path = File.join(opts.output, 'stats.json')
 saved_stats = {'by_date' => {}}
 
@@ -62,8 +101,15 @@ if File.exists?(stats_path)
   saved_stats = JSON.parse(File.read(stats_path))
 end
 
+saved_stats['current'] = stats
 saved_stats['by_date'][Time.now.strftime("%Y-%m-%d")] = stats
+
 File.open(stats_path, 'w') { |io| io << saved_stats.to_json }
+
+File.open(File.join(opts.output, "index.html"), "w") do |io|
+  io << ERB.new(DATA.read, 0, "%-<>").result(binding)
+end
+
 
 __END__
 <html>
@@ -120,20 +166,20 @@ __END__
       </div>
 
       <div class="row vertical-align">
-       <div class="col-md-4">
-          <div id="complete-pie"></div>
-       </div>
+        <div class="col-md-8">
+          <div id="person-column"></div>
+        </div>
 
-       <div class="col-md-4 text-xs-center vertical-align-item">
-         <div>
-           <div class="huge"><%= stats[:percent_complete].to_s.sub('.', ',') %>%</div>
-           <div>ferdig</div>
-         </div>
-       </div>
+        <div class="col-md-4 text-xs-center vertical-align-item">
+          <div>
+            <div class="huge"><%= stats[:percent_complete].to_s.sub('.', ',') %>%</div>
+            <div>ferdig</div>
+          </div>
+        </div>
+      </div>
 
-       <div class="col-md-4">
-         <div id="person-column"></div>
-       </div>
+      <div class="row">
+        <div id="timeline" />
       </div>
 
       <hr />
@@ -157,8 +203,10 @@ __END__
       </div>
     </div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highcharts/4.2.6/highcharts.js"></script>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highcharts/4.2.6/highcharts.js"></script>
 
     <script type="text/javascript">
       Highcharts.setOptions({
@@ -261,28 +309,28 @@ __END__
           }
       });
 
-      var stats = <%= stats.to_json %>;
+      var stats = <%= saved_stats.to_json %>;
 
       $(function() {
-        $("#complete-pie").highcharts({
-          chart: {
-            type: 'pie'
-          },
+        // $("#complete-pie").highcharts({
+        //   chart: {
+        //     type: 'pie'
+        //   },
 
-          title: {
-            text: ''
-          },
+        //   title: {
+        //     text: ''
+        //   },
 
-          series: [{
-            name: 'Antall løfter',
-            data: [
-              {name: 'Ikke ferdig', y: stats.remaining },
-              {name: 'Ferdig', y: stats.completed }
-            ]
-          }]
-        });
+        //   series: [{
+        //     name: 'Antall løfter',
+        //     data: [
+        //       {name: 'Ikke ferdig', y: stats.current.remaining },
+        //       {name: 'Ferdig', y: stats.current.completed }
+        //     ]
+        //   }]
+        // });
 
-        var names = Object.keys(stats.by_person).filter(function(e) { return e; });
+        var names = Object.keys(stats.current.by_person).filter(function(e) { return e; });
 
         $("#person-column").highcharts({
           chart: {
@@ -306,11 +354,58 @@ __END__
             categories: names
           },
 
-          series: [
-            {name: 'Totalt', data: names.map(function(name) { return stats.by_person[name].total; })},
-            {name: 'Ferdigsjekka', data: names.map(function(name) { return stats.by_person[name].completed; })},
-          ]
+          yAxis: {
+            allowDecimals: false
+          },
 
+          series: [
+            {name: 'Totalt', data: names.map(function(name) { return stats.current.by_person[name].total; })},
+            {name: 'Ferdigsjekka', data: names.map(function(name) { return stats.current.by_person[name].completed; })},
+            {name: 'Ikke enda', data: names.map(function(name) { return stats.current.by_person[name].not_yet; })},
+          ]
+        })
+
+        var dates = Object.keys(stats.by_date).sort();
+
+        $("#timeline").highcharts({
+          chart: {
+            type: 'area'
+          },
+
+          xAxis: {
+            type: 'datetime',
+          },
+
+          title: {
+            text: ''
+          },
+
+          plotOptions: {
+            area: {
+              stacking: 'normal',
+              lineColor: '#666666',
+              lineWidth: 1,
+              marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+              }
+            }
+          },
+
+          series: [
+            {
+              name: 'Totalt',
+              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].total] })
+            },
+            {
+              name: 'Ferdigsjekka',
+              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].completed] })
+            },
+            {
+              name: 'Ikke enda',
+              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].not_yet] })
+            }
+          ]
         })
       })
     </script>
