@@ -55,6 +55,11 @@ node 'hdo02' {
     ssl         => true
   }
 
+  class { 'hdo::rebels':
+    server_name => 'utbrytere.holderdeord.no',
+    ssl         => true
+  }
+
   class { 'hdo::cards':
     server_name => 'kort.holderdeord.no',
     ssl         => true,
