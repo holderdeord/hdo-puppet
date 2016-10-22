@@ -25,6 +25,7 @@ end
 data = JSON.parse(File.read(opts.input))
 
 promises = data['data']['promises']
+errors = []
 
 stats = {
   total: promises.size,
@@ -34,6 +35,8 @@ stats = {
   partly_kept: 0,
   not_yet: 0,
   unknown: 0,
+  error: 0,
+  bullshit: 0
 }
 
 stats[:total] = promises.size
@@ -49,16 +52,26 @@ stats[:by_person] = Hash.new do |h, k|
     broken: 0,
     partly_kept: 0,
     not_yet: 0,
-    unknown: 0
+    unknown: 0,
+    error: 0,
+    bullshit: 0
   }
 end
 
-promises.each do |p|
+promises.each_with_index do |p, idx|
+  p['row']  = idx + 2;
   completed = p['Ferdigsjekka?'].to_s.downcase == 'ja'
   name      = p['Hvem sjekker?']
+  svada     = p['Svada'].to_s.downcase == 'ja'
 
   pers = stats[:by_person][name]
-  pers[:total] += 1
+  pers[:total] += 1  
+  pers[:unknown] += 1
+
+  if svada
+    stats[:bullshit] += 1
+    pers[:bullshit] += 1
+  end
 
   case p['Holdt?'].to_s.downcase
   when 'ja'
@@ -74,8 +87,14 @@ promises.each do |p|
     stats[:not_yet] += 1
     pers[:not_yet] += 1
   when ''
-    stats[:unknown] += 1
-    pers[:unknown] += 1
+    if completed && !svada
+      errors << p
+      stats[:error] += 1
+      pers[:error] += 1
+    else
+      stats[:unknown] += 1
+      pers[:unknown] += 1
+    end
   else
     STDERR.puts "invalid value: #{p['Holdt?'].inspect}"
   end
@@ -94,6 +113,7 @@ stats[:percent_not_yet] = ((stats[:not_yet] / stats[:total].to_f) * 100).round(1
 stats[:remaining] = stats[:total] - stats[:completed]
 stats[:days_to_election] = (election - Date.today).to_i
 stats[:days_to_campaign] = (campaign - Date.today).to_i
+stats[:errors] = errors
 
 stats_path = File.join(opts.output, 'stats.json')
 saved_stats = {'by_date' => {}}
@@ -111,7 +131,6 @@ File.open(File.join(opts.output, "index.html"), "w") do |io|
   io << ERB.new(DATA.read, 0, "%-<>").result(binding)
 end
 
-
 __END__
 <html>
   <head>
@@ -119,7 +138,6 @@ __END__
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, shrink-to-fit=no" />
     <link rel="stylesheet" href="//files.holderdeord.no/dev/hdo-bootstrap/hdo-bootstrap.css"></link>
-
 
     <style>
       .hdo-logo {
@@ -211,6 +229,44 @@ __END__
             <div id="promise-status"></div>
           </div>
       </div>
+
+      <div class="row">
+          <div class="col-md-12">
+            <h3>Feil</h3>
+
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <td>Rad</td>
+                  <td>ID</td>
+                  <td>Løfte</td>
+                  <td>Hvem</td>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% stats[:errors].each_with_index do |error| %>
+                  <tr>
+                    <td>
+                      <%= error['row'] %> 
+                    </td>
+                    <td>
+                      <%= error['ID'] %> 
+                    </td>
+                    <td>
+                      <%= error['Løfte'] %> 
+                    </td>
+                    <td>
+                      <%= error['Hvem sjekker?'] %> 
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+      </div>
+
+
     </div>
 
 
@@ -322,24 +378,6 @@ __END__
       var stats = <%= saved_stats.to_json %>;
 
       $(function() {
-        // $("#complete-pie").highcharts({
-        //   chart: {
-        //     type: 'pie'
-        //   },
-
-        //   title: {
-        //     text: ''
-        //   },
-
-        //   series: [{
-        //     name: 'Antall løfter',
-        //     data: [
-        //       {name: 'Ikke ferdig', y: stats.current.remaining },
-        //       {name: 'Ferdig', y: stats.current.completed }
-        //     ]
-        //   }]
-        // });
-
         $("#promise-status").highcharts({
           chart: {
             type: 'pie'
@@ -356,6 +394,7 @@ __END__
                 { name: 'Holdt',        y: stats.current.kept },
                 { name: 'Delvis holdt', y: stats.current.partly_kept },
                 { name: 'Brutt',        y: stats.current.broken },
+                { name: 'Svada',        y: stats.current.bullshit },
               ]
             }
           ]
@@ -390,9 +429,11 @@ __END__
           },
 
           series: [
-            {name: 'Totalt', data: names.map(function(name) { return stats.current.by_person[name].total; })},
-            {name: 'Ferdigsjekka', data: names.map(function(name) { return stats.current.by_person[name].completed; })},
-            {name: 'Ikke enda', data: names.map(function(name) { return stats.current.by_person[name].not_yet; })},
+            { name: 'Totalt',       data: names.map(function(name) { return stats.current.by_person[name].total; })},
+            { name: 'Ferdigsjekka', data: names.map(function(name) { return stats.current.by_person[name].completed; })},
+            { name: 'Ikke enda',    data: names.map(function(name) { return stats.current.by_person[name].not_yet; })},
+            { name: 'Svada',         data: names.map(function(name) { return stats.current.by_person[name].bullshit; })},
+            { name: 'Feil',         data: names.map(function(name) { return stats.current.by_person[name].error; })},
           ]
         })
 
@@ -425,8 +466,8 @@ __END__
 
           series: [
             {
-              name: 'Totalt',
-              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].total] })
+              name: 'Gjenstår',
+              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].remaining] })
             },
             {
               name: 'Ferdigsjekka',
@@ -435,7 +476,15 @@ __END__
             {
               name: 'Ikke enda',
               data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].not_yet] })
-            }
+            },
+            {
+              name: 'Svada',
+              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].bullshit] })
+            },
+            {
+              name: 'Feil',
+              data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].error] })
+            },
           ]
         })
       })
