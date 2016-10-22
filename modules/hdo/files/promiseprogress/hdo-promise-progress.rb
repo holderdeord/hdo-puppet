@@ -205,6 +205,12 @@ __END__
           </div>
         </div>
       </div>
+
+      <div class="row">
+          <div class="col-md-12">
+            <div id="promise-status"></div>
+          </div>
+      </div>
     </div>
 
 
@@ -333,6 +339,27 @@ __END__
         //     ]
         //   }]
         // });
+
+        $("#promise-status").highcharts({
+          chart: {
+            type: 'pie'
+          },
+
+          title: {
+            text: 'Løftestatus'
+          },
+
+          series: [
+            {
+              name: 'Status',
+              data: [
+                { name: 'Holdt',        y: stats.current.kept },
+                { name: 'Delvis holdt', y: stats.current.partly_kept },
+                { name: 'Brutt',        y: stats.current.broken },
+              ]
+            }
+          ]
+        })
 
         var names = Object.keys(stats.current.by_person).filter(function(e) { return e; });
 
