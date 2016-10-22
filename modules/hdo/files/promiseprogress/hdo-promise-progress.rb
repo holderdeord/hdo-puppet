@@ -351,7 +351,7 @@ __END__
 
           series: [
             {
-              name: 'Status',
+              name: 'Antall løfter',
               data: [
                 { name: 'Holdt',        y: stats.current.kept },
                 { name: 'Delvis holdt', y: stats.current.partly_kept },
