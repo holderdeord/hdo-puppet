@@ -39,6 +39,7 @@ stats = {
   bullshit: 0
 }
 
+stats[:categories] = Hash.new { |hash, key| hash[key] = {total: 0, completed: 0} }
 stats[:total] = promises.size
 stats[:completed] = 0
 stats[:kept] = 0
@@ -63,9 +64,10 @@ promises.each_with_index do |p, idx|
   completed = p['Ferdigsjekka?'].to_s.downcase == 'ja'
   name      = p['Hvem sjekker?']
   svada     = p['Svada'].to_s.downcase == 'ja'
+  categories = p['Kategori'].split(';')
 
   pers = stats[:by_person][name]
-  pers[:total] += 1  
+  pers[:total] += 1
   pers[:unknown] += 1
 
   if svada
@@ -103,17 +105,24 @@ promises.each_with_index do |p, idx|
     stats[:completed] += 1
     pers[:completed] += 1
   end
+
+  categories.each do |c|
+    stats[:categories][c][:total] += 1
+    stats[:categories][c][:completed] += 1 if completed
+  end
 end
 
 election = Date.new(2017, 9, 11)
 campaign = Date.new(2017, 4, 1)
+launch   = Date.new(2017, 7, 1)
 
 stats[:percent_complete] = ((stats[:completed] / stats[:total].to_f) * 100).round(1)
-stats[:percent_not_yet] = ((stats[:not_yet] / stats[:total].to_f) * 100).round(1)
-stats[:remaining] = stats[:total] - stats[:completed]
+stats[:percent_not_yet]  = ((stats[:not_yet] / stats[:total].to_f) * 100).round(1)
+stats[:remaining]        = stats[:total] - stats[:completed]
 stats[:days_to_election] = (election - Date.today).to_i
 stats[:days_to_campaign] = (campaign - Date.today).to_i
-stats[:errors] = errors
+stats[:days_to_launch] = (campaign - Date.today).to_i
+stats[:errors]           = errors
 
 stats_path = File.join(opts.output, 'stats.json')
 saved_stats = {'by_date' => {}}
@@ -172,7 +181,6 @@ __END__
         justify-content: center; /* Optional, to align inner flex-items
                                     horizontally within the column  */
       }
-
     </style>
   </head>
 
@@ -217,9 +225,9 @@ __END__
 
         <div class="col-md-6 vertical-align-item">
           <div>
-            <div class="huge"><%= stats[:days_to_campaign] %></div>
-            <div>dager til valgkampstart <%= campaign.strftime("%e. %b").downcase %></div>
-            <div><%= (stats[:remaining] / stats[:days_to_campaign].to_f).round(1).to_s.sub('.', ',') %> løfter per dag</div>
+            <div class="huge"><%= stats[:days_to_launch] %></div>
+            <div>dager til lansering <%= launch.strftime("%e. %b").downcase %></div>
+            <div><%= (stats[:remaining] / stats[:days_to_launch].to_f).round(1).to_s.sub('.', ',') %> løfter per dag</div>
           </div>
         </div>
       </div>
@@ -248,27 +256,31 @@ __END__
                 <% stats[:errors].each_with_index do |error| %>
                   <tr>
                     <td>
-                      <%= error['row'] %> 
+                      <%= error['row'] %>
                     </td>
                     <td>
-                      <%= error['ID'] %> 
+                      <%= error['ID'] %>
                     </td>
                     <td>
-                      <%= error['Løfte'] %> 
+                      <%= error['Løfte'] %>
                     </td>
                     <td>
-                      <%= error['Hvem sjekker?'] %> 
+                      <%= error['Hvem sjekker?'] %>
                     </td>
                   </tr>
                 <% end %>
               </tbody>
             </table>
           </div>
+
+          <div class="row">
+              <div class="col-md-12">
+                <h3>Prosent ferdigsjekka etter kategori</h3>
+                <div id="categories-column"></div>
+              </div>
+          </div>
       </div>
-
-
     </div>
-
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
@@ -487,7 +499,68 @@ __END__
             },
           ]
         })
-      })
+      });
+
+      var categoryData = Object.keys(stats.current.categories).map(function(name) {
+        var total = stats.current.categories[name].total;
+        var completed = stats.current.categories[name].completed;
+
+        return {
+          name: name,
+          completed: completed,
+          total: total,
+          percent: 100 * (completed / total)
+        };
+      }).sort(function(a, b) { return b.percent - a.percent; });
+
+      $("#categories-column").highcharts({
+        chart: {
+          type: 'bar',
+          height: 1200
+        },
+
+        title: {
+          text: ''
+        },
+
+        plotOptions: {
+            series: {
+                pointPadding: 0,
+                // groupPadding: 0,
+                borderWidth: 0.5,
+            },
+        },
+
+        xAxis: {
+          type: 'category',
+          categories: categoryData.map(function(c) { 
+            return c.name; 
+          }),
+          labels: { 
+            step: 1,
+            style: { 
+              fontSize: '9px', 
+              fontWeight: 300 
+            }
+          },
+          // tickInterval: 1,
+        },
+
+        yAxis: {
+          allowDecimals: false,
+          max: 100
+        },
+
+        series: [
+          {
+            name: 'Prosent ferdigsjekka etter kategori',
+            data: categoryData.map(function(c) { 
+              return c.percent; 
+            })
+          }
+        ]
+      });
+
     </script>
   </body>
 </html>
