@@ -8,3 +8,4 @@
 /.librarian
 /vendor/puppet/cache
 .ruby-version
+modules/hdo/files/promiseprogress/*.json

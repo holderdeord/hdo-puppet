@@ -62,9 +62,9 @@ end
 promises.each_with_index do |p, idx|
   p['row']  = idx + 2;
   completed = p['Ferdigsjekka?'].to_s.downcase == 'ja'
-  name      = p['Hvem sjekker?']
+  name      = p['Hvem sjekker?'].to_s.downcase.strip
   svada     = p['Svada'].to_s.downcase == 'ja'
-  categories = p['Kategori'].split(';')
+  categories = p['Kategori'].to_s.split(';')
 
   pers = stats[:by_person][name]
   pers[:total] += 1
@@ -121,7 +121,7 @@ stats[:percent_not_yet]  = ((stats[:not_yet] / stats[:total].to_f) * 100).round(
 stats[:remaining]        = stats[:total] - stats[:completed]
 stats[:days_to_election] = (election - Date.today).to_i
 stats[:days_to_campaign] = (campaign - Date.today).to_i
-stats[:days_to_launch] = (campaign - Date.today).to_i
+stats[:days_to_launch]   = (launch - Date.today).to_i
 stats[:errors]           = errors
 
 stats_path = File.join(opts.output, 'stats.json')
@@ -533,14 +533,14 @@ __END__
 
         xAxis: {
           type: 'category',
-          categories: categoryData.map(function(c) { 
-            return c.name; 
+          categories: categoryData.map(function(c) {
+            return c.name;
           }),
-          labels: { 
+          labels: {
             step: 1,
-            style: { 
-              fontSize: '9px', 
-              fontWeight: 300 
+            style: {
+              fontSize: '9px',
+              fontWeight: 300
             }
           },
           // tickInterval: 1,
@@ -554,8 +554,8 @@ __END__
         series: [
           {
             name: 'Prosent ferdigsjekka etter kategori',
-            data: categoryData.map(function(c) { 
-              return c.percent; 
+            data: categoryData.map(function(c) {
+              return c.percent;
             })
           }
         ]

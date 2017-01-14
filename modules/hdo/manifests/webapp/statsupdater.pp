@@ -32,9 +32,19 @@ class hdo::webapp::statsupdater(
     missingok    => true
   }
 
-  cron { 'hdo-stats-update':
+  cron { 'hdo-agreement-stats-update':
     ensure      => $ensure,
-    command     => "bash -l -c 'cd ${hdo::params::app_root} && bundle exec script/import stats >> ${logfile}'",
+    command     => "bash -l -c 'cd ${hdo::params::app_root} && bundle exec script/import agreement-stats >> ${logfile}'",
+    user        => hdo,
+    environment => ["RAILS_ENV=${hdo::params::environment}", 'PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
+    require     => [Class['hdo::webapp'], File[$logfile]],
+    hour        => $hour,
+    minute      => $minute
+  }
+
+  cron { 'hdo-rebel-stats-update':
+    ensure      => $ensure,
+    command     => "bash -l -c 'cd ${hdo::params::app_root} && bundle exec script/import rebel-stats >> ${logfile}'",
     user        => hdo,
     environment => ["RAILS_ENV=${hdo::params::environment}", 'PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
     require     => [Class['hdo::webapp'], File[$logfile]],
