@@ -1,0 +1,37 @@
+# This file is managed by Puppet, do not edit manually, your changes will be overwritten.
+
+# start on filesystem and net-device-up IFACE!=lo
+# stop on shutdown
+# respawn
+# respawn limit 20 5
+#
+#
+# script
+#   exec google-drive-sync \
+#     --out-dir <%= @output_dir %> \
+#     --credentials <%= @credentials_path %> \
+#     --plugins <%= @plugin_path %> \
+#     --interval <%= @interval %> \
+#     --state <%= @state_path %> \
+#     ><%= @log_path %> 2>&1
+# end script
+#
+# post-start script
+#    echo "started <%= @description %>"
+# end script
+
+
+[Unit]
+Description=<%= @app_name %>
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/run/<%= @app_name %>.pid
+ExecStart=/bin/bash -c 'google-drive-sync --out-dir <%= @output_dir %> --credentials <%= @credentials_path %> --plugins <%= @plugin_path %> --interval <%= @interval %> --state <%= @state_path %> ><%= @log_path %> 2>&1'
+ExecStop=/bin/kill -s QUIT $MAINPID
+KillMode=control-group
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

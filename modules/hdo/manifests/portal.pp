@@ -45,7 +45,6 @@ class hdo::portal(
     notify  => Service['nginx']
   }
 
-  $description = $app_name
   $author      = 'hdo-puppet'
   $user        = 'hdo'
 

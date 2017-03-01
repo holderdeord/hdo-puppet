@@ -7,7 +7,6 @@ class hdo::googledrivesync(
   }
 
   $app_name    = 'hdo-google-drive-sync'
-  $description = $app_name
   $author      = 'hdo-puppet'
   $user        = 'hdo'
 
@@ -17,7 +16,7 @@ class hdo::googledrivesync(
   $state_path        = "${state_dir}/state.json"
   $credentials_path  = "${state_dir}/credentials.json"
   $plugin_path       = "${state_dir}/plugin.js"
-  $upstart_conf_path = "/etc/init/${description}.conf"
+  $systemd_conf_path = "/lib/systemd/system/${description}.service"
 
   file { $log_path:
     ensure => file,
@@ -66,11 +65,11 @@ class hdo::googledrivesync(
     provider => 'npm',
   }
 
-  file { $upstart_conf_path:
+  file { $systemd_conf_path:
     ensure  => $ensure,
     owner   => root,
     group   => root,
-    content => template('hdo/upstart-google-drive-sync.conf.erb'),
+    content => template('hdo/systemd-google-drive-sync.conf.erb'),
     require => [File[$log_path], File[$credentials_path], Package['google-drive-sync']]
   }
 
