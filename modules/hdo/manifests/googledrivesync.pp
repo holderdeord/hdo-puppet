@@ -16,7 +16,7 @@ class hdo::googledrivesync(
   $state_path        = "${state_dir}/state.json"
   $credentials_path  = "${state_dir}/credentials.json"
   $plugin_path       = "${state_dir}/plugin.js"
-  $systemd_conf_path = "/lib/systemd/system/${description}.service"
+  $systemd_conf_path = "/lib/systemd/system/${app_name}.service"
 
   file { $log_path:
     ensure => file,
