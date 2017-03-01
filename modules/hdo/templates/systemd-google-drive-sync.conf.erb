@@ -26,13 +26,13 @@ Description=<%= @app_name %>
 After=syslog.target network.target remote-fs.target nss-lookup.target
 
 [Service]
-Type=forking
-PIDFile=/run/<%= @app_name %>.pid
+Type=simple
 ExecStart=/bin/bash -c 'google-drive-sync --out-dir <%= @output_dir %> --credentials <%= @credentials_path %> --plugins <%= @plugin_path %> --interval <%= @interval %> --state <%= @state_path %> --daemonize <%= @log_path %>'
 ExecStop=/bin/kill -s QUIT $MAINPID
 KillMode=control-group
 PrivateTmp=true
 Restart=on-abort
+User=<%= @user %>
 
 [Install]
 WantedBy=multi-user.target
