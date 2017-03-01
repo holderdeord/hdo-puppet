@@ -49,14 +49,6 @@ class hdo::portal(
   $author      = 'hdo-puppet'
   $user        = 'hdo'
 
-  file { "/etc/init/${app_name}.conf":
-    ensure  => $ensure,
-    owner   => root,
-    group   => root,
-    content => template('hdo/upstart-node.conf.erb'),
-    require => File[$app_log]
-  }
-
   logrotate::rule { $app_name:
     ensure       => $ensure,
     path         => $app_log,
