@@ -75,8 +75,9 @@ class hdo::googledrivesync(
   }
 
   service { $app_name:
-    ensure  => running,
-    require => File[$upstart_conf_path]
+    ensure           => running,
+    require          => File[$upstart_conf_path],
+    service_provider => upstart
   }
 
 }

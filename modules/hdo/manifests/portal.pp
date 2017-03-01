@@ -73,8 +73,6 @@ class hdo::portal(
     content => template('hdo/hdo-portal-profile.sh')
   }
 
-  service { $app_name: ensure => 'stopped' }
-
   file { '/etc/sudoers.d/allow-hdo-service-hdo-portal':
     ensure  => 'absent',
   }
