@@ -163,8 +163,6 @@ if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Mon 08:00'
     Det er for tiden #{stats[:errors].length} feil i arket. <https://files.holderdeord.no/analyse/2017/loftesjekk|Klikk her> for hele oversikten.
     END
 
-    puts message
-
     req         = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
     req.body    = {
       username: 'Løftesjekk',
@@ -176,9 +174,9 @@ if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Mon 08:00'
     http.use_ssl = true
 
     res = http.start { |agent| agent.request req }
-    p slack_status: res.code
-  else
-    p no_stats_for: one_week_ago
+    if res.code != 200
+      puts "slack hook failed: #{res.code}"
+    end
   end
 end
 
