@@ -27,4 +27,5 @@ class hdo::params {
   $twitter_pp_access_token        = hiera('twitter_pp_access_token', '')
   $twitter_pp_access_token_secret = hiera('twitter_pp_access_token_secret', '')
   $morph_io_api_key               = hiera('morph_io_api_key', '')
+  $slack_webhook_url              = hiera('hdo_slack_webhook_url', '')
 }

@@ -23,7 +23,11 @@ class hdo::promiseprogress(
     ensure      => 'present',
     command     => "bash -l -c 'ruby ${script} --input /webapps/files/gdrive/${spreadhsheetId}.json --output ${out}'",
     user        => $hdo::params::user,
-    environment => ['PATH=/usr/local/bin:/usr/bin:/bin', "MAILTO=${hdo::params::admin_email}"],
+    environment => [
+      'PATH=/usr/local/bin:/usr/bin:/bin',
+      "MAILTO=${hdo::params::admin_email}",
+      "SLACK_HOOK=${hdo::params::slack_webhook_url}"
+    ],
     require     => File[$script],
     hour        => '*',
     minute      => '*/1'

@@ -6,6 +6,10 @@ require 'ostruct'
 require 'erb'
 require 'date'
 require 'time'
+require 'open-uri'
+require 'net/http'
+require 'net/https'
+require 'uri'
 
 opts = OpenStruct.new
 
@@ -22,7 +26,7 @@ unless opts.input && opts.output
   abort "missing --input and --output"
 end
 
-data = JSON.parse(File.read(opts.input))
+data = JSON.parse(open(opts.input).read)
 
 promises = data['data']['promises']
 errors = []
@@ -138,6 +142,44 @@ File.open(stats_path, 'w') { |io| io << saved_stats.to_json }
 
 File.open(File.join(opts.output, "index.html"), "w") do |io|
   io << ERB.new(DATA.read, 0, "%-<>").result(binding)
+end
+
+if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Mon 08:00'
+  uri = URI(ENV['SLACK_HOOK'])
+
+  one_week_ago = (Date.today - 7).strftime("%F");
+  last_week_stats = saved_stats['by_date'][one_week_ago]
+
+  if last_week_stats
+    checked_this_week        = stats[:completed] - last_week_stats['completed']
+    percent_change_this_week = stats[:percent_complete] - last_week_stats['percent_complete']
+    weeks_remaining          = (stats[:remaining] / checked_this_week)
+    done_date                = (Date.today + (weeks_remaining * 7)).strftime("%e %b %Y")
+
+    message = <<-END
+    God morgen HDO!
+    Denne uka har #{checked_this_week} løfter blitt sjekka ferdig, som er en endring på #{percent_change_this_week.round(2).to_s.sub('.', ',')} %.
+    #{stats[:remaining]} løfter gjenstår. Med dette tempoet vil vi være klare til lansering om #{weeks_remaining} uker, altså #{done_date}.
+    Det er for tiden #{stats[:errors].length} feil i arket. <https://files.holderdeord.no/analyse/2017/loftesjekk|Klikk her> for hele oversikten.
+    END
+
+    puts message
+
+    req         = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+    req.body    = {
+      username: 'Løftesjekk',
+      text: message.strip,
+      channel: "@jari"
+    }.to_json
+
+    http = Net::HTTP.new(uri.hostname, uri.port)
+    http.use_ssl = true
+
+    res = http.start { |agent| agent.request req }
+    p slack_status: res.code
+  else
+    p no_stats_for: one_week_ago
+  end
 end
 
 __END__
