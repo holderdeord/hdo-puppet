@@ -144,7 +144,7 @@ File.open(File.join(opts.output, "index.html"), "w") do |io|
   io << ERB.new(DATA.read, 0, "%-<>").result(binding)
 end
 
-if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Mon 08:00'
+if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Tue 12:00'
   uri = URI(ENV['SLACK_HOOK'])
 
   one_week_ago = (Date.today - 7).strftime("%F");
@@ -157,24 +157,28 @@ if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Mon 08:00'
     done_date                = (Date.today + (weeks_remaining * 7)).strftime("%e %b %Y")
 
     message = <<-END
-    God morgen HDO!
-    Denne uka har #{checked_this_week} løfter blitt sjekka ferdig, som er en endring på #{percent_change_this_week.round(2).to_s.sub('.', ',')} %.
-    #{stats[:remaining]} løfter gjenstår. Med dette tempoet vil vi være klare til lansering om #{weeks_remaining} uker, altså #{done_date}.
-    Det er for tiden #{stats[:errors].length} feil i arket. <https://files.holderdeord.no/analyse/2017/loftesjekk|Klikk her> for hele oversikten.
+    God dag <!channel|channel>!
+    Denne uka har *#{checked_this_week} løfter* blitt sjekka ferdig, som er en endring på *#{percent_change_this_week.round(2).to_s.sub('.', ',')} %*.
+    *#{stats[:remaining]} løfter* gjenstår. Med dette tempoet vil vi være klare til lansering om *#{weeks_remaining} uker*, altså *#{done_date}*.
+    Det er for tiden *#{stats[:errors].length} feil* i arket. <https://files.holderdeord.no/analyse/2017/loftesjekk|Klikk her> for hele oversikten.
+
+    Hvem kommer på arbeidskveld?
     END
 
     req         = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
     req.body    = {
       username: 'Løftesjekk',
-      text: message.strip,
-      channel: "@jari"
+      text: message.split("\n").map { |e| e.strip }.join("\n"),
+      # channel: "#jari-test"
+      channel: "#general"
     }.to_json
 
     http = Net::HTTP.new(uri.hostname, uri.port)
     http.use_ssl = true
 
     res = http.start { |agent| agent.request req }
-    if res.code != 200
+
+    if res.code != "200"
       puts "slack hook failed: #{res.code}"
     end
   end
