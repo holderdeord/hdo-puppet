@@ -29,7 +29,7 @@ server {
   access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
   error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
 
-  location ~* ^(/_search) {
+  location ~* ^(/[\w_]+/_search) {
     <% if @cors %>
       <%= scope.function_template(['hdo/nginx-cors.conf']) %>
     <% end %>
