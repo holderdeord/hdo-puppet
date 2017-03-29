@@ -1,0 +1,55 @@
+#
+# This file is managed by Puppet. Local edits will be lost.
+#
+
+upstream elasticsearch {
+  server 127.0.0.1:9200;
+  keepalive 15;
+}
+
+<% if @ssl %>
+server {
+  listen          80;
+  server_name     <%= @server_name %>;
+
+  return          301 https://$server_name$request_uri;
+}
+<% end %>
+
+server {
+  <% if @ssl %>
+    <%= scope.function_template(['hdo/nginx-ssl-conf.erb']) %>
+  <% else %>
+    listen       80;
+  <% end %>
+
+  server_name    <%= @server_name %>;
+  autoindex      off;
+
+  access_log  /opt/nginx/logs/<%= @server_name %>.access.log combined;
+  error_log   /opt/nginx/logs/<%= @server_name %>.error.log;
+
+  location ~* ^(/_search) {
+    <% if @cors %>
+      <%= scope.function_template(['hdo/nginx-cors.conf']) %>
+    <% end %>
+
+    proxy_pass                http://elasticsearch;
+    proxy_http_version        1.1;
+    proxy_set_header          Connection "Keep-Alive";
+    proxy_set_header          Proxy-Connection "Keep-Alive";
+    proxy_redirect            off;
+
+    proxy_cache_key           "$scheme://$host$uri$is_args$args";
+    proxy_cache               hdo;
+    proxy_cache_bypass        $http_cache_control; # respect Cache-Control=no-cache from the client
+    proxy_cache_use_stale     updating; # error timeout invalid_header updating
+    proxy_cache_purge         PURGE from all;
+    proxy_cache_valid 200     302 10m;
+    proxy_cache_valid 404     1m;
+    proxy_connect_timeout     5s;
+    proxy_read_timeout        10s;
+
+    add_header                X-Proxy-Cache $upstream_cache_status; # set HIT/MISS/BYPASS in response
+  }
+}

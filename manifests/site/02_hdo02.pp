@@ -76,6 +76,11 @@ node 'hdo02' {
     restrict    => false,
   }
 
+  # class { 'hdo::searchproxy':
+  #   server_name => 'search.holderdeord.no',
+  #   ssl         => true
+  # }
+
   include hdo::googledrivesync
   include hdo::promiseprogress
   include hdo::webapp::exporter
