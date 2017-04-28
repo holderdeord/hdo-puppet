@@ -144,33 +144,43 @@ File.open(File.join(opts.output, "index.html"), "w") do |io|
   io << ERB.new(DATA.read, 0, "%-<>").result(binding)
 end
 
-if ENV['SLACK_HOOK'] && Time.now.strftime("%a %H:%M") == 'Tue 12:00'
+is_notify_time = Time.now.strftime("%a %H:%M") == 'Tue 12:00'
+
+if ENV['SLACK_HOOK'] && (is_notify_time || ENV['SLACK_TEST'])
   uri = URI(ENV['SLACK_HOOK'])
 
   one_week_ago = (Date.today - 7).strftime("%F");
   last_week_stats = saved_stats['by_date'][one_week_ago]
 
   if last_week_stats
+    percent_complete         = stats[:percent_complete]
     checked_this_week        = stats[:completed] - last_week_stats['completed']
-    percent_change_this_week = stats[:percent_complete] - last_week_stats['percent_complete']
-    weeks_remaining          = (stats[:remaining] / checked_this_week)
-    done_date                = (Date.today + (weeks_remaining * 7)).strftime("%e %b %Y")
+    percent_change_this_week = percent_complete - last_week_stats['percent_complete']
 
-    message = <<-END
-    God dag <!channel|channel>!
-    Denne uka har *#{checked_this_week} løfter* blitt sjekka ferdig, som er en endring på *#{percent_change_this_week.round(2).to_s.sub('.', ',')} %*.
-    *#{stats[:remaining]} løfter* gjenstår. Med dette tempoet vil vi være klare til lansering om *#{weeks_remaining} uker*, altså *#{done_date}*.
-    Det er for tiden *#{stats[:errors].length} feil* i arket. <https://files.holderdeord.no/analyse/2017/loftesjekk|Klikk her> for hele oversikten.
+    message = []
 
-    Hvem kommer på arbeidskveld?
+    message << <<-END
+God dag <!channel|channel>!
+
+Denne uka har *#{checked_this_week} løfter* blitt sjekka ferdig, som er en endring på *#{percent_change_this_week.round(2).to_s.sub('.', ',')} %*.
+Vi har nå sjekket ferdig *#{percent_complete.round(2).to_s.sub('.', ',')}* %, og bare *#{stats[:remaining]} løfter* gjenstår.
     END
+
+    if checked_this_week > 0
+      weeks_remaining = (stats[:remaining] / checked_this_week)
+      done_date       = (Date.today + (weeks_remaining * 7)).strftime("%e %b %Y")
+
+      message << "Med dette tempoet vil vi være klare til lansering om *#{weeks_remaining} uker*, altså *#{done_date}*."
+    end
+
+    message << "Det er for tiden *#{stats[:errors].length} feil* i arket. <https://files.holderdeord.no/analyse/2017/loftesjekk|Klikk her> for hele oversikten."
+    message << "\n\nHvem kommer på arbeidskveld?"
 
     req         = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
     req.body    = {
       username: 'Løftesjekk',
-      text: message.split("\n").map { |e| e.strip }.join("\n"),
-      # channel: "#jari-test"
-      channel: "#general"
+      text: message.join("\n"),
+      channel: ENV['SLACK_TEST'] ? "#jari-test" : '#general'
     }.to_json
 
     http = Net::HTTP.new(uri.hostname, uri.port)
