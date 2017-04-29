@@ -5,7 +5,12 @@
 <% if @ssl %>
 server {
   listen          80;
-  server_name     <%= @server_name %>;
+
+  <% if @server_alias %>
+    server_name     <%= @server_name %> <%= @server_alias %>;
+  <% else %>
+    server_name     <%= @server_name %>;
+  <% end %>
 
   return          301 https://$server_name$request_uri;
 }

@@ -55,6 +55,12 @@ node 'hdo02' {
     ssl         => true
   }
 
+  class { 'hdo::promisesearch':
+    server_name  => 'løfter.holderdeord.no',
+    server_alias => 'lofter.holderdeord.no'
+    ssl          => true
+  }
+
   class { 'hdo::rebels':
     server_name => 'utbrytere.holderdeord.no',
     ssl         => true
