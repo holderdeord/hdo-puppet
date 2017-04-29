@@ -56,8 +56,8 @@ node 'hdo02' {
   }
 
   class { 'hdo::promisesearch':
-    server_name  => 'løfter.holderdeord.no',
-    server_alias => 'lofter.holderdeord.no',
+    server_name  => 'lofter.holderdeord.no',
+    server_alias => 'løfter.holderdeord.no xn--lfter-vua.holderdeord.no',
     ssl          => true
   }
 
