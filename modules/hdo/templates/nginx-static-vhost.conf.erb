@@ -8,11 +8,13 @@ server {
 
   <% if @server_alias %>
     server_name     <%= @server_name %> <%= @server_alias %>;
+    return          301 https://$host$request_uri;
   <% else %>
     server_name     <%= @server_name %>;
+    return          301 https://$server_name$request_uri;
   <% end %>
 
-  return          301 https://$server_name$request_uri;
+
 }
 <% end %>
 
