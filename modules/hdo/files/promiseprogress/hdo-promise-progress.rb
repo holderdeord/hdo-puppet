@@ -67,7 +67,7 @@ promises.each_with_index do |p, idx|
   p['row']  = idx + 2;
   completed = p['Ferdigsjekka?'].to_s.downcase == 'ja'
   name      = p['Hvem sjekker?'].to_s.downcase.strip
-  svada     = p['Svada'].to_s.downcase == 'ja'
+  svada     = p['Kan ikke etterprøves'].to_s.downcase == 'ja'
   categories = p['Kategori'].to_s.split(';')
 
   pers = stats[:by_person][name]
@@ -457,10 +457,10 @@ __END__
             {
               name: 'Antall løfter',
               data: [
-                { name: 'Holdt',        y: stats.current.kept },
-                { name: 'Delvis holdt', y: stats.current.partly_kept },
-                { name: 'Brutt',        y: stats.current.broken },
-                { name: 'Svada',        y: stats.current.bullshit },
+                { name: 'Holdt',                y: stats.current.kept },
+                { name: 'Delvis holdt',         y: stats.current.partly_kept },
+                { name: 'Brutt',                y: stats.current.broken },
+                { name: 'Kan ikke etterprøves', y: stats.current.bullshit },
               ]
             }
           ]
@@ -544,7 +544,7 @@ __END__
               data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].not_yet] })
             },
             {
-              name: 'Svada',
+              name: 'Kan ikke etterprøves',
               data: dates.map(function(d) { return [moment(d).valueOf(), stats.by_date[d].bullshit] })
             },
             {
