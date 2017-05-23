@@ -495,11 +495,11 @@ __END__
           },
 
           series: [
-            { name: 'Totalt',       data: names.map(function(name) { return stats.current.by_person[name].total; })},
-            { name: 'Ferdigsjekka', data: names.map(function(name) { return stats.current.by_person[name].completed; })},
-            { name: 'Ikke enda',    data: names.map(function(name) { return stats.current.by_person[name].not_yet; })},
-            { name: 'Svada',         data: names.map(function(name) { return stats.current.by_person[name].bullshit; })},
-            { name: 'Feil',         data: names.map(function(name) { return stats.current.by_person[name].error; })},
+            { name: 'Totalt',               data: names.map(function(name) { return stats.current.by_person[name].total; })},
+            { name: 'Ferdigsjekka',         data: names.map(function(name) { return stats.current.by_person[name].completed; })},
+            { name: 'Ikke enda',            data: names.map(function(name) { return stats.current.by_person[name].not_yet; })},
+            { name: 'Kan ikke etterprøves', data: names.map(function(name) { return stats.current.by_person[name].bullshit; })},
+            { name: 'Feil',                 data: names.map(function(name) { return stats.current.by_person[name].error; })},
           ]
         })
 
