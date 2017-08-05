@@ -7,6 +7,7 @@ class hdo::users {
     'pere'   => { email => 'pere@hungry.com',         keytype => 'ssh-dss', key => 'AAAAB3NzaC1kc3MAAAEBAIthNgfzBlNTOdlCgKj4RIShPhOelizoj8/fD0xxvYSiErXn4YqxAQ7t4dTFyS6vvgDSXiTo+PgnYUbbNlSkYskX4t6yvCYA2P+hjSIuwzwZgA/xmygjGEAaYlYiWMl4sNdVIf09gd5ae3J/9ik2DoFQM0S9CtbPG7aInJmldK7a5OuiURVFKKziQW+LYMP+4X9CaeTfb7HEhh1HpVl7Evir1MOiejdYPd3SoLfy+DXiQq56p0iHoMQ+x+Vts+dBKy0a9beiT09X6AAYx3QPS5QjrAa9piyZJkn8TN4KkkvBLzHvXTsVKuT44fqZEUi9+UQePG/DInmRvhglu3m644UAAAAVAIq3PB/9XEOTNAAmmFgoELqTgKj9AAABAC91qLKlgh5g6/JwAXPEglbv+2Una3Qm8yx/460oWXiPPfcnjgZ0NwpH3IIGteo9zXFFzcR4+reAFyeDVAXv1bKCr5bYe5XLkKJkNvSg4vpARn5rHwUY4dHc+4xpOnMVGrV3pFGPVgltoW3bUDOrK8VnVo3miyOWgSY/Cqfv90YvY3PhCF1dPfzmbLzvoHAFI2HT0A4iRPiE1taWpEeixOmxYQ9QeY4WXQvb6+kw0a2b2s7DAVSXt8O8CRRuwNmV7ZQvsBcVd1adtzCb1lx91fWBChBOveX1P2lsliwP479A3dg/F8pJpIxmiz1Xc2+wii9AOQtTfIVOAvBHoPU1WK8AAAEAY7io3vbubukSBxAmQ2UN8NvvcgeAt9d1zvggcSoGKk4KLa6ScgUBfvLNeKpM0W7zkaORATpPMEWfGJCLQU++qbHn6usRUB8UGQ3/5f++jyonTbc88fj3SH9v2y+be2sBWyq2Anq3NU1V1QA3og0eqZvha6rB1DPjfBkgd8S6/tZ0opHOTbm8VTRgk/xdjIvZGa9u6zBqXpRkHCFFUsQ6NSLJUs+0+yv2RtmkZ6Iz6QHu3feyJdMJsiFoztYt/7kDSxwoqWUdphoovCCz73ZHX3rIom+MX7qZNaYSKWC37QpGJxofnwQC/PRIIJuSkuqPTzyu6OwNuBia9wCn29wZ4Q==' },
     'bjorn'  => { email => 'bjorn.dyresen@gmail.com', keytype => 'ssh-rsa', key => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAsTd38lUZZygRAQKigMb30yW+9CPDJlcYTzLivgE7pcjr5fFMsdcvqJp7raMAFjx8lyf8lljFKnRwPuWMvyUfvxuEyFCUbvgLF8wsSc1lIAsNO0hs5/ejp/ra6LqQ3p3Fz0O2bjd1jQgRu38PPu228ryZHw9jV1cO0Szjxh+S3iqDSU5U9b/HkdHOP8n5b+9YEDSWfePZc8LrE802qb7f43mGs44DX37erq69SrSc05ddlxe13nxIm3DeNlROxZeA02OasnD7DrnLkayYqT9sINn2viajtaWhZIH+C3nua28gygrEUKp333KJjXV4luSzIKUc7zDuxTURAa3E2F9hsw=='},
     'yablee' => { email => 'yablee@gmail.com',        keytype => 'ssh-rsa', key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDcv4n9P+oQGoNIGsm7xGzqFYwGElidAdKmqYg8jk5uWLblaBLBjlXWqMSqYFNYk3AQ0ygzmxSeszGYPRI/Zp4+lnq8knG7WAo/PCdo+IrqW0ZXtxzRbqXRq08Itl8anQ5BsTNeYUDNQAV+zq4g9iS4EsjoSBUeE99yAGrO7a5bFfVNet8fljVgT0cRYqs11XZFgSH2Sk9XGmfmfYOU9VUURpB35g/9ZHcKtmYx7pwRPCZGLymjTekawRfOQ8SOmDoNGpc40ZD5m8rZf/YhYzhBCh0EmkzVx5AsoTSga9TqwDscB3DapUiR0NQdBqhLXTEyPSiIxSJsLt75xEG47I8/'},
+    'arne'   => { email => 'arne.hassel@gmail.com',   keytype => 'ssh-rsa', key => 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQCprlYDSAZG4fwIEWRFxEx37xQsXvd784bH4dhXZCtsPZeCUzn7xNsJ+OUhnW7hdkwYR8HuQwiXDh4KiLyWvqXUbBTLjwz31Yak0hc3mqnAkWlPmb0JeyTVyTlpCCKC+MSLW8+WcONjPVRsdE+cxxajbfoBsvldyPEFIHczwa9jZw==' }
   }
 
   #
@@ -21,8 +22,16 @@ class hdo::users {
     tag    => 'hdo-deployer'
   }
 
-  @ssh_authorized_key { "hdo+${users[yablee][email]}":
+  @ssh_authorized_key { "hdo+${users[arne][email]}":
     ensure => present,
+    user   => $hdo::params::user,
+    type   => $users[arne][keytype],
+    key    => $users[arne][key],
+    tag    => 'hdo-deployer'
+  }
+
+  @ssh_authorized_key { "hdo+${users[yablee][email]}":
+    ensure => absent,
     user   => $hdo::params::user,
     type   => $users[yablee][keytype],
     key    => $users[yablee][key],
@@ -45,6 +54,7 @@ class hdo::users {
   admin_account { 'pere':   config => $users[pere]   }
   admin_account { 'bjorn':  config => $users[bjorn]  }
   admin_account { 'yablee': config => $users[yablee] }
+  admin_account { 'arne':   config => $users[arne] }
 
   file { "${hdo::params::home}/.ssh/id_dsa":
     ensure  => file,
