@@ -1,4 +1,4 @@
-class hdo::promisestracker(
+class hdo::promisetracker(
   $server_name  = $::fqdn,
   $server_alias = false,
   $ssl          = true,
