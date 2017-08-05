@@ -87,6 +87,12 @@ node 'hdo02' {
     ssl         => true
   }
 
+  class { 'hdo::promisetracker':
+    server_name => 'sjekk.holderdeord.no',
+    ssl         => true,
+    restrict    => true
+  }
+
   include hdo::googledrivesync
   include hdo::promiseprogress
   include hdo::webapp::exporter
