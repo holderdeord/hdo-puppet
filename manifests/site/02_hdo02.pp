@@ -93,8 +93,12 @@ node 'hdo02' {
     restrict    => true
   }
 
+  class { 'hdo::promiseprogress':
+    ensure => absent
+  }
+
   include hdo::googledrivesync
-  include hdo::promiseprogress
+
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
   include hdo::webapp::apiupdater

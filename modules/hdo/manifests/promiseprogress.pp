@@ -1,4 +1,5 @@
 class hdo::promiseprogress(
+  $ensure         = 'present',
   $spreadhsheetId = '14LtkMlUJ3K7BPz_bJOEVjtktBK9V3tVeDLu5D1qiRnQ',
   $root           = '/var/lib/hdo-promise-progress',
   $out            = '/webapps/files/analyse/2017/loftesjekk'
@@ -20,7 +21,7 @@ class hdo::promiseprogress(
   }
 
   cron { 'hdo-promise-progress':
-    ensure      => 'present',
+    ensure      => $ensure,
     command     => "bash -l -c 'ruby ${script} --input /webapps/files/gdrive/${spreadhsheetId}.json --output ${out}'",
     user        => $hdo::params::user,
     environment => [
