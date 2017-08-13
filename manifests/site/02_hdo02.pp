@@ -90,7 +90,7 @@ node 'hdo02' {
   class { 'hdo::promisetracker':
     server_name => 'sjekk.holderdeord.no',
     ssl         => true,
-    restrict    => true
+    restrict    => false
   }
 
   class { 'hdo::promiseprogress':
