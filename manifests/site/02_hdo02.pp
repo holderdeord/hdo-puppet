@@ -101,7 +101,7 @@ node 'hdo02' {
 
   # include hdo::webapp::apiupdater
 
-  classe { 'hdo::webapp::apiupdater':
+  class { 'hdo::webapp::apiupdater':
     ensure => 'absent'
   }
 
