@@ -99,9 +99,14 @@ node 'hdo02' {
 
   include hdo::googledrivesync
 
+  # include hdo::webapp::apiupdater
+
+  classe { 'hdo::webapp::apiupdater':
+    ensure => 'absent'
+  }
+
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
-  include hdo::webapp::apiupdater
   include hdo::webapp::statsupdater
   include hdo::webapp::rebeltweeter
 
