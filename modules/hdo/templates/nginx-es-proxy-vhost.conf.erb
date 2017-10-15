@@ -41,7 +41,7 @@ server {
     proxy_redirect            off;
 
     # Cache POST requests including the request body in the key.
-    proxy_cache_methods       POST;
+    proxy_cache_methods       GET POST;
     proxy_cache_key           "$request_uri|$request_body";
     proxy_buffers             8 32k;
     proxy_buffer_size         64k;
