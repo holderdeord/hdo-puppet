@@ -99,12 +99,7 @@ node 'hdo02' {
 
   include hdo::googledrivesync
 
-  # include hdo::webapp::apiupdater
-
-  class { 'hdo::webapp::apiupdater':
-    ensure => 'absent'
-  }
-
+  include hdo::webapp::apiupdater
   include hdo::webapp::exporter
   include hdo::webapp::apichangelog
   include hdo::webapp::statsupdater
