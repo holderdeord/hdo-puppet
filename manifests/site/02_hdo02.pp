@@ -9,7 +9,8 @@ node 'hdo02' {
 
   class { 'postfix':
     smtp_listen => 'all',
-    munin       => false
+    munin       => false,
+    domain      => 'holderdeord.no'
   }
 
   class { 'hdo::elasticsearch': }
