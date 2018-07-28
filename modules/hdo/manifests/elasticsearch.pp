@@ -67,4 +67,14 @@ class hdo::elasticsearch(
     group  => $nagios::base::user,
     source => 'puppet:///modules/hdo/nagioschecks/elasticsearch-cluster-state'
   }
+
+  logrotate::rule { 'hdo-elasticsearch':
+    path         => "/var/log/elasticsearch/${::hostname}/*",
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    ifempty      => false,
+    missingok    => true
+  }
+
 }
